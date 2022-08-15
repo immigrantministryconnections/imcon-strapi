@@ -6,7 +6,7 @@ name: Build and deploy Node.js app to Azure Web App - IMCON
 on:
   push:
     branches:
-      - johnyoder8888
+      - main
   workflow_dispatch:
 
 jobs:
@@ -15,11 +15,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
-      - name: reset runner
-        run: |
-          curl -o actions-runner-linux-x64-2.288.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.288.1/actions-runner-linux-x64-2.288.1.tar.gz && \
-          echo "325b89bdc1c67264ec6f4515afda4534f14a6477d9ba241da19c43f9bed2f5a6  actions-runner-linux-x64-2.288.1.tar.gz" | shasum -a 256 -c \
 
       - name: Set up Node.js version
         uses: actions/setup-node@v1
@@ -31,7 +26,7 @@ jobs:
           yarn install
           yarn build
         working-directory: ./backend/app
-        
+
       - name: 'Tar files'
         run: tar -cf node-app.tar .
 
@@ -53,7 +48,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: node-app
-          
+
       - name: 'Untar files'
         run: 'tar -xf node-app.tar'
 
