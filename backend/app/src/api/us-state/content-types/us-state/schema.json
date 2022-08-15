@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "us_states",
+  "info": {
+    "singularName": "us-state",
+    "pluralName": "us-states",
+    "displayName": "US States",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "stateSlug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "organizations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::org.org",
+      "mappedBy": "us_state"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "resource": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::resource.resource"
+    },
+    "country": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::country.country"
+    }
+  }
+}

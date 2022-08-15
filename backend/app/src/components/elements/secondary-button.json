@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_elements_secondary_buttons",
+  "info": {
+    "displayName": "Secondary button"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    },
+    "size": {
+      "type": "enumeration",
+      "enum": [
+        "tiny",
+        "small",
+        "medium",
+        "large",
+        "extra-large"
+      ]
+    }
+  }
+}

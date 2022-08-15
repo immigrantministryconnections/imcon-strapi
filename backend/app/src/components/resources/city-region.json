@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_resources_city_regions",
+  "info": {
+    "displayName": "City / Region",
+    "icon": "city",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "orgs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::org.org"
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_elements_rounded_buttons",
+  "info": {
+    "displayName": "Rounded button"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true
+    },
+    "size": {
+      "type": "enumeration",
+      "enum": [
+        "tiny",
+        "small",
+        "medium",
+        "large",
+        "extra-large"
+      ]
+    }
+  }
+}

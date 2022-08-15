@@ -1,0 +1,87 @@
+{
+  "kind": "collectionType",
+  "collectionName": "orgs",
+  "info": {
+    "singularName": "org",
+    "pluralName": "orgs",
+    "displayName": "Organizations",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "websiteURL": {
+      "type": "string",
+      "required": true
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "description": {
+      "type": "richtext",
+      "required": true
+    },
+    "approvedDate": {
+      "type": "date",
+      "required": true
+    },
+    "dateAdded": {
+      "type": "date",
+      "required": true
+    },
+    "city_region": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::city-region.city-region",
+      "inversedBy": "orgs"
+    },
+    "orgSlug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "subcategory": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::subcategory.subcategory",
+      "inversedBy": "orgs"
+    },
+    "resource_category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::resource-category.resource-category",
+      "inversedBy": "orgs"
+    },
+    "us_state": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::us-state.us-state",
+      "inversedBy": "organizations"
+    },
+    "ca_province": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::ca-province.ca-province",
+      "inversedBy": "organizations"
+    },
+    "resource": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::resource.resource"
+    },
+    "contact": {
+      "type": "string"
+    }
+  }
+}

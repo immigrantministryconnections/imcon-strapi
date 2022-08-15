@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_elements_member_groups",
+  "info": {
+    "displayName": "Member group",
+    "icon": "address-book",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "memberInfo": {
+      "displayName": "Member Info",
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.member-info"
+    },
+    "title": {
+      "type": "string"
+    }
+  }
+}

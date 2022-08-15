@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "resource_categories",
+  "info": {
+    "singularName": "resource-category",
+    "pluralName": "resource-categories",
+    "displayName": "Resource Categories",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "orgs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::org.org",
+      "mappedBy": "resource_category"
+    },
+    "categorySlug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "subcategory": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::subcategory.subcategory",
+      "inversedBy": "resource_category"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "resource": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::resource.resource"
+    }
+  }
+}

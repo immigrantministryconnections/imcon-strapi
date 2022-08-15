@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_elements_image_link_with_texts",
+  "info": {
+    "displayName": "Image link with text",
+    "icon": "image"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    },
+    "imageLink": {
+      "type": "component",
+      "component": "links.link-image"
+    }
+  }
+}

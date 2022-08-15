@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_elements_feature_columns",
+  "info": {
+    "displayName": "Feature column",
+    "icon": "star"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "icon": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

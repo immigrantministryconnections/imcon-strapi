@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_sections_feature_rows_groups",
+  "info": {
+    "displayName": "Feature rows group",
+    "icon": "long-arrow-alt-right"
+  },
+  "options": {},
+  "attributes": {
+    "features": {
+      "displayName": "Feature row",
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.feature-row"
+    },
+    "sectionTitle": {
+      "type": "string"
+    }
+  }
+}

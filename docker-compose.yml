@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  imcon_mysql:
+    container_name: imcon_mysql
+    image: mariadb
+    ports:
+      - 3306:3306
+    volumes:
+      - ./backend/mariadb:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=strapi
+      - MYSQL_PASSWORD=strapi
+      - MYSQL_USER=strapi
+      - MYSQL_DATABASE=strapi

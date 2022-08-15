@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "city_regions",
+  "info": {
+    "singularName": "city-region",
+    "pluralName": "city-regions",
+    "displayName": "Cities / Regions",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "orgs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::org.org",
+      "mappedBy": "city_region"
+    },
+    "ca_province": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::ca-province.ca-province"
+    },
+    "citySlug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "us_state": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::us-state.us-state"
+    },
+    "resource": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::resource.resource"
+    },
+    "country": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::country.country"
+    }
+  }
+}

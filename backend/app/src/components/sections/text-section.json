@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_sections_text_sections",
+  "info": {
+    "displayName": "Text section",
+    "icon": "text-height"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": false
+    },
+    "content": {
+      "type": "richtext"
+    }
+  }
+}

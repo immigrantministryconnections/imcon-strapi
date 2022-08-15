@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_sections_image_link_grids",
+  "info": {
+    "displayName": "Image link grid",
+    "icon": "grip-horizontal"
+  },
+  "options": {},
+  "attributes": {
+    "imageLink": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.image-link-with-text"
+    }
+  }
+}

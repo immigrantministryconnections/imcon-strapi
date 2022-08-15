@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_sections_organization_groups",
+  "info": {
+    "displayName": "Organization group",
+    "icon": "layer-group"
+  },
+  "options": {},
+  "attributes": {
+    "organization": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.organization",
+      "required": true
+    }
+  }
+}

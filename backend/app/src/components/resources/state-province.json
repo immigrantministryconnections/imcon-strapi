@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_resources_state_provinces",
+  "info": {
+    "displayName": "State / Province",
+    "icon": "globe"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "orgs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::org.org"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "top_level_pages",
+  "info": {
+    "singularName": "top-level-page",
+    "pluralName": "top-level-pages",
+    "displayName": "Top Level Pages",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "pageName": {
+      "type": "string"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    },
+    "sections": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.feature-columns-group",
+        "sections.feature-rows-group",
+        "sections.image-link-grid",
+        "sections.image-with-short-text",
+        "sections.text-section",
+        "sections.embedded-form",
+        "sections.leadership-section",
+        "sections.simple-text",
+        "sections.link-list",
+        "sections.blog-style-section"
+      ]
+    },
+    "slug": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_sections_leadership_sections",
+  "info": {
+    "displayName": "Leadership section",
+    "icon": "address-book",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Our Leadership"
+    },
+    "memberGroup": {
+      "displayName": "Member group",
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.member-group"
+    }
+  }
+}

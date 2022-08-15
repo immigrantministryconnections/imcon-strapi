@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_sections_simple_texts",
+  "info": {
+    "displayName": "Simple text",
+    "icon": "align-justify",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.short-text"
+    }
+  }
+}

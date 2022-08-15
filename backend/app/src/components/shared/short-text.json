@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_short_texts",
+  "info": {
+    "displayName": "Short Text",
+    "icon": "align-justify",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    },
+    "center": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

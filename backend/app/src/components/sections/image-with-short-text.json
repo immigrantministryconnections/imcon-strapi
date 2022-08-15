@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_sections_image_with_short_texts",
+  "info": {
+    "displayName": "Image With Text",
+    "icon": "image",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "sectionTitle": {
+      "type": "string"
+    },
+    "image": {
+      "type": "component",
+      "repeatable": false,
+      "component": "links.link-image"
+    },
+    "shortText": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.short-text"
+    },
+    "richText": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.rich-text"
+    }
+  }
+}

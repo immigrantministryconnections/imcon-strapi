@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_sections_embedded_forms",
+  "info": {
+    "displayName": "Embedded form",
+    "icon": "archive",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "script": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
