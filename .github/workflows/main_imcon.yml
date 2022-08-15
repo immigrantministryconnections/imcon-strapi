@@ -58,5 +58,5 @@ jobs:
         with:
           app-name: 'imcon-test-app'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0E3FFF443B054E51879F43BF53076D6A }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_712FA4F30BE04D849DDDDB2AE45440EA }}
           package: .
