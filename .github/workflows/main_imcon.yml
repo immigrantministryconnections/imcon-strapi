@@ -56,7 +56,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'imcon-test-app'
+          app-name: 'IMCON'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_712FA4F30BE04D849DDDDB2AE45440EA }}
           package: .
