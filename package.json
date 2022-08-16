@@ -6,7 +6,8 @@
     "build:backend": "yarn --cwd backend/app build",
     "develop:backend": "yarn --cwd backend/app develop",
     "develop:frontend": "wait-on http://localhost:1337/admin && yarn --cwd frontend develop",
-    "develop": "cross-env FORCE_COLOR=1 npm-run-all -l -p develop:*"
+    "develop": "cross-env FORCE_COLOR=1 npm-run-all -l -p develop:*",
+    "start": "yarn --cwd backend/app node node_modules/@strapi/strapi/bin/strapi.js start"
   },
   "devDependencies": {
     "cross-env": "7.0.3",
