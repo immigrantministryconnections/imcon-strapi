@@ -31,7 +31,8 @@
         "sections.simple-text",
         "sections.link-list",
         "sections.blog-style-section",
-        "sections.image-link-grid"
+        "sections.image-link-grid",
+        "sections.leadership-section"
       ]
     },
     "slug": {

@@ -1,7 +1,14 @@
-import ImageLinkwithText from '../elements/image-link-with-text';
+import ImageLinkWithText from '@/components/elements/image-link-with-text';
 
-export default function ImageLinkGrid({ images }) {
-  images.map((imageLink) => {
-    return <ImageLinkwithText imageLink={imageLink} />;
+export default function ImageLinkGrid({ data }) {
+  return data.imageLink?.map((imageLink) => {
+    return (
+      <div
+        key={imageLink.id}
+        className="mb-6 last:mb-0 items-center w-full text-center"
+      >
+        <ImageLinkWithText imageLink={imageLink} />
+      </div>
+    );
   });
 }

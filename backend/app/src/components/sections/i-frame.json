@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_sections_i_frames",
+  "info": {
+    "displayName": "iFrame",
+    "icon": "tv"
+  },
+  "options": {},
+  "attributes": {
+    "src": {
+      "type": "string"
+    }
+  }
+}

@@ -10,7 +10,7 @@ module.exports = {
         mediumBlue: '#1d5b8dff',
         lightBlue: '#247ab9ff',
         imconOrange: '#bd6719ff',
-        imconYello: '#edb11cff',
+        imconYellow: '#edb11cff',
       },
     },
   },

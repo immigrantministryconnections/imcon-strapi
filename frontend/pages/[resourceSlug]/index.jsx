@@ -3,8 +3,9 @@ import { useRouter } from 'next/router';
 import NextImage from '@/components/elements/image';
 
 import Seo from '@/components/elements/seo';
+import Sections from '@/components/sections';
 import Layout from '@/components/layout';
-import { fetchAPI } from 'utils/api';
+import { fetchAPI, getPageData } from 'utils/api';
 
 /**
  * This page is a dynamic page that will render the top-level
@@ -12,43 +13,47 @@ import { fetchAPI } from 'utils/api';
  * the children 'subdirectory' state / province, city / region,
  * category / subcategory pages.
  */
-export default function ResourcesPage({ seo, imageLinks }) {
+export default function ResourcesPage({ seo, imageLinks, sections }) {
   const router = useRouter();
   return (
     <Layout>
       <Seo seo={seo} />
-      <ul role="list" className="mx-auto">
-        {imageLinks.map((imageLink) => {
-          const slug =
-            imageLink.attributes?.stateSlug ||
-            imageLink.attributes?.provinceSlug ||
-            imageLink.attributes.categorySlug;
-          return (
-            <li
-              key={imageLink.id}
-              className="flex items-center justify-center mx-auto py-4"
-            >
-              <div className="flex flex-col items-center cursor-pointer">
-                <Link
-                  as={`${router.asPath}/${slug}`}
-                  href={`${router.pathname}/${slug}`}
-                >
-                  <a>
-                    <NextImage
-                      media={imageLink.attributes.image}
-                      height={200}
-                      width={600}
-                    />
-                  </a>
-                </Link>
-                <h3 className="font-medium text-lg text-[#1e1e1e]">
-                  {imageLink.attributes.name || imageLink.attributes.title}
-                </h3>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+      {!!sections ? (
+        <Sections sections={sections} />
+      ) : (
+        <ul role="list" className="mx-auto">
+          {imageLinks?.map((imageLink) => {
+            const slug =
+              imageLink.attributes?.stateSlug ||
+              imageLink.attributes?.provinceSlug ||
+              imageLink.attributes.categorySlug;
+            return (
+              <li
+                key={imageLink.id}
+                className="flex items-center justify-center mx-auto py-4"
+              >
+                <div className="flex flex-col items-center cursor-pointer">
+                  <Link
+                    as={`${router.asPath}/${slug}`}
+                    href={`${router.pathname}/${slug}`}
+                  >
+                    <a>
+                      <NextImage
+                        media={imageLink.attributes.image}
+                        height={200}
+                        width={600}
+                      />
+                    </a>
+                  </Link>
+                  <h3 className="font-medium text-lg text-[#1e1e1e]">
+                    {imageLink.attributes.name || imageLink.attributes.title}
+                  </h3>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </Layout>
   );
 }
@@ -109,10 +114,12 @@ export async function getStaticProps(context) {
       break;
   }
 
+  if (pageData === null) return { props: {} };
+
   return {
     props: {
       imageLinks: pageData.data,
-      metadata: null,
+      seo: pageData.attributes?.seo || null,
       global: null,
     },
   };

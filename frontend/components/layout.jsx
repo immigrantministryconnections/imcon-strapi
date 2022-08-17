@@ -8,9 +8,9 @@ const Layout = ({ children }) => {
   const { global } = useContext(GlobalContext);
   const { navbar, footer } = global;
   return (
-    <div className="flex flex-col h-screen justify-between">
+    <div className="realtive flex flex-col min-h-screen">
       <Navbar navbar={navbar} />
-      <main className="container mx-auto py-8 px-4 sm:px-6 lg:px-8">
+      <main className="top-0 h-full container mx-auto py-8 px-4 sm:px-6 lg:px-8">
         {children}
       </main>
       <Footer footer={footer} />

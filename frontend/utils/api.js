@@ -180,10 +180,12 @@ export async function getPageData({ slug, preview }) {
                   id
                   title
                   content
+                  centerText
                 }
                 ... on ComponentSectionsSimpleText {
                   id
                   text {
+                    center
                     text
                   }
                 }
@@ -225,6 +227,7 @@ export async function getPageData({ slug, preview }) {
                 }
                 ... on ComponentSectionsLeadershipSection {
                   id
+                  title
                   memberGroup {
                     title
                     memberInfo {
@@ -241,7 +244,7 @@ export async function getPageData({ slug, preview }) {
                 }
                 ... on ComponentSectionsEmbeddedForm {
                   id
-                  script
+                  src
                 }
                 ... on ComponentSectionsImageWithShortText {
                   id
@@ -282,10 +285,10 @@ export async function getPageData({ slug, preview }) {
   const { data, errors } = await pagesRes.json();
 
   // Make sure we found something, otherwise return null
-  if (data?.pages == null || data.pages.length === 0) {
+  if (data?.topLevelPages == null || data.topLevelPages.data.length === 0) {
     return null;
   }
 
   // Return the first item since there should only be one result per slug
-  return data.pages.data[0];
+  return data.topLevelPages.data[0];
 }

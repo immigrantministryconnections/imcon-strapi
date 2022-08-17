@@ -6,6 +6,7 @@ import Seo from '@/components/elements/seo';
 import NextImage from '@/components/elements/image';
 
 import { fetchAPI } from 'utils/api';
+import Sections from '@/components/sections';
 
 export default function StatePage({
   seo,
@@ -14,15 +15,20 @@ export default function StatePage({
   orgLinks,
   slug1,
   stateData,
+  sections,
 }) {
   const router = useRouter();
   return (
     <Layout>
       <Seo seo={seo} />
       {
+        // Render top-level page sections if we have them
+      }
+      {!!sections && <Sections sections={sections} />}
+      {
         // a list of links to cities or subcategories
       }
-      {!!imageLinks.length && (
+      {!!imageLinks?.length && (
         <ul role="list" className="mx-auto">
           {imageLinks.map((imageLink) => {
             const slug =
@@ -89,7 +95,7 @@ export default function StatePage({
       }
       {!stateData && (
         <ul role="list" className="mx-auto">
-          {orgLinks.map((orgLink) => {
+          {orgLinks?.map((orgLink) => {
             const slug = orgLink.attributes.orgSlug;
             return (
               <li

@@ -18,14 +18,16 @@ export default function Navbar({ navbar }) {
   const router = useRouter();
   const [searchText, setSearchText] = useState();
   return (
-    <Disclosure as="header" className="bg-white shadow">
+    <Disclosure as="header" className="bg-white shadow sticky top-0">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:divide-y lg:divide-gray-200 lg:px-8">
             <div className="relative h-16 flex justify-between">
               <div className="relative z-10 px-2 flex lg:px-0">
                 <div className="flex-shrink-0 flex items-center">
-                  <NextImage height={50} width={50} media={navbar.logo} />
+                  {navbar?.logo && (
+                    <NextImage height={50} width={50} media={navbar.logo} />
+                  )}
                 </div>
               </div>
               <div className="relative z-0 flex-1 px-2 flex items-center justify-center sm:absolute sm:inset-0">
@@ -62,7 +64,7 @@ export default function Navbar({ navbar }) {
                 </Disclosure.Button>
               </div>
               <div className="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
-                {navbar.button && (
+                {navbar?.button && (
                   <PrimaryButton size="medium" text="Sign In" />
                 )}
               </div>
@@ -71,7 +73,7 @@ export default function Navbar({ navbar }) {
               className="hidden lg:py-2 lg:flex lg:space-x-8"
               aria-label="Global"
             >
-              {navbar.link?.map((item) => (
+              {navbar?.link?.map((item) => (
                 <Link key={item.id} href={item.url}>
                   <a
                     className={`
@@ -92,7 +94,7 @@ export default function Navbar({ navbar }) {
 
           <Disclosure.Panel as="nav" className="lg:hidden" aria-label="Global">
             <div className="pt-2 pb-3 px-2 space-y-1">
-              {navbar.link?.map((item) => (
+              {navbar?.link?.map((item) => (
                 <Link key={item.id} href={item.url}>
                   <a>
                     <Disclosure.Button

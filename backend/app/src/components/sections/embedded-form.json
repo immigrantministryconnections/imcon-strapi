@@ -7,7 +7,7 @@
   },
   "options": {},
   "attributes": {
-    "script": {
+    "src": {
       "type": "string",
       "required": true
     }
