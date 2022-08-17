@@ -3,17 +3,19 @@ module.exports = ({ env }) => ({
     enabled: true,
   },
   email: {
-    provider: env("EMAIL_PROVIDER", "nodemailer"),
-    providerOptions: {
-      host: env("EMAIL_SMTP_HOST", "smtp.imcon.church"),
-      port: env("EMAIL_SMTP_PORT", 587),
-      auth: {
-        user: env("EMAIL_SMTP_USER"),
-        pass: env("EMAIL_SMTP_PASS"),
+    config: {
+      provider: env("EMAIL_PROVIDER"),
+      providerOptions: {
+        host: env("EMAIL_SMTP_HOST"),
+        port: env("EMAIL_SMTP_PORT"),
+        auth: {
+          user: env("EMAIL_SMTP_USER"),
+          pass: env("EMAIL_SMTP_PASS"),
+        },
       },
       settings: {
-        defaultFrom: "john@imcon.church",
-        defaultReplyTo: "john@imcon.church",
+        defaultFrom: env("EMAIL_DEFAULT_FROM"),
+        defaultReplyTo: env("EMAIL_DEFAULT_REPLYTO"),
       },
     },
   },

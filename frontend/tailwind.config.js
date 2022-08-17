@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
@@ -11,6 +13,10 @@ module.exports = {
         lightBlue: '#247ab9ff',
         imconOrange: '#bd6719ff',
         imconYellow: '#edb11cff',
+      },
+      fontFamily: {
+        sans: ['Corbel', ...defaultTheme.fontFamily.sans],
+        display: ['Lexend', ...defaultTheme.fontFamily.sans],
       },
     },
   },

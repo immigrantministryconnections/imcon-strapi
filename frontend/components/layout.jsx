@@ -8,7 +8,7 @@ const Layout = ({ children }) => {
   const { global } = useContext(GlobalContext);
   const { navbar, footer } = global;
   return (
-    <div className="realtive flex flex-col min-h-screen">
+    <div className="relative min-h-screen">
       <Navbar navbar={navbar} />
       <main className="top-0 h-full container mx-auto py-8 px-4 sm:px-6 lg:px-8">
         {children}

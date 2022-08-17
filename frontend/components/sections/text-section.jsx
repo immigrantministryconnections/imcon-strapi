@@ -4,7 +4,11 @@ export default function TextSection({ data }) {
   return (
     <div className="w-full my-2">
       {data.title && (
-        <h2 className="text-xl font-bold tracking-tight sm:text-3xl sm:tracking-tight text-center">
+        <h2
+          className={`text-xl font-bold tracking-tight sm:text-3xl sm:tracking-tight ${
+            data.centerText && 'text-center'
+          }`}
+        >
           {data.title}
         </h2>
       )}

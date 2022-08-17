@@ -3,11 +3,20 @@ module.exports = ({ env }) => ({
     enabled: true,
   },
   email: {
-    provider: "nodemailer",
-    providerOptions: {
-      host: "localhost",
-      port: 1025,
-      ignoreTLS: true,
+    config: {
+      provider: env("EMAIL_PROVIDER"),
+      providerOptions: {
+        host: env("EMAIL_SMTP_HOST"),
+        port: env("EMAIL_SMTP_PORT"),
+        auth: {
+          user: env("EMAIL_SMTP_USER"),
+          pass: env("EMAIL_SMTP_PASS"),
+        },
+      },
+      settings: {
+        defaultFrom: "connect@imcon.church",
+        defaultReplyTo: "connect@imcon.church",
+      },
     },
   },
 });

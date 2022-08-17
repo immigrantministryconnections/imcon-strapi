@@ -18,7 +18,7 @@ export default function Navbar({ navbar }) {
   const router = useRouter();
   const [searchText, setSearchText] = useState();
   return (
-    <Disclosure as="header" className="bg-white shadow sticky top-0">
+    <Disclosure as="header" className="bg-white shadow sticky top-0 z-10">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:divide-y lg:divide-gray-200 lg:px-8">

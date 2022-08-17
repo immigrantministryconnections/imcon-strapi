@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_sections_blog_posts",
+  "info": {
+    "displayName": "Blog posts",
+    "icon": "align-justify"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    }
+  }
+}
