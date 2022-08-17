@@ -3,6 +3,7 @@
     "@strapi/plugin-graphql": "^4.0.0",
     "@strapi/plugin-i18n": "4.3.4",
     "@strapi/plugin-users-permissions": "4.3.4",
+    "@strapi/provider-email-nodemailer": "^4.3.4",
     "@strapi/strapi": "4.3.4",
     "better-sqlite3": "7.4.6",
     "boom": "^7.3.0",

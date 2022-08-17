@@ -25,14 +25,13 @@
       "components": [
         "sections.feature-columns-group",
         "sections.feature-rows-group",
-        "sections.image-link-grid",
         "sections.image-with-short-text",
         "sections.text-section",
         "sections.embedded-form",
-        "sections.leadership-section",
         "sections.simple-text",
         "sections.link-list",
-        "sections.blog-style-section"
+        "sections.blog-style-section",
+        "sections.image-link-grid"
       ]
     },
     "slug": {

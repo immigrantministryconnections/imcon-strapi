@@ -18,6 +18,7 @@ export async function getStaticPaths() {
 
   const paths = pages.data.map((page) => {
     const { slug } = page.attributes;
+    console.log({ slug });
     // Decompose the slug that was saved in Strapi
     const slugArray = !slug ? false : slug.split('/');
     return {
@@ -41,6 +42,8 @@ export async function getStaticProps(context) {
   }
 
   const { sections, seo } = pageData.attributes;
+
+  console.log({ sections });
 
   return {
     props: {

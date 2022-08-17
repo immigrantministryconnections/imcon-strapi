@@ -7,25 +7,87 @@ import NextImage from '@/components/elements/image';
 
 import { fetchAPI } from 'utils/api';
 
-export default function StatePage({ seo, imageLinks, orgLinks }) {
+export default function StatePage({
+  seo,
+  imageLinks,
+  subcatLinks,
+  orgLinks,
+  slug1,
+  stateData,
+}) {
   const router = useRouter();
   return (
     <Layout>
       <Seo seo={seo} />
-      {imageLinks?.map((imageLink) => {
-        const { image, name } = imageLink.attributes;
-        const slug =
-          imageLink.attributes?.citySlug || imageLink.attributes?.categorySlug;
-        return (
-          <Link
-            as={`${router.asPath}/${slug}`}
-            href={`${router.pathname}/${slug}`}
-          >
-            <div key={imageLink.id}>{name}</div>
-          </Link>
-        );
-      })}
-      {orgLinks && (
+      {
+        // a list of links to cities or subcategories
+      }
+      {!!imageLinks.length && (
+        <ul role="list" className="mx-auto">
+          {imageLinks.map((imageLink) => {
+            const slug =
+              imageLink.attributes?.citySlug ||
+              imageLink.attributes?.categorySlug;
+            return (
+              <li
+                key={imageLink.id}
+                className="flex items-center justify-center mx-auto py-4"
+              >
+                <div className="flex flex-col items-center cursor-pointer">
+                  <Link
+                    as={`${router.asPath}/${slug}`}
+                    href={`${router.pathname}/${slug}`}
+                  >
+                    <a>
+                      <NextImage
+                        media={imageLink.attributes.image}
+                        height={200}
+                        width={600}
+                      />
+                    </a>
+                  </Link>
+                  <h3 className="font-medium text-lg text-[#1e1e1e]">
+                    {imageLink.attributes.name}
+                  </h3>
+                </div>
+              </li>
+            );
+          })}
+          {
+            // We have state data and organizations. Show a
+            // 'statewide resource' image and link
+          }
+          {stateData && (
+            <li
+              key={`statewide-${slug1}`}
+              className="flex items-center justify-center mx-auto py-4"
+            >
+              <div className="flex flex-col items-center cursor-pointer">
+                <Link
+                  as={`${router.asPath}/statewide-${slug1}`}
+                  href={`${router.pathname}/statewide-${slug1}`}
+                >
+                  <a>
+                    <NextImage
+                      media={stateData.stateImage}
+                      height={200}
+                      width={600}
+                    />
+                  </a>
+                </Link>
+                <h3 className="font-medium text-lg text-[#1e1e1e]">
+                  {`${stateData.stateName} Statewide Resources`}
+                </h3>
+              </div>
+            </li>
+          )}
+        </ul>
+      )}
+      {
+        // If we don't have a mix of orgs and cities, show the list of org
+        // links.
+      }
+      {!stateData && (
         <ul role="list" className="mx-auto">
           {orgLinks.map((orgLink) => {
             const slug = orgLink.attributes.orgSlug;
@@ -41,6 +103,30 @@ export default function StatePage({ seo, imageLinks, orgLinks }) {
                   >
                     <a className="font-medium text-lg text-blue-500 hover:text-blue-400 underline">
                       {orgLink.attributes.name}
+                    </a>
+                  </Link>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+      {subcatLinks && (
+        <ul role="list" className="mx-auto">
+          {subcatLinks.map((subcatLink) => {
+            const slug = subcatLink.attributes.orgSlug;
+            return (
+              <li
+                key={subcatLink.id}
+                className="flex items-center justify-center mx-auto py-4"
+              >
+                <div className="flex flex-col items-center cursor-pointer">
+                  <Link
+                    as={`${router.asPath}/${slug}`}
+                    href={`${router.pathname}/${slug}`}
+                  >
+                    <a className="font-medium text-lg text-blue-500 hover:text-blue-400 underline">
+                      {subcatLink.attributes.title}
                     </a>
                   </Link>
                 </div>
@@ -101,6 +187,8 @@ export async function getStaticProps(context) {
   const $resourceSlug = params.resourceSlug;
 
   let pageTiles, pageOrgs;
+  let stateData = null;
+  let hasCityOrgs = false;
 
   // Get all the orgs that belong at this level
   pageOrgs = await fetchAPI('/orgs', {
@@ -137,70 +225,101 @@ export async function getStaticProps(context) {
     },
   });
 
-  // switch (resourceSlug) {
-  //   case 'national-resources':
-  //     pageData = await fetchAPI('/resource-categories', {
-  //       fields: ['name', 'categorySlug'],
-  //       populate: ['image'],
-  //     });
-  //     break;
-  //   case 'local-resources':
-  //   case 'canadian-resources':
-  //   default:
-  //     [pageData, orgs] = await Promise.all([
-  //       fetchAPI('/city-regions', {
-  //         fields: ['name', 'citySlug'],
-  //         populate: ['us_state', 'ca_province', 'image'],
-  //         filters: {
-  //           $or: [
-  //             {
-  //               $and: [
-  //                 {
-  //                   us_state: {
-  //                     stateSlug: {
-  //                       $eq: slug1,
-  //                     },
-  //                   },
-  //                 },
-  //                 {
-  //                   citySlug: {
-  //                     $startsWith: 'statewide',
-  //                   },
-  //                 },
-  //               ],
-  //             },
-  //             {
-  //               $and: [
-  //                 {
-  //                   ca_province: {
-  //                     provinceSlug: {
-  //                       $eq: slug1,
-  //                     },
-  //                   },
-  //                 },
-  //                 {
-  //                   citySlug: {
-  //                     $startsWith: 'statewide',
-  //                   },
-  //                 },
-  //               ],
-  //             },
-  //           ],
-  //         },
-  //       }),
-  //       fetchAPI('/org', {
-  //         populate: '*',
-  //         filters: {
+  pageOrgs.data.map((org) => {
+    console.log(org.id);
+    return org.id;
+  });
 
-  //         }
-  //       }),
-  //     ]);
-  //     break;
-  // }
+  /**
+   * Get an links (tiles) for subcategories or
+   * cities.
+   */
+  switch ($resourceSlug) {
+    case 'national-resources':
+      pageTiles = await fetchAPI('/subcategories', {
+        field: ['title', 'subcategorySlug', 'orgs'],
+        populate: ['orgs'],
+        filters: {
+          subcategorySlug: {
+            $eq: slug1,
+          },
+        },
+      });
+      console.log(pageTiles.data);
+      break;
+    case 'local-resources':
+    case 'canadian-resources':
+    default:
+      pageTiles = await fetchAPI('/city-regions', {
+        field: ['name', 'citySlug'],
+        populate: ['us_state', 'ca_province', 'image', 'orgs'],
+        filters: {
+          $or: [
+            {
+              us_state: {
+                stateSlug: {
+                  $eq: slug1,
+                },
+              },
+            },
+            {
+              ca_province: {
+                provinceSlug: {
+                  $eq: slug1,
+                },
+              },
+            },
+          ],
+        },
+      });
+      break;
+  }
+
+  pageTiles.data.forEach((tile) => {
+    console.log(tile.attributes.orgs.data);
+    if (tile.attributes.orgs.data.length) {
+      hasCityOrgs = true;
+    }
+  });
+
+  /**
+   * If this is a state route and we have cities and
+   * listings - we need to show a 'statewide' resources
+   * link with the image for the state. Canadian provinces
+   * should only have listings - no cities.
+   */
+
+  if (
+    hasCityOrgs &&
+    pageOrgs.data.length &&
+    $resourceSlug === 'local-resources'
+  ) {
+    const stateDataRes = await fetchAPI('/us-states', {
+      field: ['image', 'name'],
+      populate: ['image'],
+      filters: {
+        stateSlug: {
+          $eq: slug1,
+        },
+      },
+    });
+    stateData = stateDataRes.data[0];
+  }
 
   return {
     props: {
-      imageLinks: null,
+      slug1,
+      stateData: stateData && {
+        stateImage: stateData.attributes.image,
+        stateName: stateData.attributes.name,
+      },
+      imageLinks:
+        hasCityOrgs && $resourceSlug === 'local-resources'
+          ? pageTiles.data.filter(
+              (pageTile) => pageTile.attributes.orgs.data.length
+            )
+          : [],
+      subcatLinks: $resourceSlug === 'national-resources' ? pageTiles.data : [],
       orgLinks: pageOrgs.data,
       metadata: null,
       global: null,

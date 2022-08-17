@@ -1,23 +1,36 @@
 const { ApplicationError } = require("@strapi/utils").errors;
 
 module.exports = {
-  beforeCreate(event) {
-    if (!event.params.data.resource) {
-      throw new ApplicationError("Resource type is required");
-    }
-
-    if (!event.params.data.country) {
-      throw new ApplicationError("Country is required");
+  async beforeCreate(event) {
+    if (!event.params.data.resource || !event.params.data.country) {
+      const resource = await strapi.db.query("api::resource.resource").findOne({
+        where: {
+          resourceSlug: "canadian-resources",
+        },
+      });
+      event.params.data.resource = resource;
+      const country = await strapi.db.query("api::country.country").findOne({
+        where: {
+          name: "Canada",
+        },
+      });
+      event.params.data.country = country;
     }
   },
-
-  beforeUpdate(event) {
-    if (!event.params.data.resource) {
-      throw new ApplicationError("Resource type is required");
-    }
-
-    if (!event.params.data.country) {
-      throw new ApplicationError("Country is required");
+  async beforeUpdate(event) {
+    if (!event.params.data.resource || !event.params.data.country) {
+      const resource = await strapi.db.query("api::resource.resource").findOne({
+        where: {
+          resourceSlug: "canadian-resources",
+        },
+      });
+      event.params.data.resource = resource;
+      const country = await strapi.db.query("api::country.country").findOne({
+        where: {
+          name: "Canada",
+        },
+      });
+      event.params.data.country = country;
     }
   },
 };

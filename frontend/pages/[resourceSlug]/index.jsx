@@ -33,14 +33,16 @@ export default function ResourcesPage({ seo, imageLinks }) {
                   as={`${router.asPath}/${slug}`}
                   href={`${router.pathname}/${slug}`}
                 >
-                  <NextImage
-                    media={imageLink.attributes.image}
-                    height={200}
-                    width={600}
-                  />
+                  <a>
+                    <NextImage
+                      media={imageLink.attributes.image}
+                      height={200}
+                      width={600}
+                    />
+                  </a>
                 </Link>
                 <h3 className="font-medium text-lg text-[#1e1e1e]">
-                  {imageLink.attributes.name}
+                  {imageLink.attributes.name || imageLink.attributes.title}
                 </h3>
               </div>
             </li>
