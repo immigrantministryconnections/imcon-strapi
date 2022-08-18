@@ -21,16 +21,16 @@ jobs:
         with:
           node-version: '14.x'
 
-      - name: build the editorjs plugin
-        run: |
-          yarn install
-        working-directory: ./backend/app/src/plugins/strapi-plugin-react-editorjs
-
       - name: npm install, build, and test
         run: |
           yarn install
           yarn build
         working-directory: ./backend/app
+
+      - name: build the editorjs plugin
+        run: |
+          yarn install
+        working-directory: ./backend/app/src/plugins/strapi-plugin-react-editorjs
 
       - name: 'Tar files'
         run: tar -cf node-app.tar .
