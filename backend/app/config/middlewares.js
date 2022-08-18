@@ -7,7 +7,7 @@ module.exports = [
         useDefaults: true,
         directives: {
           "connect-src": ["'self'", "https:"],
-          "img-src": ["'self'", "data:", "blob:", process.env.STORAGE_URL],
+          "img-src": ["*", "'self'", "data:", "blob:", process.env.STORAGE_URL],
           "media-src": ["'self'", "data:", "blob:", process.env.STORAGE_URL],
           upgradeInsecureRequests: null,
         },

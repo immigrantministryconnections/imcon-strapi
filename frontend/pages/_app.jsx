@@ -1,5 +1,7 @@
 import { createContext } from 'react';
 
+import { SessionProvider, useSession } from 'next-auth/react';
+
 import App from 'next/app';
 import Head from 'next/head';
 import ErrorPage from 'next/error';
@@ -10,7 +12,7 @@ import '@/styles/globals.css';
 
 export const GlobalContext = createContext({});
 
-const MyApp = ({ Component, pageProps }) => {
+const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
   // Extract the data we need
   const { globalData } = pageProps;
   if (globalData == null) {
@@ -50,12 +52,31 @@ const MyApp = ({ Component, pageProps }) => {
         }}
       />
       {/* Display the content */}
-      <GlobalContext.Provider value={{ global: globalData.attributes }}>
-        <Component {...pageProps} />
-      </GlobalContext.Provider>
+      <SessionProvider session={session}>
+        <GlobalContext.Provider value={{ global: globalData.attributes }}>
+          {Component.auth ? (
+            <Auth>
+              <Component {...pageProps} />
+            </Auth>
+          ) : (
+            <Component {...pageProps} />
+          )}
+        </GlobalContext.Provider>
+      </SessionProvider>
     </>
   );
 };
+
+function Auth({ children }) {
+  // if `{ required: true }` is supplied, `status` can only be "loading" or "authenticated"
+  const { status } = useSession({ required: true });
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  return children;
+}
 
 // getInitialProps disables automatic static optimization for pages that don't
 // have getStaticProps. So [[...slug]] pages still get SSG.

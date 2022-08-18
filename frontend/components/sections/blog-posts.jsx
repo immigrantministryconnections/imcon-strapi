@@ -41,7 +41,7 @@ export default function BlogPosts({ posts }) {
                         {post.attributes.title}
                       </p>
                       <p className="mt-3 text-base text-gray-500">
-                        {post.attributes.description}
+                        {post.attributes?.description}
                       </p>
                     </a>
                   </Link>
