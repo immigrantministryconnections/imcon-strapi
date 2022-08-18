@@ -140,6 +140,8 @@ export async function getStaticProps(context) {
         ],
       };
 
+  console.log({ queryFilter });
+
   // Get all the orgs that belong at this level
   pageOrgs = await fetchAPI('/orgs', {
     populate: '*',

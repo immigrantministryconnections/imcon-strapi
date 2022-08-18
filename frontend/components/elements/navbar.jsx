@@ -79,8 +79,8 @@ export default function Navbar({ navbar }) {
                     className={`
                       ${
                         router.asPath === item.url
-                          ? '!bg-gray-100 !text-gray-900 '
-                          : '!text-gray-900 !hover:bg-gray-50 !hover:text-gray-900 '
+                          ? 'bg-gray-100 text-gray-900 '
+                          : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900 '
                       }
                       rounded-md py-2 px-3 inline-flex items-center text-sm font-medium`}
                     aria-current={item.current ? 'page' : undefined}
@@ -100,8 +100,8 @@ export default function Navbar({ navbar }) {
                     <Disclosure.Button
                       className={`${
                         router.asPath === item.url
-                          ? '!bg-gray-100 !text-gray-900 '
-                          : '!text-gray-900 !hover:bg-gray-50 !hover:text-gray-900 '
+                          ? 'bg-gray-100 text-gray-900 '
+                          : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900 '
                       } block rounded-md py-2 px-3 text-base font-medium`}
                       aria-current={
                         router.asPath === item.url ? 'page' : undefined
