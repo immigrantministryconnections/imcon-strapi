@@ -54,7 +54,7 @@ export default function BlogPosts({ posts }) {
                       </span>
                     </a>
                   </div>
-                  <div className="ml-3">
+                  <div>
                     <p className="text-sm font-medium text-gray-900">
                       <span className="hover:underline">
                         {post.attributes.author.data.attributes.name}
