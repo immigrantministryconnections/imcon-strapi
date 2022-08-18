@@ -82,7 +82,7 @@ export default function Navbar({ navbar }) {
                           ? '!bg-gray-100 !text-gray-900 '
                           : '!text-gray-900 !hover:bg-gray-50 !hover:text-gray-900 '
                       }
-                      rounded-md py-2 px-3 inline-flex items-center text-sm font-medium`}
+                      rounded-md py-2 px-3 inline-flex items-center text-sm font-medium !no-underline`}
                     aria-current={item.current ? 'page' : undefined}
                   >
                     {item.text}
@@ -96,7 +96,7 @@ export default function Navbar({ navbar }) {
             <div className="pt-2 pb-3 px-2 space-y-1">
               {navbar?.link?.map((item) => (
                 <Link key={item.id} href={item.url}>
-                  <a>
+                  <a className="!no-underline">
                     <Disclosure.Button
                       className={`${
                         router.asPath === item.url
