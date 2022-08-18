@@ -1,7 +1,6 @@
 import Script from 'next/script';
 
 export default function EmbeddedForm({ data }) {
-  console.log({ data });
   return (
     <div className="">
       <Script src={`${data.src}`} />

@@ -15,7 +15,6 @@
     "pg-connection-string": "^2.5.0",
     "strapi-plugin-entity-relationship-chart": "^4.1.0",
     "strapi-plugin-publisher": "^1.1.3",
-    "strapi-plugin-react-editorjs": "^2.0.1",
     "strapi-provider-upload-azure-storage": "^2.1.0"
   },
   "name": "backend",

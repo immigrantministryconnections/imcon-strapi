@@ -1,7 +1,6 @@
 import Link from 'next/link';
 
 export default function LinkList({ data }) {
-  console.log({ data });
   return (
     <ul className="flex items-center justify-center">
       {data.links?.map((link) => {
