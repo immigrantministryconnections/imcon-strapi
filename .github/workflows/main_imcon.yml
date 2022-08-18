@@ -21,12 +21,17 @@ jobs:
         with:
           node-version: '14.x'
 
+      - name: install editorjs plugin
+        run: |
+          yarn install
+        working-directory: ./backend/app/src/plugins/strapi-plugin-react-editorjs
+
       - name: npm install, build, and test
         run: |
           yarn install
           yarn build
         working-directory: ./backend/app
-        
+
       - name: 'Tar files'
         run: tar -cf node-app.tar .
         working-directory: ./backend/app
@@ -49,7 +54,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: node-app
-          
+
       - name: 'Untar files'
         run: 'tar -xf node-app.tar'
 
