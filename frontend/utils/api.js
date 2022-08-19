@@ -89,6 +89,7 @@ export async function getGlobalData() {
                   url
                   newTab
                   text
+                  protected
                 }
                 button {
                   id
@@ -261,6 +262,7 @@ export async function getPageData({ slug, preview }) {
                     text
                     imageLink {
                       url
+                      protected
                       image {
                         ...FileParts
                       }

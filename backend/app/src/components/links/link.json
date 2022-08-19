@@ -2,7 +2,8 @@
   "collectionName": "components_links_links",
   "info": {
     "displayName": "Link",
-    "icon": "link"
+    "icon": "link",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -15,6 +16,10 @@
       "required": true
     },
     "newTab": {
+      "type": "boolean",
+      "default": false
+    },
+    "protected": {
       "type": "boolean",
       "default": false
     }

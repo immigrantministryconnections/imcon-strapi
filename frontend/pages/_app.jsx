@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useState } from 'react';
 
 import { SessionProvider, useSession } from 'next-auth/react';
 
@@ -8,7 +8,9 @@ import ErrorPage from 'next/error';
 import { DefaultSeo } from 'next-seo';
 import { getStrapiMedia } from 'utils/media';
 import { getGlobalData } from 'utils/api';
+
 import '@/styles/globals.css';
+import { Modal } from 'utils/context/modal-context';
 
 export const GlobalContext = createContext({});
 
@@ -54,13 +56,15 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
       {/* Display the content */}
       <SessionProvider session={session}>
         <GlobalContext.Provider value={{ global: globalData.attributes }}>
-          {Component.auth ? (
-            <Auth>
+          <Modal>
+            {Component.auth ? (
+              <Auth>
+                <Component {...pageProps} />
+              </Auth>
+            ) : (
               <Component {...pageProps} />
-            </Auth>
-          ) : (
-            <Component {...pageProps} />
-          )}
+            )}
+          </Modal>
         </GlobalContext.Provider>
       </SessionProvider>
     </>

@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import Navbar from './elements/navbar';
 import Footer from './elements/footer';
+import SignIn from './elements/sign-in-modal';
 
 import { GlobalContext } from 'pages/_app';
 
