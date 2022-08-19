@@ -1,5 +1,3 @@
-const { ApplicationError } = require("@strapi/utils").errors;
-
 module.exports = {
   async afterCreate(event) {
     const { id } = event.result;
