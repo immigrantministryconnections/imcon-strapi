@@ -1,18 +1,18 @@
-import PluginId from "../pluginId";
+import PluginId from '../pluginId'
 
-import Code from "@editorjs/code";
-import Header from "@editorjs/header";
-import Embed from "@editorjs/embed";
-import List from "@editorjs/list";
-import Table from "@editorjs/table";
-import Quote from "@editorjs/quote";
-import Delimiter from "@editorjs/delimiter";
-import Raw from "@editorjs/raw";
-
-import LinkTool from "@editorjs/link";
-import Marker from "@editorjs/marker";
-import CheckList from "@editorjs/checklist";
-import InlineCode from "@editorjs/inline-code";
+import Embed from '@editorjs/embed'
+import Table from '@editorjs/table'
+import List from '@editorjs/list'
+import Warning from '@editorjs/warning'
+import Code from '@editorjs/code'
+import LinkTool from '@editorjs/link'
+import Raw from '@editorjs/raw'
+import Header from '@editorjs/header'
+import Quote from '@editorjs/quote'
+import Marker from '@editorjs/marker'
+import CheckList from '@editorjs/checklist'
+import Delimiter from '@editorjs/delimiter'
+import InlineCode from '@editorjs/inline-code'
 
 const customTools = {
   embed: Embed,
@@ -23,6 +23,14 @@ const customTools = {
   list: {
     class: List,
     inlineToolbar: true,
+  },
+  warning: {
+    class: Warning,
+    inlineToolbar: true,
+    config: {
+      titlePlaceholder: 'Title',
+      messagePlaceholder: 'Message',
+    },
   },
   code: Code,
   LinkTool: {
@@ -43,8 +51,8 @@ const customTools = {
     class: Quote,
     inlineToolbar: true,
     config: {
-      quotePlaceholder: "Quote",
-      captionPlaceholder: "Quote`s author",
+      quotePlaceholder: 'Quote',
+      captionPlaceholder: 'Quote`s author',
     },
   },
   marker: {
@@ -57,6 +65,6 @@ const customTools = {
   },
   delimiter: Delimiter,
   inlineCode: InlineCode,
-};
+}
 
-export default customTools;
+export default customTools

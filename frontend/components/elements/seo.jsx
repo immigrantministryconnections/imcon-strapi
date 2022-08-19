@@ -17,9 +17,9 @@ const Seo = ({ metadata }) => {
         description: metadata.metaDescription,
         // Only include OG image if we have it
         // Careful: if you disable image optimization in Strapi, this will break
-        ...(metadata.shareImage && {
+        ...(!!metadata.shareImage.data && {
           images: Object.values(
-            metadata.shareImage.data.attributes.formats
+            metadata.shareImage?.data?.attributes.formats
           ).map((image) => {
             return {
               url: getStrapiMedia(image.url),

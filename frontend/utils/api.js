@@ -131,7 +131,6 @@ export async function getGlobalData() {
  * @param {boolean} options.preview router isPreview value
  */
 export async function getPageData({ slug, preview }) {
-  //console.log({slug})
   // Find the pages that match this slug
   const gqlEndpoint = getStrapiURL('/graphql');
   const pagesRes = await fetch(gqlEndpoint, {
@@ -267,6 +266,17 @@ export async function getPageData({ slug, preview }) {
                       }
                     }
                   }
+                }
+                ...on ComponentSectionsBlogStyleSection {
+                  id
+                  blogSectionTitle: title
+                  author
+                    content
+                    authorLink {
+                      text
+                      url
+                      newTab
+                    }
                 }
               }
             }
