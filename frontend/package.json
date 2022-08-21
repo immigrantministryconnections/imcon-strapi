@@ -5,7 +5,8 @@
     "dev": "next",
     "export": "next build && next export",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "noIndex": "npm run build && echo 'User-agent: *\nDisallow: /' > dist/robots.txt"
   },
   "dependencies": {
     "date-fns": "^2.29.1",
