@@ -1,5 +1,9 @@
+import { useEffect, useState } from 'react';
+
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+
+import { getSession, signIn, useSession } from 'next-auth/react';
 
 import Layout from '@/components/layout';
 import Seo from '@/components/elements/seo';
@@ -17,130 +21,144 @@ export default function StatePage({
   stateData,
   sections,
 }) {
+  const { data: session } = useSession();
+  const [loading, setLoading] = useState(true);
+  const [userSession, setUserSession] = useState(session);
   const router = useRouter();
+
+  useEffect(() => {
+    const sessionRes = async () => {
+      const session = await getSession();
+      setUserSession(session);
+      setLoading(false);
+    };
+    sessionRes();
+  }, [session]);
+
+  const renderContent = (userSession) => {
+    if (!!sections) {
+      return <Sections sections={sections} />;
+    } else if (userSession) {
+      return (
+        <>
+          {!!imageLinks?.length && (
+            <ul role="list" className="mx-auto">
+              {imageLinks.map((imageLink) => {
+                const slug =
+                  imageLink.attributes?.citySlug ||
+                  imageLink.attributes?.categorySlug;
+                return (
+                  <li
+                    key={imageLink.id}
+                    className="flex items-center justify-center mx-auto py-4"
+                  >
+                    <div className="flex flex-col items-center cursor-pointer">
+                      <Link
+                        as={`${router.asPath}/${slug}`}
+                        href={`${router.pathname}/${slug}`}
+                      >
+                        <a>
+                          <NextImage
+                            media={imageLink.attributes.image}
+                            height={200}
+                            width={600}
+                          />
+                        </a>
+                      </Link>
+                      <h3 className="font-medium text-lg text-[#1e1e1e]">
+                        {imageLink.attributes.name}
+                      </h3>
+                    </div>
+                  </li>
+                );
+              })}
+
+              {stateData && (
+                <li
+                  key={`statewide-${slug1}`}
+                  className="flex items-center justify-center mx-auto py-4"
+                >
+                  <div className="flex flex-col items-center cursor-pointer">
+                    <Link
+                      as={`${router.asPath}/statewide-${slug1}`}
+                      href={`${router.pathname}/statewide-${slug1}`}
+                    >
+                      <a>
+                        <NextImage
+                          media={stateData.stateImage}
+                          height={200}
+                          width={600}
+                        />
+                      </a>
+                    </Link>
+                    <h3 className="font-medium text-lg text-[#1e1e1e]">
+                      {`${stateData.stateName} Statewide Resources`}
+                    </h3>
+                  </div>
+                </li>
+              )}
+            </ul>
+          )}
+
+          {!stateData && (
+            <ul role="list" className="mx-auto">
+              {orgLinks?.map((orgLink) => {
+                const slug = orgLink.attributes.orgSlug;
+                return (
+                  <li
+                    key={orgLink.id}
+                    className="flex items-center justify-center mx-auto py-4"
+                  >
+                    <div className="flex flex-col items-center cursor-pointer">
+                      <Link
+                        as={`${router.asPath}/${slug}`}
+                        href={`${router.pathname}/${slug}`}
+                      >
+                        <a className="font-medium text-lg text-blue-500 hover:text-blue-400 underline">
+                          {orgLink.attributes.name}
+                        </a>
+                      </Link>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+          {subcatLinks && (
+            <ul role="list" className="mx-auto">
+              {subcatLinks.map((subcatLink) => {
+                const slug = subcatLink.attributes.orgSlug;
+                return (
+                  <li
+                    key={subcatLink.id}
+                    className="flex items-center justify-center mx-auto py-4"
+                  >
+                    <div className="flex flex-col items-center cursor-pointer">
+                      <Link
+                        as={`${router.asPath}/${slug}`}
+                        href={`${router.pathname}/${slug}`}
+                      >
+                        <a className="font-medium text-lg text-blue-500 hover:text-blue-400 underline">
+                          {subcatLink.attributes.title}
+                        </a>
+                      </Link>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </>
+      );
+    } else {
+      signIn();
+    }
+  };
+
   return (
     <Layout>
-      <Seo seo={seo} />
-      {
-        // Render top-level page sections if we have them
-      }
-      {!!sections && <Sections sections={sections} />}
-      {
-        // a list of links to cities or subcategories
-      }
-      {!!imageLinks?.length && (
-        <ul role="list" className="mx-auto">
-          {imageLinks.map((imageLink) => {
-            const slug =
-              imageLink.attributes?.citySlug ||
-              imageLink.attributes?.categorySlug;
-            return (
-              <li
-                key={imageLink.id}
-                className="flex items-center justify-center mx-auto py-4"
-              >
-                <div className="flex flex-col items-center cursor-pointer">
-                  <Link
-                    as={`${router.asPath}/${slug}`}
-                    href={`${router.pathname}/${slug}`}
-                  >
-                    <a>
-                      <NextImage
-                        media={imageLink.attributes.image}
-                        height={200}
-                        width={600}
-                      />
-                    </a>
-                  </Link>
-                  <h3 className="font-medium text-lg text-[#1e1e1e]">
-                    {imageLink.attributes.name}
-                  </h3>
-                </div>
-              </li>
-            );
-          })}
-          {
-            // We have state data and organizations. Show a
-            // 'statewide resource' image and link
-          }
-          {stateData && (
-            <li
-              key={`statewide-${slug1}`}
-              className="flex items-center justify-center mx-auto py-4"
-            >
-              <div className="flex flex-col items-center cursor-pointer">
-                <Link
-                  as={`${router.asPath}/statewide-${slug1}`}
-                  href={`${router.pathname}/statewide-${slug1}`}
-                >
-                  <a>
-                    <NextImage
-                      media={stateData.stateImage}
-                      height={200}
-                      width={600}
-                    />
-                  </a>
-                </Link>
-                <h3 className="font-medium text-lg text-[#1e1e1e]">
-                  {`${stateData.stateName} Statewide Resources`}
-                </h3>
-              </div>
-            </li>
-          )}
-        </ul>
-      )}
-      {
-        // If we don't have a mix of orgs and cities, show the list of org
-        // links.
-      }
-      {!stateData && (
-        <ul role="list" className="mx-auto">
-          {orgLinks?.map((orgLink) => {
-            const slug = orgLink.attributes.orgSlug;
-            return (
-              <li
-                key={orgLink.id}
-                className="flex items-center justify-center mx-auto py-4"
-              >
-                <div className="flex flex-col items-center cursor-pointer">
-                  <Link
-                    as={`${router.asPath}/${slug}`}
-                    href={`${router.pathname}/${slug}`}
-                  >
-                    <a className="font-medium text-lg text-blue-500 hover:text-blue-400 underline">
-                      {orgLink.attributes.name}
-                    </a>
-                  </Link>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      )}
-      {subcatLinks && (
-        <ul role="list" className="mx-auto">
-          {subcatLinks.map((subcatLink) => {
-            const slug = subcatLink.attributes.orgSlug;
-            return (
-              <li
-                key={subcatLink.id}
-                className="flex items-center justify-center mx-auto py-4"
-              >
-                <div className="flex flex-col items-center cursor-pointer">
-                  <Link
-                    as={`${router.asPath}/${slug}`}
-                    href={`${router.pathname}/${slug}`}
-                  >
-                    <a className="font-medium text-lg text-blue-500 hover:text-blue-400 underline">
-                      {subcatLink.attributes.title}
-                    </a>
-                  </Link>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      )}
+      <Seo metadata={seo} />
+      {loading ? <></> : renderContent(userSession)}
     </Layout>
   );
 }
@@ -232,7 +250,6 @@ export async function getStaticProps(context) {
   });
 
   pageOrgs.data.map((org) => {
-    console.log(org.id);
     return org.id;
   });
 
@@ -251,7 +268,6 @@ export async function getStaticProps(context) {
           },
         },
       });
-      console.log(pageTiles.data);
       break;
     case 'local-resources':
     case 'canadian-resources':
@@ -282,7 +298,6 @@ export async function getStaticProps(context) {
   }
 
   pageTiles.data.forEach((tile) => {
-    console.log(tile.attributes.orgs.data);
     if (tile.attributes.orgs.data.length) {
       hasCityOrgs = true;
     }

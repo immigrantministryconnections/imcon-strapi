@@ -121,7 +121,7 @@ export async function getGlobalData() {
   });
 
   const global = await globalRes.json();
-  return global.data.global;
+  return global.data;
 }
 
 /**
@@ -303,4 +303,23 @@ export async function getPageData({ slug, preview }) {
 
   // Return the first item since there should only be one result per slug
   return data.topLevelPages.data[0];
+}
+
+export async function signIn({ email, password }) {
+  const signInRes = await fetch(`${getStrapiURL('/api/auth/local')}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      identifier: email,
+      password,
+    }),
+  });
+
+  const data = await signInRes.json();
+
+  // {jwt, data, error}
+
+  return data;
 }

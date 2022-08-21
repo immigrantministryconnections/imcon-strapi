@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import { signIn, useSession } from 'next-auth/react';
+import { getSession, signIn, signOut, useSession } from 'next-auth/react';
 
 import { Disclosure } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
@@ -12,15 +12,18 @@ import { SearchIcon } from '@heroicons/react/solid';
 import NextImage from './image';
 import PrimaryButton from './primary-button';
 import { useModalContext, MODAL_TYPES } from 'utils/context/modal-context';
+import { getStrapiURL } from 'utils/api';
 
-export default function Navbar({ navbar }) {
+export default function Navbar({ navbar, session }) {
   const router = useRouter();
-  const { data: session, status } = useSession();
   const [searchText, setSearchText] = useState();
   const { showModal } = useModalContext();
   const signinModal = () => {
     showModal(MODAL_TYPES.SIGNIN_MODAL, {});
   };
+
+  const signoutHome = () => signOut({ callbackUrl: getStrapiURL('/') });
+
   return (
     <Disclosure as="header" className="bg-white shadow sticky top-0 z-10">
       {({ open }) => (
@@ -72,7 +75,7 @@ export default function Navbar({ navbar }) {
                   <PrimaryButton
                     size="medium"
                     text={`${!session ? 'Sign In' : 'Sign Out'}`}
-                    onClick={signinModal}
+                    onClick={session ? signoutHome : signinModal}
                   />
                 )}
               </div>
@@ -82,7 +85,6 @@ export default function Navbar({ navbar }) {
               aria-label="Global"
             >
               {navbar?.link?.map((item) => {
-                console.log({ item });
                 return item.protected && !session ? (
                   <button key={item.id} onClick={signinModal}>
                     <a
@@ -122,7 +124,7 @@ export default function Navbar({ navbar }) {
             <div className="pt-2 pb-3 px-2 space-y-1">
               {navbar?.link?.map((item) => {
                 return item.protected && !session ? (
-                  <button key={item.id} onClick={signinModal}>
+                  <div key={item.id} onClick={signinModal} className="block">
                     <a className="!no-underline">
                       <Disclosure.Button
                         className={`${
@@ -137,7 +139,7 @@ export default function Navbar({ navbar }) {
                         {item.text}
                       </Disclosure.Button>
                     </a>
-                  </button>
+                  </div>
                 ) : (
                   <Link key={item.id} href={item.url}>
                     <a className="!no-underline">
@@ -159,7 +161,15 @@ export default function Navbar({ navbar }) {
               })}
             </div>
             <div className="border-t border-gray-200 pt-4 pb-3">
-              <div className="px-4 flex items-center"></div>
+              <div className="px-4 flex items-center">
+                {navbar?.button && (
+                  <PrimaryButton
+                    size="medium"
+                    text={`${!session ? 'Sign In' : 'Sign Out'}`}
+                    onClick={session ? signoutHome : signinModal}
+                  />
+                )}
+              </div>
             </div>
           </Disclosure.Panel>
         </>

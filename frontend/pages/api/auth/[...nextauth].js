@@ -1,16 +1,15 @@
 import NextAuth from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { signIn } from '../../../utils/api';
-import Logo from '../../../public/imcon_icon.png';
 
 const options = {
   theme: {
     colorScheme: 'light',
     brandColor: '#001D3D',
-    logo: Logo,
+    logo: 'https://imconstrapi.blob.core.windows.net/imconuploads/assets/IMCON_Full_Color_7fe9e8694f.png?updated_at=2022-08-16T20:42:55.751Z',
     buttonText: '#575757',
   },
+  secret: process.env.JWT_SECRET,
   providers: [
     CredentialsProvider({
       name: 'email',
@@ -44,12 +43,8 @@ const options = {
     jwt: async ({ token, account, user }) => {
       const isSignIn = user ? true : false;
       if (isSignIn) {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/auth/${account.provider}/callback?access_token=${account?.access_token}`
-        );
-        const resData = await response.json();
-        token.jwt = resData.jwt;
-        token.id = resData.user.id;
+        token.jwt = user.jwt;
+        token.id = user.id;
       }
       return Promise.resolve(token);
     },

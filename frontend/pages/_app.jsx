@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext } from 'react';
 
 import { SessionProvider, useSession } from 'next-auth/react';
 
@@ -21,7 +21,8 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
     return <ErrorPage statusCode={404} />;
   }
 
-  const { defaultSeo, favicon, metaTitleSuffix } = globalData.attributes;
+  const { defaultSeo, favicon, metaTitleSuffix } =
+    globalData.global.data.attributes;
 
   return (
     <>
@@ -55,7 +56,7 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
       />
       {/* Display the content */}
       <SessionProvider session={session}>
-        <GlobalContext.Provider value={{ global: globalData.attributes }}>
+        <GlobalContext.Provider value={{ global: globalData }}>
           <Modal>
             {Component.auth ? (
               <Auth>
@@ -94,7 +95,7 @@ MyApp.getInitialProps = async (appContext) => {
   return {
     ...appProps,
     pageProps: {
-      globalData: globalData.data,
+      globalData: globalData,
     },
   };
 };

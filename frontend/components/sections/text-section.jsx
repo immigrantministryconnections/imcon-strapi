@@ -3,7 +3,6 @@ import Blocks from 'editorjs-blocks-react-renderer';
 import { textBlockConfig } from '../../styles/textBlockConfig';
 
 export default function TextSection({ data }) {
-  console.log(data.content);
   return (
     <div className="w-full my-2">
       {data.title && (

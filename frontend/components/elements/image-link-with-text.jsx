@@ -1,20 +1,36 @@
+import { useState, useEffect } from 'react';
+
 import Link from 'next/link';
 
-import { useSession } from 'next-auth/react';
+import { useSession, signIn, getSession } from 'next-auth/react';
 
 import { useModalContext, MODAL_TYPES } from 'utils/context/modal-context';
 
 import NextImage from './image';
 
 export default function ImageLinkWithText({ imageLink }) {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
+  const [loading, setLoading] = useState(true);
+  const [userSession, setUserSession] = useState(null);
   const { showModal } = useModalContext();
   const createModal = () => {
     showModal(MODAL_TYPES.SIGNIN_MODAL, {});
   };
-  return (
+
+  useEffect(() => {
+    const sessionRes = async () => {
+      const session = await getSession();
+      setUserSession(session);
+      setLoading(false);
+    };
+    sessionRes();
+  }, [session]);
+
+  return loading ? (
+    <></>
+  ) : (
     <div className="flex flex-col items-center cursor-pointer">
-      {imageLink.imageLink.protected && !session ? (
+      {imageLink.imageLink.protected && !userSession ? (
         <button onClick={createModal}>
           <a>
             <NextImage
