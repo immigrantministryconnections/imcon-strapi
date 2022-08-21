@@ -2,7 +2,8 @@
   "collectionName": "components_elements_image_link_with_texts",
   "info": {
     "displayName": "Image link with text",
-    "icon": "image"
+    "icon": "image",
+    "description": ""
   },
   "options": {},
   "attributes": {

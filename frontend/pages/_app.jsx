@@ -8,7 +8,9 @@ import ErrorPage from 'next/error';
 import { DefaultSeo } from 'next-seo';
 import { getStrapiMedia } from 'utils/media';
 import { getGlobalData } from 'utils/api';
+
 import '@/styles/globals.css';
+import { Modal } from 'utils/context/modal-context';
 
 export const GlobalContext = createContext({});
 
@@ -19,7 +21,8 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
     return <ErrorPage statusCode={404} />;
   }
 
-  const { defaultSeo, favicon, metaTitleSuffix } = globalData.attributes;
+  const { defaultSeo, favicon, metaTitleSuffix } =
+    globalData.global.data.attributes;
 
   return (
     <>
@@ -53,14 +56,16 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
       />
       {/* Display the content */}
       <SessionProvider session={session}>
-        <GlobalContext.Provider value={{ global: globalData.attributes }}>
-          {Component.auth ? (
-            <Auth>
+        <GlobalContext.Provider value={{ global: globalData }}>
+          <Modal>
+            {Component.auth ? (
+              <Auth>
+                <Component {...pageProps} />
+              </Auth>
+            ) : (
               <Component {...pageProps} />
-            </Auth>
-          ) : (
-            <Component {...pageProps} />
-          )}
+            )}
+          </Modal>
         </GlobalContext.Provider>
       </SessionProvider>
     </>
@@ -90,7 +95,7 @@ MyApp.getInitialProps = async (appContext) => {
   return {
     ...appProps,
     pageProps: {
-      globalData: globalData.data,
+      globalData: globalData,
     },
   };
 };

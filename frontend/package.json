@@ -5,7 +5,8 @@
     "dev": "next",
     "export": "next build && next export",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "noIndex": "npm run build && echo 'User-agent: *\nDisallow: /' > dist/robots.txt"
   },
   "dependencies": {
     "date-fns": "^2.29.1",
@@ -18,6 +19,7 @@
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-editor-js": "^2.1.0",
+    "react-hook-form": "^7.34.2",
     "react-markdown": "^8.0.3"
   },
   "devDependencies": {

@@ -1,0 +1,18 @@
+# Settings in the [build] context are global and are applied to
+# all contexts unless otherwise overridden by more specific contexts.
+[build]
+  base = "frontend/"
+	publish = ".next"
+	command = "yarn build"
+
+[context.branch-deploy]
+  command = "yarn run noIndex"
+
+[context.deploy-preview]
+	command = "yarn run noIndex"
+
+[[plugins]]
+  package = 'netlify-plugin-contextual-env'
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

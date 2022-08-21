@@ -1,11 +1,15 @@
+import { useState, useEffect } from 'react';
+
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import NextImage from '@/components/elements/image';
 
+import { signIn, getSession } from 'next-auth/react';
+
+import NextImage from '@/components/elements/image';
 import Seo from '@/components/elements/seo';
 import Sections from '@/components/sections';
 import Layout from '@/components/layout';
-import { fetchAPI, getPageData } from 'utils/api';
+import { fetchAPI } from 'utils/api';
 
 /**
  * This page is a dynamic page that will render the top-level
@@ -14,46 +18,68 @@ import { fetchAPI, getPageData } from 'utils/api';
  * category / subcategory pages.
  */
 export default function ResourcesPage({ seo, imageLinks, sections }) {
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
+
+  useEffect(() => {
+    const sessionRes = async () => {
+      const session = await getSession();
+      setSession(session);
+      setLoading(false);
+    };
+    sessionRes();
+  }, []);
+
+  const renderContent = (session) => {
+    if (!!sections) {
+      return <Sections sections={sections} />;
+    } else if (session) {
+      return (
+        <>
+          <ul role="list" className="mx-auto">
+            {imageLinks?.map((imageLink) => {
+              const slug =
+                imageLink.attributes?.stateSlug ||
+                imageLink.attributes?.provinceSlug ||
+                imageLink.attributes.categorySlug;
+              return (
+                <li
+                  key={imageLink.id}
+                  className="flex items-center justify-center mx-auto py-4"
+                >
+                  <div className="flex flex-col items-center cursor-pointer">
+                    <Link
+                      as={`${router.asPath}/${slug}`}
+                      href={`${router.pathname}/${slug}`}
+                    >
+                      <a>
+                        <NextImage
+                          media={imageLink.attributes.image}
+                          height={200}
+                          width={600}
+                        />
+                      </a>
+                    </Link>
+                    <h3 className="font-medium text-lg text-[#1e1e1e]">
+                      {imageLink.attributes.name || imageLink.attributes.title}
+                    </h3>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      );
+    } else {
+      signIn();
+    }
+  };
+
   return (
     <Layout>
-      <Seo seo={seo} />
-      {!!sections ? (
-        <Sections sections={sections} />
-      ) : (
-        <ul role="list" className="mx-auto">
-          {imageLinks?.map((imageLink) => {
-            const slug =
-              imageLink.attributes?.stateSlug ||
-              imageLink.attributes?.provinceSlug ||
-              imageLink.attributes.categorySlug;
-            return (
-              <li
-                key={imageLink.id}
-                className="flex items-center justify-center mx-auto py-4"
-              >
-                <div className="flex flex-col items-center cursor-pointer">
-                  <Link
-                    as={`${router.asPath}/${slug}`}
-                    href={`${router.pathname}/${slug}`}
-                  >
-                    <a>
-                      <NextImage
-                        media={imageLink.attributes.image}
-                        height={200}
-                        width={600}
-                      />
-                    </a>
-                  </Link>
-                  <h3 className="font-medium text-lg text-[#1e1e1e]">
-                    {imageLink.attributes.name || imageLink.attributes.title}
-                  </h3>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      )}
+      <Seo metadata={seo} />
+      {loading ? <></> : renderContent(session)}
     </Layout>
   );
 }
@@ -124,3 +150,5 @@ export async function getStaticProps(context) {
     },
   };
 }
+
+ResourcesPage.auth = true;

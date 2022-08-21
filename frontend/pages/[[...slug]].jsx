@@ -33,6 +33,7 @@ export async function getStaticPaths() {
       } else return;
     })
     .filter((param) => param !== undefined);
+
   return { paths, fallback: false };
 }
 

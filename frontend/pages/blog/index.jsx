@@ -10,7 +10,7 @@ export default function BlogPage({ posts, seo, page, pageCount }) {
   const router = useRouter();
   return (
     <Layout>
-      <Seo seo={seo} />
+      <Seo metadata={seo} />
       <BlogPosts posts={posts} />
       <div className="flex flex-row item-center justify-center gap-x-4 mb-24 mt-4">
         <button
