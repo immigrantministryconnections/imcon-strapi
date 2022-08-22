@@ -42,27 +42,4 @@ module.exports = ({ env }) => ({
       ],
     },
   },
-  "preview-button": {
-    config: {
-      contentTypes: [
-        {
-          uid: "api::top-level-page.top-level-page",
-          targetField: "slug",
-        },
-        {
-          uid: "api::org.org",
-          draft: {
-            query: {
-              type: "org",
-            },
-            targetField: "slug",
-          },
-          published: {
-            basePath: "organization",
-            targetField: "slug",
-          },
-        },
-      ],
-    },
-  },
 });
