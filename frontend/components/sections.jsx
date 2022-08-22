@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import Hero from '@/components/sections/hero';
 import ImageLinkGrid from '@/components/sections/image-link-grid';
 import BlogStyleSection from '@/components/sections/blog-style-section';
@@ -27,9 +29,32 @@ const Section = ({ sectionData }) => {
   return <SectionComponent data={sectionData} />;
 };
 
-export default function Sections({ sections }) {
+const PreviewModeBanner = () => {
+  const router = useRouter();
+  const exitURL = `/api/exit-preview?redirect=${encodeURIComponent(
+    router.asPath
+  )}`;
+
+  return (
+    <div className="py-4 bg-red-600 text-red-100 font-semibold uppercase tracking-wide">
+      <div className="container">
+        Preview mode is on.{' '}
+        <a
+          className="underline"
+          href={`/api/exit-preview?redirect=${router.asPath}`}
+        >
+          Turn off
+        </a>
+      </div>
+    </div>
+  );
+};
+
+export default function Sections({ sections, preview }) {
   return (
     <div className="flex flex-col mx-auto max-w-5xl pb-16">
+      {/* Show a banner if preview mode is on */}
+      {preview && <PreviewModeBanner />}
       {sections?.map((section) =>
         section ? (
           <section key={`${section.__typename}${section.id}`} className="my-8">

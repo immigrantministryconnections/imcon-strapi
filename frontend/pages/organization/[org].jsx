@@ -65,11 +65,12 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-  const { params } = context;
+  const { params, preview } = context;
   const { org } = params;
 
   const orgData = await fetchAPI('/orgs', {
     populate: '*',
+    publicationState: preview ? 'preview' : 'live',
     filters: { orgSlug: { $eq: org } },
   });
 

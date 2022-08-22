@@ -5,11 +5,13 @@ import { useRouter } from 'next/router';
 
 import { signIn, getSession } from 'next-auth/react';
 
+import { LockClosedIcon } from '@heroicons/react/outline';
+
 import NextImage from '@/components/elements/image';
 import Seo from '@/components/elements/seo';
 import Sections from '@/components/sections';
 import Layout from '@/components/layout';
-import { fetchAPI } from 'utils/api';
+import { fetchAPI, getPageData } from 'utils/api';
 
 /**
  * This page is a dynamic page that will render the top-level
@@ -72,7 +74,15 @@ export default function ResourcesPage({ seo, imageLinks, sections }) {
         </>
       );
     } else {
-      signIn();
+      <button
+        onClick={signIn}
+        className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-mediumBlue hover:bg-darkBlue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      >
+        <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+          <LockClosedIcon className="h-5 w-5 text-white" aria-hidden="true" />
+        </span>
+        Sign in to view this content
+      </button>;
     }
   };
 
@@ -150,5 +160,3 @@ export async function getStaticProps(context) {
     },
   };
 }
-
-ResourcesPage.auth = true;

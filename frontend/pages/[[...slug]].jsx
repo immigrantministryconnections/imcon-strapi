@@ -1,20 +1,35 @@
+import { useRouter } from 'next/router';
 import { fetchAPI, getPageData } from 'utils/api';
 
 import Sections from '@/components/sections';
 import Seo from '@/components/elements/seo';
 import Layout from '@/components/layout';
+import Custom404 from './404';
 
-export default function Page({ seo, sections }) {
+export default function Page({ seo, sections, preview }) {
+  const router = useRouter();
+
+  // Check if the required data was provided
+  // if (!router.isFallback && !sections?.length) {
+  //   return <Custom404 statusCode={404} />;
+  // }
+
+  // // Loading screen (only possible in preview mode)
+  // if (router.isFallback) {
+  //   return <div className="container">Loading...</div>;
+  // }
   return (
     <Layout>
       <Seo metadata={seo} />
-      <Sections sections={sections} />
+      <Sections sections={sections} preview={preview} />
     </Layout>
   );
 }
 
 export async function getStaticPaths() {
-  const pages = await fetchAPI('/top-level-pages', { fields: ['slug'] });
+  const pages = await fetchAPI('/top-level-pages', {
+    fields: ['slug'],
+  });
   const resources = await fetchAPI('/resources', { fields: ['resourceSlug'] });
 
   const resourceSlugs = resources.data.map(
@@ -38,10 +53,11 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-  const { params } = context;
+  const { params, preview = null } = context;
 
   const pageData = await getPageData({
     slug: (!params.slug ? [''] : params.slug).join('/'),
+    preview,
   });
 
   if (pageData == null) {
@@ -54,6 +70,7 @@ export async function getStaticProps(context) {
   return {
     props: {
       sections,
+      preview,
       seo,
     },
   };

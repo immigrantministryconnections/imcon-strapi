@@ -31,11 +31,14 @@ export async function fetchAPI(path, urlParamsObject = {}, options = {}) {
   // Trigger API call
   const response = await fetch(requestUrl, mergedOptions);
 
+  const data = await response.json();
+  console.log({ error: data.error });
+
   // Handle response
   if (!response.ok) {
     throw new Error(`An error occured please try again`);
   }
-  const data = await response.json();
+
   return data;
 }
 
@@ -132,6 +135,7 @@ export async function getGlobalData() {
  * @param {boolean} options.preview router isPreview value
  */
 export async function getPageData({ slug, preview }) {
+  console.log({ preview });
   // Find the pages that match this slug
   const gqlEndpoint = getStrapiURL('/graphql');
   const pagesRes = await fetch(gqlEndpoint, {
