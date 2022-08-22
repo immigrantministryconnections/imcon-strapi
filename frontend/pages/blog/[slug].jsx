@@ -38,7 +38,6 @@ export async function getStaticPaths() {
   const blogSlugs = await fetchAPI('/blog-posts', { fields: ['slug'] });
 
   const paths = blogSlugs.data.map((post) => {
-    console.log({ post });
     const { slug } = post.attributes;
     return { params: { slug } };
   });
@@ -53,8 +52,6 @@ export async function getStaticProps(context) {
     populate: '*',
     filters: { slug: { $eq: slug } },
   });
-
-  console.log({});
 
   return { props: { article: pageData.data[0] } };
 }

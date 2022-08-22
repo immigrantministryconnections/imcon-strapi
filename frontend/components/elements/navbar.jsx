@@ -22,7 +22,9 @@ export default function Navbar({ navbar, session }) {
     showModal(MODAL_TYPES.SIGNIN_MODAL, {});
   };
 
-  const signoutHome = () => signOut({ callbackUrl: getStrapiURL('/') });
+  const signoutHome = () => {
+    signOut({ redirect: false, callbackUrl: '/' });
+  };
 
   return (
     <Disclosure as="header" className="bg-white shadow sticky top-0 z-10">

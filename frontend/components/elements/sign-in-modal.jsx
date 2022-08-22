@@ -35,7 +35,6 @@ export default function SignInModal() {
           email: data.email,
           password: data.password,
         });
-        console.log([signinRes]);
         if (!signinRes.ok) {
           setErrors({
             error: 'Please check you username and password and try again.',

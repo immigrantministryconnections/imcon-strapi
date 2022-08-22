@@ -349,7 +349,6 @@ export async function updateUser({
   ethnicitiesServed,
   salariedMinistry,
 }) {
-  console.log({ user });
   const signUpRes = await fetch(
     `${getStrapiURL(`/api/users/${user.user.id}`)}`,
     {

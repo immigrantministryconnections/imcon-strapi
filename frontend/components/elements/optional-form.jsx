@@ -1,7 +1,5 @@
 import { useForm } from 'react-hook-form';
 
-import { LockClosedIcon } from '@heroicons/react/solid';
-
 export default function OptionalForm({ onSubmit, onClose, submitErrors }) {
   const {
     register,
