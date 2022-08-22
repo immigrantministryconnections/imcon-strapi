@@ -142,12 +142,13 @@ export async function getStaticProps(context) {
       });
       break;
     case 'local-resources':
-    default:
       pageData = await fetchAPI('/us-states', {
         field: ['name', 'stateSlug'],
         populate: ['image'],
       });
       break;
+    default:
+      pageData = null;
   }
 
   if (pageData === null) return { props: {} };
