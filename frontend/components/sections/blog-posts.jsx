@@ -18,7 +18,7 @@ export default function BlogPosts({ posts }) {
         <div className="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
           {posts.map((post) => (
             <div
-              key={post.attributes.title}
+              key={`${post.attributes.title}-${post.id}`}
               className="flex flex-col rounded-lg shadow-lg overflow-hidden"
             >
               <div className="flex-shrink-0">
@@ -36,7 +36,7 @@ export default function BlogPosts({ posts }) {
                     </Link>
                   </p> */}
                   <Link href={`/blog/${post.attributes.slug}`}>
-                    <a className="block mt-2">
+                    <a className="block mt-2 !no-underline">
                       <p className="text-xl font-semibold text-gray-900">
                         {post.attributes.title}
                       </p>
@@ -48,16 +48,20 @@ export default function BlogPosts({ posts }) {
                 </div>
                 <div className="mt-6 flex items-center">
                   <div className="flex-shrink-0">
-                    <a href={post.attributes.author.data.attributes.name}>
-                      <span className="sr-only">
-                        {post.attributes.author.data.attributes.name}
-                      </span>
-                    </a>
+                    <span className="sr-only">
+                      {`${
+                        post.attributes?.author?.data?.attributes?.name ||
+                        'Immigrant Ministry Connections'
+                      } `}
+                    </span>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-900">
                       <span className="hover:underline">
-                        {post.attributes.author.data.attributes.name}
+                        {`${
+                          post.attributes?.author?.data?.attributes?.name ||
+                          'Immigrant Ministry Connections'
+                        } `}
                       </span>
                     </p>
                     <div className="flex space-x-1 text-sm text-gray-500">

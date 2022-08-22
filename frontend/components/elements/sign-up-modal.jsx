@@ -1,15 +1,18 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useContext, useRef } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { LockClosedIcon } from '@heroicons/react/solid';
 import { useModalContext, MODAL_TYPES } from 'utils/context/modal-context';
 import NextImage from 'next/image';
-import { GlobalContext } from 'pages/_app';
 import SignUpForm from './sign-up-form';
+import OptionalForm from './optional-form';
+import { signUp, updateUser } from 'utils/api';
 
 export default function SignInModal() {
   const { hideModal, showModal, store } = useModalContext();
-  const { modalProps } = store || {};
+  const [step, setStep] = useState(1);
+  const [errors, setErrors] = useState();
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState();
 
   const handleModalToggle = () => {
     hideModal();
@@ -21,12 +24,65 @@ export default function SignInModal() {
 
   const cancelButtonRef = useRef(null);
 
-  const {
-    global: { typesOfMinistries, ethnicities },
-  } = useContext(GlobalContext);
+  const onSubmitSignup = async (data) => {
+    if (data.honeypot === '') {
+      setLoading(true);
+      try {
+        const signUpRes = await signUp({
+          email: data.email,
+          password: data.password,
+          firstName: data.firstName,
+          lastName: data.lastName,
+        });
+        console.log({ signUpRes });
+        if (signUpRes?.error) {
+          setErrors({
+            error: signUpRes.error?.message || 'There was en error signing up.',
+          });
+        } else {
+          setErrors(null);
+          setUser(signUpRes);
+          setStep(step + 1);
+        }
+        setLoading(false);
+      } catch (error) {
+        setErrors({
+          error:
+            'Server error. Check your internet connection or please try again at another time.',
+        });
+        setLoading(false);
+      }
+    }
+  };
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmitOptional = async (data) => {
+    if (data.honeypot === '') {
+      setLoading(true);
+      try {
+        const signUpRes = await updateUser({
+          user,
+          state: data.state,
+          ethnicitiesServed: data.ethnicities,
+          ministryTypes: data.ministryTypes,
+          salariedMinistry: data.salariedMinistry,
+        });
+        if (signUpRes?.error) {
+          setErrors({
+            error: signUpRes.error?.message || 'There was en error signing up.',
+          });
+        } else {
+          setErrors(null);
+          setStep(step + 1);
+        }
+        setLoading(false);
+      } catch (error) {
+        setErrors({
+          error:
+            'Server error. Check your internet connection or please try again at another time.',
+        });
+        setLoading(false);
+      }
+    }
   };
 
   return (
@@ -68,10 +124,25 @@ export default function SignInModal() {
                         as="h3"
                         className="text-lg text-center leading-6 font-bold text-gray-900 mt-4"
                       >
-                        Sign Up for an account
+                        {step === 1 &&
+                          'Unlock free access to hundreds of ministry resources'}
+                        {step === 2 &&
+                          'Optional: To better serve you and others, please provide the following voluntary information'}
                       </Dialog.Title>
                     </div>
-                    <SignUpForm onSubmit={onSubmit} />
+                    {step === 1 && (
+                      <SignUpForm
+                        submitErrors={errors}
+                        onSubmit={onSubmitSignup}
+                      />
+                    )}
+                    {step === 2 && (
+                      <OptionalForm
+                        onClose={handleModalToggle}
+                        submitErrors={errors}
+                        onSubmit={onSubmitOptional}
+                      />
+                    )}
                   </div>
                 </div>
               </Dialog.Panel>

@@ -33,7 +33,11 @@ export default function Navbar({ navbar, session }) {
               <div className="relative z-10 px-2 flex lg:px-0">
                 <div className="flex-shrink-0 flex items-center">
                   {navbar?.logo && (
-                    <NextImage height={50} width={50} media={navbar.logo} />
+                    <Link href={'/'}>
+                      <div className="cursor-pointer">
+                        <NextImage height={50} width={50} media={navbar.logo} />
+                      </div>
+                    </Link>
                   )}
                 </div>
               </div>

@@ -3,11 +3,13 @@ import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useModalContext, MODAL_TYPES } from 'utils/context/modal-context';
 import NextImage from 'next/image';
+import { useRouter } from 'next/router';
 
 import SignInForm from './sign-in-form';
 import { signIn } from 'next-auth/react';
 
 export default function SignInModal() {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
 
@@ -24,26 +26,32 @@ export default function SignInModal() {
   const cancelButtonRef = useRef(null);
 
   const onSubmit = async (data) => {
-    setLoading(true);
-    try {
-      const signinRes = await signIn('credentials', {
-        redirect: false,
-        callbackUrl: 'http://localhost:3000',
-        email: data.email,
-        password: data.password,
-      });
-      if (!signinRes.ok) {
-        setErrors({
-          error: 'Please check you username and password and try again.',
+    if (data?.honeypot !== '') {
+      setLoading(true);
+      try {
+        const signinRes = await signIn('credentials', {
+          redirect: false,
+          callbackUrl: router.asPath,
+          email: data.email,
+          password: data.password,
         });
-      } else {
-        setErrors(false);
-        handleModalToggle();
+        console.log([signinRes]);
+        if (!signinRes.ok) {
+          setErrors({
+            error: 'Please check you username and password and try again.',
+          });
+        } else {
+          setErrors(false);
+          handleModalToggle();
+        }
+        setLoading(false);
+      } catch (error) {
+        setErrors({
+          error:
+            'Server error. Check your internet connection or please try again at another time.',
+        });
+        setLoading(false);
       }
-      setLoading(false);
-    } catch (error) {
-      setErrors(error);
-      setLoading(false);
     }
   };
 
@@ -86,7 +94,8 @@ export default function SignInModal() {
                         as="h3"
                         className="text-lg text-center leading-6 font-bold text-gray-900 mt-4"
                       >
-                        Login to View Resources
+                        Sign in to unlock free access to hundreds of ministry
+                        resources
                       </Dialog.Title>
                       <p className="text-center text-md text-gray-600">
                         Or{' '}

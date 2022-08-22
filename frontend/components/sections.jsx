@@ -30,11 +30,15 @@ const Section = ({ sectionData }) => {
 export default function Sections({ sections }) {
   return (
     <div className="flex flex-col mx-auto max-w-5xl pb-16">
-      {sections?.map((section) => (
-        <section key={`${section.__typename}${section.id}`} className="my-8">
-          <Section sectionData={section} />
-        </section>
-      ))}
+      {sections?.map((section) =>
+        section ? (
+          <section key={`${section.__typename}${section.id}`} className="my-8">
+            <Section sectionData={section} />
+          </section>
+        ) : (
+          <></>
+        )
+      )}
     </div>
   );
 }
