@@ -323,3 +323,49 @@ export async function signIn({ email, password }) {
 
   return data;
 }
+
+export async function signUp({ email, password, firstName, lastName }) {
+  const signUpRes = await fetch(`${getStrapiURL('/api/auth/local/register')}`, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      username: email,
+      email,
+      password,
+      firstName,
+      lastName,
+    }),
+  });
+
+  return await signUpRes.json();
+}
+
+export async function updateUser({
+  user,
+  state,
+  ministryTypes,
+  ethnicitiesServed,
+  salariedMinistry,
+}) {
+  console.log({ user });
+  const signUpRes = await fetch(
+    `${getStrapiURL(`/api/users/${user.user.id}`)}`,
+    {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${user.jwt}`,
+      },
+      body: JSON.stringify({
+        state,
+        ministryTypes,
+        ethnicitiesServed,
+        salariedMinistry,
+      }),
+    }
+  );
+
+  return await signUpRes.json();
+}

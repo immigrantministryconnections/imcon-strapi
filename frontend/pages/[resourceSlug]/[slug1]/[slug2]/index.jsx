@@ -39,8 +39,8 @@ export default function StatePage({ orgLinks, seo }) {
                 >
                   <div className="flex flex-col items-center cursor-pointer">
                     <Link
-                      as={`${router.asPath}/${slug}`}
-                      href={`${router.pathname}/${slug}`}
+                      as={`/organization/${slug}`}
+                      href={`/organization/${slug}`}
                     >
                       <a className="font-medium text-lg text-blue-500 hover:text-blue-400 underline">
                         {orgLink.attributes.name}

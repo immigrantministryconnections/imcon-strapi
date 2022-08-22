@@ -11,6 +11,7 @@ export default function SignInForm({ onSubmit }) {
   return (
     <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
       <input type="hidden" name="remember" defaultValue="true" />
+      <input type="hidden" name="honeypot" id="honeypot" value="" />
       <div className="rounded-md shadow-sm -space-y-px">
         <div>
           <label htmlFor="email-address" className="sr-only">
