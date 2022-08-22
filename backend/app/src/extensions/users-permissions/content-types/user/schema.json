@@ -73,7 +73,14 @@
       "type": "string"
     },
     "salariedMinistry": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
     }
   }
 }
