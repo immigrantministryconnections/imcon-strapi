@@ -6,6 +6,7 @@ import NextImage from 'next/image';
 import SignUpForm from './sign-up-form';
 import OptionalForm from './optional-form';
 import { signUp, updateUser } from 'utils/api';
+import SuccessSection from './success-section';
 
 export default function SignInModal() {
   const { hideModal, showModal, store } = useModalContext();
@@ -22,6 +23,10 @@ export default function SignInModal() {
     showModal(MODAL_TYPES.SIGNUP_MODAL, {});
   };
 
+  const signInModal = () => {
+    showModal(MODAL_TYPES.SIGNIN_MODAL);
+  };
+
   const cancelButtonRef = useRef(null);
 
   const onSubmitSignup = async (data) => {
@@ -34,7 +39,6 @@ export default function SignInModal() {
           firstName: data.firstName,
           lastName: data.lastName,
         });
-        console.log({ signUpRes });
         if (signUpRes?.error) {
           setErrors({
             error: signUpRes.error?.message || 'There was en error signing up.',
@@ -143,6 +147,7 @@ export default function SignInModal() {
                         onSubmit={onSubmitOptional}
                       />
                     )}
+                    {step === 3 && <SuccessSection signInModal={signInModal} />}
                   </div>
                 </div>
               </Dialog.Panel>
