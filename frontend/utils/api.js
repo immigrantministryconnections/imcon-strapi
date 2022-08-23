@@ -32,7 +32,6 @@ export async function fetchAPI(path, urlParamsObject = {}, options = {}) {
   const response = await fetch(requestUrl, mergedOptions);
 
   const data = await response.json();
-  console.log({ error: data.error });
 
   // Handle response
   if (!response.ok) {
