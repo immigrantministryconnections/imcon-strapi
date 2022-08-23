@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import { getSession, signIn, signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 
 import { Disclosure } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
@@ -12,7 +12,6 @@ import { SearchIcon } from '@heroicons/react/solid';
 import NextImage from './image';
 import PrimaryButton from './primary-button';
 import { useModalContext, MODAL_TYPES } from 'utils/context/modal-context';
-import { getStrapiURL } from 'utils/api';
 
 export default function Navbar({ navbar, session }) {
   const router = useRouter();
@@ -30,40 +29,44 @@ export default function Navbar({ navbar, session }) {
     <Disclosure as="header" className="bg-white shadow sticky top-0 z-10">
       {({ open }) => (
         <>
-          <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:divide-y lg:divide-gray-200 lg:px-8">
-            <div className="relative h-16 flex justify-between">
+          <div className="max-w-7xl mx-auto px-2 pt-8 sm:px-4 lg:divide-gray-200 lg:px-8">
+            <div className="flex justify-center h-20">
               <div className="relative z-10 px-2 flex lg:px-0">
-                <div className="flex-shrink-0 flex items-center">
+                <div className="flex-shrink-0 flex items-center pt-2">
                   {navbar?.logo && (
                     <Link href={'/'}>
-                      <div className="cursor-pointer">
-                        <NextImage height={50} width={50} media={navbar.logo} />
+                      <div className="cursor-pointer h-auto w-[400px]">
+                        <NextImage cover={true} media={navbar.logo} />
                       </div>
                     </Link>
                   )}
                 </div>
               </div>
-              <div className="relative z-0 flex-1 px-2 flex items-center justify-center sm:absolute sm:inset-0">
-                <div className="w-full sm:max-w-xs">
-                  <label htmlFor="search" className="sr-only">
-                    Search
-                  </label>
-                  <div className="relative">
-                    <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
-                      <SearchIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
+            </div>
+            <div className="relative h-16 flex justify-between">
+              <div className="relative z-0 flex items-center justify-center sm:inset-0">
+                {session && (
+                  <div className="w-full sm:max-w-xs">
+                    <label htmlFor="search" className="sr-only">
+                      Search
+                    </label>
+                    <div className="relative">
+                      <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
+                        <SearchIcon
+                          className="h-5 w-5 text-gray-400"
+                          aria-hidden="true"
+                        />
+                      </div>
+                      <input
+                        id="search"
+                        name="search"
+                        className="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-mediumBlue focus:border-mediumBlue sm:text-sm"
+                        placeholder="Search"
+                        type="search"
                       />
                     </div>
-                    <input
-                      id="search"
-                      name="search"
-                      className="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-mediumBlue focus:border-mediumBlue sm:text-sm"
-                      placeholder="Search"
-                      type="search"
-                    />
                   </div>
-                </div>
+                )}
               </div>
               <div className="relative z-10 flex items-center lg:hidden">
                 {/* Mobile menu button */}
