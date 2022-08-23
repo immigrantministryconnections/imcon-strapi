@@ -171,12 +171,14 @@ export async function getStaticProps(context) {
   // Get all the orgs that belong at this level
   pageOrgs = await fetchAPI('/orgs', {
     populate: '*',
-    filters: {
-      ...queryFilter,
-      resource: {
-        resourceSlug: {
-          $eq: $resourceSlug,
-        },
+    filters: queryFilter,
+    pagination: {
+      page: 1,
+      pageSize: 1000,
+    },
+    resource: {
+      resourceSlug: {
+        $eq: $resourceSlug,
       },
     },
   });

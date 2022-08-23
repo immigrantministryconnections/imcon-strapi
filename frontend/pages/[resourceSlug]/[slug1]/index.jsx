@@ -46,7 +46,8 @@ export default function StatePage({
               {imageLinks.map((imageLink) => {
                 const slug =
                   imageLink.attributes?.citySlug ||
-                  imageLink.attributes?.categorySlug;
+                  imageLink.attributes?.categorySlug ||
+                  imageLink.attributes?.subcategorySlug;
                 return (
                   <li
                     key={imageLink.id}
@@ -66,7 +67,8 @@ export default function StatePage({
                         </a>
                       </Link>
                       <h3 className="font-medium text-lg text-[#1e1e1e]">
-                        {imageLink.attributes.name}
+                        {imageLink.attributes?.name ||
+                          imageLink.attributes?.title}
                       </h3>
                     </div>
                   </li>
@@ -168,14 +170,17 @@ export async function getStaticPaths(context) {
   const [statePages, provincePages, categoryPages] = await Promise.all([
     fetchAPI('/us-states', {
       fields: ['stateSlug'],
+      pagination: { page: 1, pageSize: 1000 },
       populate: { resource: { fields: ['resourceSlug'] } },
     }),
     fetchAPI('/ca-provinces', {
       fields: ['provinceSlug'],
+      pagination: { page: 1, pageSize: 1000 },
       populate: { resource: { fields: ['resourceSlug'] } },
     }),
     fetchAPI('/resource-categories', {
       fields: ['categorySlug'],
+      pagination: { page: 1, pageSize: 1000 },
       populate: { resource: { fields: ['resourceSlug'] } },
     }),
   ]);
@@ -260,11 +265,16 @@ export async function getStaticProps(context) {
   switch ($resourceSlug) {
     case 'national-resources':
       pageTiles = await fetchAPI('/subcategories', {
-        field: ['title', 'subcategorySlug', 'orgs'],
-        populate: ['orgs'],
+        populate: '*',
+        pagination: {
+          page: 1,
+          pageSize: 1000,
+        },
         filters: {
-          subcategorySlug: {
-            $eq: slug1,
+          resource_category: {
+            categorySlug: {
+              $eq: slug1,
+            },
           },
         },
       });
@@ -275,6 +285,10 @@ export async function getStaticProps(context) {
       pageTiles = await fetchAPI('/city-regions', {
         field: ['name', 'citySlug'],
         populate: ['us_state', 'ca_province', 'image', 'orgs'],
+        pagination: {
+          page: 1,
+          pageSize: 1000,
+        },
         filters: {
           $or: [
             {
@@ -318,6 +332,10 @@ export async function getStaticProps(context) {
     const stateDataRes = await fetchAPI('/us-states', {
       field: ['image', 'name'],
       populate: ['image'],
+      pagination: {
+        page: 1,
+        pageSize: 1000,
+      },
       filters: {
         stateSlug: {
           $eq: slug1,
@@ -334,13 +352,12 @@ export async function getStaticProps(context) {
         stateImage: stateData.attributes.image,
         stateName: stateData.attributes.name,
       },
-      imageLinks:
-        hasCityOrgs && $resourceSlug === 'local-resources'
-          ? pageTiles.data.filter(
-              (pageTile) => pageTile.attributes.orgs.data.length
-            )
-          : [],
-      subcatLinks: $resourceSlug === 'national-resources' ? pageTiles.data : [],
+      imageLinks: hasCityOrgs
+        ? pageTiles.data.filter(
+            (pageTile) => pageTile.attributes.orgs.data.length
+          )
+        : [],
+      subcatLinks: [],
       orgLinks: pageOrgs.data,
       metadata: null,
       global: null,
