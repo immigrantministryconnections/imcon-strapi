@@ -223,6 +223,11 @@ export async function getStaticProps(context) {
   pageOrgs = await fetchAPI('/orgs', {
     populate: '*',
     filters: {
+      resource: {
+        resourceSlug: {
+          $eq: $resourceSlug,
+        },
+      },
       $or: [
         {
           us_state: {
@@ -246,11 +251,6 @@ export async function getStaticProps(context) {
           },
         },
       ],
-      resource: {
-        resourceSlug: {
-          $eq: $resourceSlug,
-        },
-      },
     },
   });
 
@@ -352,11 +352,12 @@ export async function getStaticProps(context) {
         stateImage: stateData.attributes.image,
         stateName: stateData.attributes.name,
       },
-      imageLinks: hasCityOrgs
-        ? pageTiles.data.filter(
-            (pageTile) => pageTile.attributes.orgs.data.length
-          )
-        : [],
+      imageLinks:
+        hasCityOrgs && $resourceSlug === 'local-resources'
+          ? pageTiles.data.filter(
+              (pageTile) => pageTile.attributes.orgs.data.length
+            )
+          : pageTiles.data,
       subcatLinks: [],
       orgLinks: pageOrgs.data,
       metadata: null,

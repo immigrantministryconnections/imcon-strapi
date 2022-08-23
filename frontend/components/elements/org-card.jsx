@@ -6,7 +6,10 @@ import RichText from './rich-text';
 export default function OrgCard({ org }) {
   const { name, description, logo, websiteURL, contact } = org.attributes;
 
-  const orgLink = contact.includes('@') ? `mailto:${contact}` : contact;
+  const orgLink =
+    contact.includes('@') && !contact.startsWith('mailto:')
+      ? `mailto:${contact}`
+      : contact;
 
   return (
     <div className="max-w-lg mx-auto bg-white rounded-lg border border-gray-200 shadow-md">
