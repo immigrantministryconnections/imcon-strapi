@@ -9,13 +9,12 @@ jobs:
       - name: 'Deploy to Netlify Prod'
         run: |
           npm --version && node --version
-
-          npm install --global yarn
-
-          cd frontend && yarn install
-
+          
+          cd frontend && npm install
           cd ../
+          
+          npm i -D netlify-cli
+          
+          cat netlify.toml
 
-          yarn add netlify-cli -D
-
-          netlify deploy --build --prod --auth ${{secrets.NETLIFY_AUTH_TOKEN}} --site ${{secrets.NETLIFY_SITE_ID}}
+          netlify deploy --build --auth ${{secrets.NETLIFY_AUTH_TOKEN}} --site ${{secrets.NETLIFY_SITE_ID}}
