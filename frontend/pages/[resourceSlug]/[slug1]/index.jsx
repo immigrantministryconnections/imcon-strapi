@@ -26,6 +26,9 @@ export default function StatePage({
   const [userSession, setUserSession] = useState(session);
   const router = useRouter();
 
+  orgLinks.sort((a, b) => a.attributes.name.localeCompare(b.attributes.name));
+  imageLinks.sort((a, b) => a.attributes.name.localeCompare(b.attributes.name));
+
   useEffect(() => {
     const sessionRes = async () => {
       const session = await getSession();
@@ -42,7 +45,7 @@ export default function StatePage({
       return (
         <>
           {!!imageLinks?.length && (
-            <ul role="list" className="mx-auto">
+            <ul role="list" className="grid grid-cols-3 mx-auto">
               {imageLinks.map((imageLink) => {
                 const slug =
                   imageLink.attributes?.citySlug ||

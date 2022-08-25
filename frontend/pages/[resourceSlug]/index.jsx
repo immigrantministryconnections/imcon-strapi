@@ -34,13 +34,18 @@ export default function ResourcesPage({ seo, imageLinks, sections }) {
     sessionRes();
   }, []);
 
+  imageLinks.sort((a, b) => a.attributes.name.localeCompare(b.attributes.name));
+
   const renderContent = (session) => {
     if (!!sections) {
       return <Sections sections={sections} />;
     } else if (session) {
       return (
         <>
-          <ul role="list" className="mx-auto">
+          <ul
+            role="list"
+            className="grid grid-cols-1 gap-0 lg:grid-cols-3 lg:gap-x-3 mx-auto"
+          >
             {imageLinks?.map((imageLink) => {
               const slug =
                 imageLink.attributes?.stateSlug ||
@@ -137,18 +142,30 @@ export async function getStaticProps(context) {
     case 'canadian-resources':
       pageData = await fetchAPI('/ca-provinces', {
         field: ['name', 'provinceSlug'],
+        pagination: {
+          page: 1,
+          pageSize: 2000,
+        },
         populate: ['image'],
       });
       break;
     case 'national-resources':
       pageData = await fetchAPI('/resource-categories', {
         field: ['name', 'categorySlug'],
+        pagination: {
+          page: 1,
+          pageSize: 2000,
+        },
         populate: ['image'],
       });
       break;
     case 'local-resources':
       pageData = await fetchAPI('/us-states', {
         field: ['name', 'stateSlug'],
+        pagination: {
+          page: 1,
+          pageSize: 2000,
+        },
         populate: ['image'],
       });
       break;
