@@ -9,12 +9,15 @@ jobs:
       - name: 'Deploy to Netlify Prod'
         run: |
           npm --version && node --version
-          
+
+          ls
+
           cd frontend && npm install
+
           cd ../
-          
+
           npm i -D netlify-cli
-          
+
           cat netlify.toml
 
           netlify deploy --build --auth ${{secrets.NETLIFY_AUTH_TOKEN}} --site ${{secrets.NETLIFY_SITE_ID}}
