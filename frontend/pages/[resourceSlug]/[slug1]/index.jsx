@@ -26,8 +26,14 @@ export default function StatePage({
   const [userSession, setUserSession] = useState(session);
   const router = useRouter();
 
-  orgLinks.sort((a, b) => a.attributes.name.localeCompare(b.attributes.name));
-  imageLinks.sort((a, b) => a.attributes.name.localeCompare(b.attributes.name));
+  orgLinks.length &&
+    orgLinks.sort((a, b) => a.attributes.name.localeCompare(b.attributes.name));
+  imageLinks.length &&
+    imageLinks.sort((a, b) => {
+      const aName = a.attributes.name || a.attributes.title;
+      const bName = b.attributes.name || b.attributes.title;
+      aName.localeCompare(bName);
+    });
 
   useEffect(() => {
     const sessionRes = async () => {

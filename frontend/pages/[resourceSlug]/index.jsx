@@ -34,7 +34,12 @@ export default function ResourcesPage({ seo, imageLinks, sections }) {
     sessionRes();
   }, []);
 
-  imageLinks.sort((a, b) => a.attributes.name.localeCompare(b.attributes.name));
+  !!imageLinks?.length &&
+    imageLinks.sort((a, b) => {
+      const aName = a.attributes.name || a.attributes.title;
+      const bName = b.attributes.name || b.attributes.title;
+      aName.localeCompare(bName);
+    });
 
   const renderContent = (session) => {
     if (!!sections) {
