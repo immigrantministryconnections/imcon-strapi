@@ -51,7 +51,12 @@ export default function StatePage({
       return (
         <>
           {!!imageLinks?.length && (
-            <ul role="list" className="grid grid-cols-3 mx-auto">
+            <ul
+              role="list"
+              className={`grid ${
+                imageLinks.length > 2 && 'lg:grid-cols-3 lg:gap-x-3'
+              } mx-auto`}
+            >
               {stateData && (
                 <li
                   key={`statewide-${slug1}`}
