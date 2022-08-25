@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import Image from '@/components/elements/image';
 
 export default function MemberGroup({ title, people }) {
@@ -36,6 +38,11 @@ export default function MemberGroup({ title, people }) {
                         <h3>{person.memberName}</h3>
                         <p className="text-mediumBlue">
                           {person.memberPosition}
+                        </p>
+                        <p>
+                          <Link href={person.memberLinkUrl}>
+                            <a>{person.memberLinkText}</a>
+                          </Link>
                         </p>
                       </div>
                       <div className="text-lg">

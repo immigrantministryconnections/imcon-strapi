@@ -57,7 +57,7 @@ export default function Sections({ sections, preview }) {
       {preview && <PreviewModeBanner />}
       {sections?.map((section) =>
         section ? (
-          <section key={`${section.__typename}${section.id}`} className="my-8">
+          <section key={`${section.__typename}${section.id}`} className="my-4">
             <Section sectionData={section} />
           </section>
         ) : (

@@ -42,4 +42,24 @@ module.exports = ({ env }) => ({
       ],
     },
   },
+  "fuzzy-search": {
+    enabled: true,
+    config: {
+      contentTypes: [
+        {
+          uid: "api::org.org",
+          modelName: "org",
+          fuzzysortOptions: {
+            characterLimit: 500,
+            keys: [
+              {
+                name: "name",
+                weight: 200,
+              },
+            ],
+          },
+        },
+      ],
+    },
+  },
 });

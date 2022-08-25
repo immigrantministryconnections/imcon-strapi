@@ -12,6 +12,7 @@ import Seo from '@/components/elements/seo';
 import Sections from '@/components/sections';
 import Layout from '@/components/layout';
 import { fetchAPI, getPageData } from 'utils/api';
+import { colors, textSize } from '@/styles/colors';
 
 /**
  * This page is a dynamic page that will render the top-level
@@ -56,14 +57,22 @@ export default function ResourcesPage({ seo, imageLinks, sections }) {
                       href={`${router.pathname}/${slug}`}
                     >
                       <a>
-                        <NextImage
-                          media={imageLink.attributes.image}
-                          height={200}
-                          width={600}
-                        />
+                        {imageLink.attributes.image && (
+                          <NextImage
+                            media={imageLink.attributes.image}
+                            height={200}
+                            width={600}
+                          />
+                        )}
                       </a>
                     </Link>
-                    <h3 className="font-medium text-lg text-[#1e1e1e]">
+                    <h3
+                      className={`font-medium text-${
+                        textSize[imageLink.attributes?.textSize] || 'large'
+                      } text-${
+                        colors[imageLinks.attributes?.textColor] || 'mediumBlue'
+                      }`}
+                    >
                       {imageLink.attributes.name || imageLink.attributes.title}
                     </h3>
                   </div>

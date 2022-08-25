@@ -1,8 +1,9 @@
 import MemberGroup from '@/components/elements/member-group';
 
 export default function LeadershipSection({ data }) {
+  console.log(data.memberGroup[1]);
   return (
-    <div className="w-full my-2 rounded-lg bg-lightBlue/10 p-4">
+    <div className="w-full text-darkBlue my-2 rounded-lg bg-lightBlue/10 p-4">
       <div className="h-full">
         <h2 className="text-xl font-bold tracking-tight sm:text-3xl sm:tracking-tight sm:text-center">
           {data.title}

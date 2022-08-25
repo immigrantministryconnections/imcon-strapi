@@ -5,13 +5,13 @@ import format from 'date-fns/format';
 
 export default function BlogPosts({ posts }) {
   return (
-    <div className="relative bg-gray-50 pt-8 pb-20 px-4 sm:px-6 lg:pt-12 lg:pb-28 lg:px-8">
+    <div className="relative text-darkBlue bg-gray-50 pt-8 pb-20 px-4 sm:px-6 lg:pt-12 lg:pb-28 lg:px-8">
       <div className="absolute inset-0">
         <div className="bg-white h-1/3 sm:h-2/3" />
       </div>
       <div className="relative max-w-7xl mx-auto">
         <div className="text-center">
-          <h2 className="text-3xl tracking-tight font-bold text-gray-900 sm:text-4xl sm:tracking-tight">
+          <h2 className="text-3xl text-darkBlue tracking-tight font-bold  sm:text-4xl sm:tracking-tight">
             From the Blog
           </h2>
         </div>
@@ -37,10 +37,10 @@ export default function BlogPosts({ posts }) {
                   </p> */}
                   <Link href={`/blog/${post.attributes.slug}`}>
                     <a className="block mt-2 !no-underline">
-                      <p className="text-xl font-semibold text-gray-900">
+                      <p className="text-xl font-semibold text-darkBlue">
                         {post.attributes.title}
                       </p>
-                      <p className="mt-3 text-base text-gray-500">
+                      <p className="mt-3 text-base text-mediumBlue">
                         {post.attributes?.description}
                       </p>
                     </a>
@@ -56,7 +56,7 @@ export default function BlogPosts({ posts }) {
                     </span>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-medium text-darkBlue">
                       <span className="hover:underline">
                         {`${
                           post.attributes?.author?.data?.attributes?.name ||
@@ -64,7 +64,7 @@ export default function BlogPosts({ posts }) {
                         } `}
                       </span>
                     </p>
-                    <div className="flex space-x-1 text-sm text-gray-500">
+                    <div className="flex space-x-1 text-sm text-lightBlue">
                       <time dateTime={post.attributes.publishedAt}>
                         {format(new Date(post.attributes.publishedAt), 'PPP')}
                       </time>

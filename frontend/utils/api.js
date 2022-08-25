@@ -183,6 +183,8 @@ export async function getPageData({ slug, preview }) {
                   title
                   content
                   centerText
+                  titleColor
+                  contentColor
                 }
                 ... on ComponentSectionsSimpleText {
                   id
