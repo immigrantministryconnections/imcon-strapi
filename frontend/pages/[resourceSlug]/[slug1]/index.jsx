@@ -46,6 +46,31 @@ export default function StatePage({
         <>
           {!!imageLinks?.length && (
             <ul role="list" className="grid grid-cols-3 mx-auto">
+              {stateData && (
+                <li
+                  key={`statewide-${slug1}`}
+                  className="flex items-center justify-center mx-auto py-4"
+                >
+                  <div className="flex flex-col items-center cursor-pointer">
+                    <Link
+                      as={`${router.asPath}/statewide-${slug1}`}
+                      href={`${router.pathname}/statewide-${slug1}`}
+                    >
+                      <a>
+                        <NextImage
+                          media={stateData.stateImage}
+                          height={200}
+                          width={600}
+                        />
+                      </a>
+                    </Link>
+                    <h3 className="font-medium text-lg text-[#1e1e1e]">
+                      {`${stateData.stateName} Statewide Resources`}
+                    </h3>
+                  </div>
+                </li>
+              )}
+
               {imageLinks.map((imageLink) => {
                 const slug =
                   imageLink.attributes?.citySlug ||
@@ -77,31 +102,6 @@ export default function StatePage({
                   </li>
                 );
               })}
-
-              {stateData && (
-                <li
-                  key={`statewide-${slug1}`}
-                  className="flex items-center justify-center mx-auto py-4"
-                >
-                  <div className="flex flex-col items-center cursor-pointer">
-                    <Link
-                      as={`${router.asPath}/statewide-${slug1}`}
-                      href={`${router.pathname}/statewide-${slug1}`}
-                    >
-                      <a>
-                        <NextImage
-                          media={stateData.stateImage}
-                          height={200}
-                          width={600}
-                        />
-                      </a>
-                    </Link>
-                    <h3 className="font-medium text-lg text-[#1e1e1e]">
-                      {`${stateData.stateName} Statewide Resources`}
-                    </h3>
-                  </div>
-                </li>
-              )}
             </ul>
           )}
 
