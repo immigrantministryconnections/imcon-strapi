@@ -11,11 +11,12 @@ jobs:
      - name: Deploy to Netlify
        uses: nwtgck/actions-netlify@v1.2
        with:
-        publish-dir: './frontend'
+        publish-dir: './frontend/.next'
         netlify-config-path: './netlify.toml'
-        production-branch: master
+        production-branch: main
         github-token: ${{ secrets.GITHUB_TOKEN }}
         deploy-message: "Deploy from GitHub Actions"
+        production-deploy: true
         enable-pull-request-comment: true
         enable-commit-comment: true
         overwrites-pull-request-comment: true
