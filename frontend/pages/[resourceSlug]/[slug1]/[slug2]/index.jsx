@@ -71,6 +71,10 @@ export async function getStaticPaths(context) {
   const [cityPages, subcategoryPages] = await Promise.all([
     fetchAPI('/city-regions', {
       fields: ['citySlug'],
+      pagination: {
+        page: 1,
+        pageSize: 2000,
+      },
       populate: {
         ca_province: { fields: ['provinceSlug'] },
         us_state: { fields: ['stateSlug'] },
@@ -79,6 +83,10 @@ export async function getStaticPaths(context) {
     }),
     fetchAPI('/subcategories', {
       fields: ['subcategorySlug'],
+      pagination: {
+        page: 1,
+        pageSize: 2000,
+      },
       populate: {
         resource_category: { fields: ['categorySlug'] },
         resource: { fields: ['resourceSlug'] },
@@ -93,6 +101,8 @@ export async function getStaticPaths(context) {
         .filter((page) => page !== undefined)
     )
   );
+
+  console.log(uniqueStates);
 
   const allPages = [
     ...cityPages.data,

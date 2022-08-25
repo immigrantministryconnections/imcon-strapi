@@ -7,7 +7,8 @@ import OrgCard from '@/components/elements/org-card';
 import { fetchAPI } from 'utils/api';
 
 export default function OrgPage({ org }) {
-  const { name, description, logo, websiteURL, contact } = org.attributes;
+  console.log(org.attributes);
+  const { name, description, logo } = org.attributes;
   const seo = {
     metaTitle: name,
     metaDescription: description,
@@ -17,7 +18,6 @@ export default function OrgPage({ org }) {
   return (
     <Layout>
       <Seo metadata={seo} />
-
       <OrgCard org={org} />
     </Layout>
   );
