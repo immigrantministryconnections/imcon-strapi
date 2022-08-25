@@ -6,8 +6,6 @@ on:
       - main
   workflow_dispatch:
   repository_dispatch:
-    types:
-      - webhook
 jobs:
   pre-job:
     name: Pre-job
