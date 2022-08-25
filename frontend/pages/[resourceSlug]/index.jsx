@@ -38,7 +38,7 @@ export default function ResourcesPage({ seo, imageLinks, sections }) {
     imageLinks.sort((a, b) => {
       const aName = a.attributes.name || a.attributes.title;
       const bName = b.attributes.name || b.attributes.title;
-      aName.localeCompare(bName);
+      return aName.localeCompare(bName);
     });
 
   const renderContent = (session) => {
