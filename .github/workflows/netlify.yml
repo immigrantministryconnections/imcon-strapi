@@ -8,7 +8,7 @@ jobs:
     steps:
       - name: 'Deploy to Netlify Prod'
         run: |
-          npm --verion && node --version
+          npm --version && node --version
 
           npm install --global yarn
 
