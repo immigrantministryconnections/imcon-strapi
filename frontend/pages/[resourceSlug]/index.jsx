@@ -67,11 +67,7 @@ export default function ResourcesPage({ seo, imageLinks, sections }) {
                       </a>
                     </Link>
                     <h3
-                      className={`font-medium text-${
-                        textSize[imageLink.attributes?.textSize] || 'large'
-                      } text-${
-                        colors[imageLinks.attributes?.textColor] || 'mediumBlue'
-                      }`}
+                      className={`font-medium text-${'lg'} text-${'mediumBlue'}`}
                     >
                       {imageLink.attributes.name || imageLink.attributes.title}
                     </h3>
