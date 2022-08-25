@@ -6,18 +6,18 @@ jobs:
   automate-netlify-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Deploy to Netlify Prod'
-        run: |
-          npm --version && node --version
+     - name: Checkout
+       uses: actions/checkout@v3
+     - name: 'Deploy to Netlify Prod'
+       run: |
+        npm --version && node --version
 
-          ls
+        cd frontend && npm install
 
-          cd frontend && npm install
+        cd ../
 
-          cd ../
+        npm i -D netlify-cli
 
-          npm i -D netlify-cli
+        cat netlify.toml
 
-          cat netlify.toml
-
-          netlify deploy --build --auth ${{secrets.NETLIFY_AUTH_TOKEN}} --site ${{secrets.NETLIFY_SITE_ID}}
+        netlify deploy --build --prod --auth ${{secrets.NETLIFY_AUTH_TOKEN}} --site ${{secrets.NETLIFY_SITE_ID}}
