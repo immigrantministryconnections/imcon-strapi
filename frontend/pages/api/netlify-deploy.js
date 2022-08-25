@@ -5,7 +5,7 @@ export default async function exit(req, res) {
       method: 'POST',
       headers: {
         Accept: 'application/vnd.github.everest-preview+json',
-        Authorization: `Bearer: ${req.query.secret}`,
+        Authorization: `Bearer ${req.query.secret}`,
       },
       body: JSON.stringify({ event_type: 'webhook' }),
     }
