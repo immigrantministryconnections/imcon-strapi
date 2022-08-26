@@ -79,7 +79,7 @@ export default function ResourcesPage({ seo, imageLinks, sections }) {
                       </a>
                     </Link>
                     <h3
-                      className={`font-medium text-${'lg'} text-${'mediumBlue'}`}
+                      className={`font-medium text-${'lg'} text-${'mediumBlue'} text-center`}
                     >
                       {imageLink.attributes.name || imageLink.attributes.title}
                     </h3>
