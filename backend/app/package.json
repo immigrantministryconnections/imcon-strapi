@@ -31,6 +31,7 @@
   "scripts": {
     "develop": "strapi develop",
     "start": "NODE_ENV=production node node_modules/@strapi/strapi/bin/strapi.js start",
+    "start:local": "NODE_ENV=production strapi start",
     "build": "strapi build",
     "strapi": "strapi"
   },

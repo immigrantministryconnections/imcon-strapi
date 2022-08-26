@@ -89,7 +89,7 @@
         "Government and Private Organizations",
         "Evangelical Ministries"
       ],
-      "required": true
+      "required": false
     }
   }
 }
