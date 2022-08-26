@@ -56,7 +56,7 @@ export default function StatePage({
     } else if (userSession) {
       return (
         <>
-          <h4 className="text-mediumBlue text-center mt-4">
+          <h4 className="text-mediumBlue text-center mt-4 mb-8">
             If you know any ministry organization website that you feel should
             be listed here, please send their Web address to
             <a href="mailto:connect@imcon.church"> connect@imcon.church</a>.
@@ -130,7 +130,7 @@ export default function StatePage({
           {!stateData &&
             orgTypes.map((type) => (
               <>
-                <h2 className="mx-auto mb-4 text-center bg-mediumBlue">
+                <h2 className="mx-auto mb-4 text-center text-mediumBlue">
                   {type}
                 </h2>
                 <ul role="list" className="mx-auto mt-4 space-y-3 lg:max-w-lg">
