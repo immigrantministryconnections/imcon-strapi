@@ -102,8 +102,6 @@ export async function getStaticPaths(context) {
     )
   );
 
-  console.log(uniqueStates);
-
   const allPages = [
     ...cityPages.data,
     ...subcategoryPages.data,

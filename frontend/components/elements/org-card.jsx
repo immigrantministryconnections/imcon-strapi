@@ -6,10 +6,11 @@ import RichText from './rich-text';
 export default function OrgCard({ org }) {
   const { name, description, logo, websiteURL, contact } = org.attributes;
 
-  const orgLink =
-    contact.includes('@') && !contact.startsWith('mailto:')
+  const orgLink = contact
+    ? contact.includes('@') && !contact.startsWith('mailto:')
       ? `mailto:${contact}`
-      : contact;
+      : contact
+    : '';
 
   return (
     <div className="max-w-lg mx-auto bg-white rounded-lg border border-gray-200 shadow-md">
@@ -27,12 +28,14 @@ export default function OrgCard({ org }) {
         <div className="mb-4">
           <RichText data={JSON.parse(description)} />
         </div>
-        <Link
-          href={orgLink}
-          classNameName="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-mediumBlue rounded-lg hover:bg-darkBlue focus:ring-4 focus:outline-none focus:ring-lightBlue"
-        >
-          {contact}
-        </Link>
+        {contact && (
+          <Link
+            href={orgLink}
+            classNameName="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-mediumBlue rounded-lg hover:bg-darkBlue focus:ring-4 focus:outline-none focus:ring-lightBlue"
+          >
+            {contact}
+          </Link>
+        )}
       </div>
     </div>
   );

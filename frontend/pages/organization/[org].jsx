@@ -7,7 +7,6 @@ import OrgCard from '@/components/elements/org-card';
 import { fetchAPI } from 'utils/api';
 
 export default function OrgPage({ org }) {
-  console.log(org.attributes);
   const { name, description, logo } = org.attributes;
   const seo = {
     metaTitle: name,
@@ -24,7 +23,10 @@ export default function OrgPage({ org }) {
 }
 
 export async function getStaticPaths() {
-  const orgs = await fetchAPI('/orgs', { fields: ['orgSlug'] });
+  const orgs = await fetchAPI('/orgs', {
+    fields: ['orgSlug'],
+    pagination: { page: 1, pageSize: 2000 },
+  });
 
   const paths = orgs.data.map((org) => {
     return {
