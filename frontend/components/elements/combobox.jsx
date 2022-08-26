@@ -1,5 +1,6 @@
+import { useRouter } from 'next/router';
+
 import { useState, useEffect } from 'react';
-import { CheckIcon } from '@heroicons/react/solid';
 import { Combobox } from '@headlessui/react';
 import { SearchIcon } from '@heroicons/react/solid';
 
@@ -8,6 +9,7 @@ function classNames(...classes) {
 }
 
 export default function ComboBox({ onChange, results }) {
+  const router = useRouter();
   const [selectedOrg, setSelectedOrg] = useState();
   const [searchResults, setSearchResults] = useState(results);
 
@@ -19,7 +21,7 @@ export default function ComboBox({ onChange, results }) {
     <Combobox
       as="div"
       value={selectedOrg}
-      onChange={setSelectedOrg}
+      onChange={(org) => router.push(`/organization/${org}`)}
       className="w-full"
     >
       <Combobox.Label className="sr-only block text-sm font-medium text-gray-700">
@@ -41,7 +43,7 @@ export default function ComboBox({ onChange, results }) {
               return (
                 <Combobox.Option
                   key={org.id}
-                  value={org.id}
+                  value={org.attributes.orgSlug}
                   className={({ active }) =>
                     classNames(
                       'relative cursor-default select-none py-2 pl-3 pr-9',
@@ -54,22 +56,12 @@ export default function ComboBox({ onChange, results }) {
                       <span
                         className={classNames(
                           'block truncate',
+                          'cursor-pointer',
                           selected && 'font-semibold'
                         )}
                       >
                         {org.attributes.name}
                       </span>
-
-                      {selected && (
-                        <span
-                          className={classNames(
-                            'absolute inset-y-0 right-0 flex items-center pr-4',
-                            active ? 'text-white' : 'text-indigo-600'
-                          )}
-                        >
-                          <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                        </span>
-                      )}
                     </>
                   )}
                 </Combobox.Option>

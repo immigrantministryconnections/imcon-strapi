@@ -26,8 +26,14 @@ export default function StatePage({
   const [userSession, setUserSession] = useState(session);
   const router = useRouter();
 
-  orgLinks.length &&
+  let orgTypes = [];
+  if (orgLinks.length) {
     orgLinks.sort((a, b) => a.attributes.name.localeCompare(b.attributes.name));
+    orgTypes = Array.from(
+      new Set(orgLinks.map((org) => org.attributes?.organizationType))
+    ).filter((org) => org !== undefined);
+  }
+
   imageLinks.length &&
     imageLinks.sort((a, b) => {
       const aName = a.attributes.name || a.attributes.title;
@@ -50,6 +56,11 @@ export default function StatePage({
     } else if (userSession) {
       return (
         <>
+          <h4 className="text-mediumBlue text-center mt-4">
+            If you know any ministry organization website that you feel should
+            be listed here, please send their Web address to
+            <a href="mailto:connect@imcon.church"> connect@imcon.church</a>.
+          </h4>
           {!!imageLinks?.length && (
             <ul
               role="list"
@@ -116,30 +127,36 @@ export default function StatePage({
             </ul>
           )}
 
-          {!stateData && (
-            <ul role="list" className="mx-auto">
-              {orgLinks?.map((orgLink) => {
-                const slug = orgLink.attributes.orgSlug;
-                return (
-                  <li
-                    key={orgLink.id}
-                    className="flex items-center justify-center mx-auto py-4"
-                  >
-                    <div className="flex flex-col items-center cursor-pointer">
-                      <Link
-                        as={`/organization/${slug}`}
-                        href={`/organization/${slug}`}
+          {!stateData &&
+            orgTypes.map((type) => (
+              <>
+                <h2 className="mx-auto mb-4 text-center bg-mediumBlue">
+                  {type}
+                </h2>
+                <ul role="list" className="mx-auto mt-4 space-y-3 lg:max-w-lg">
+                  {orgLinks?.map((orgLink) => {
+                    const slug = orgLink.attributes.orgSlug;
+                    return (
+                      <li
+                        key={orgLink.id}
+                        className="shadow overflow-hidden px-4 py-4 sm:px-6 rounded-md bg-imconOrange/20"
                       >
-                        <a className="font-medium text-lg text-blue-500 hover:text-blue-400 underline">
-                          {orgLink.attributes.name}
-                        </a>
-                      </Link>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
+                        <div className="flex flex-col items-center text-center cursor-pointer">
+                          <Link
+                            as={`/organization/${slug}`}
+                            href={`/organization/${slug}`}
+                          >
+                            <a className="font-medium text-lg text-blue-500 hover:text-blue-400 underline">
+                              {orgLink.attributes.name}
+                            </a>
+                          </Link>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </>
+            ))}
           {subcatLinks && (
             <ul role="list" className="mx-auto">
               {subcatLinks.map((subcatLink) => {

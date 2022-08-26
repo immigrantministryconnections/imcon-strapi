@@ -25,19 +25,28 @@ export default function StatePage({ orgLinks, seo }) {
     sessionRes();
   }, [session]);
 
+  let orgTypes = [];
+  if (orgLinks.length) {
+    orgLinks.sort((a, b) => a.attributes.name.localeCompare(b.attributes.name));
+    orgTypes = Array.from(
+      new Set(orgLinks.map((org) => org.attributes?.organizationType))
+    ).filter((org) => org !== undefined);
+  }
+
   const renderContent = (userSession) => {
     if (userSession) {
-      return (
+      return orgTypes.map((type) => (
         <>
-          <ul role="list" className="mx-auto">
-            {orgLinks.map((orgLink) => {
+          <h2 className="mx-auto mb-4 text-center bg-mediumBlue">{type}</h2>
+          <ul role="list" className="mx-auto mt-4 space-y-3 lg:max-w-lg">
+            {orgLinks?.map((orgLink) => {
               const slug = orgLink.attributes.orgSlug;
               return (
                 <li
                   key={orgLink.id}
-                  className="flex items-center justify-center mx-auto py-4"
+                  className="shadow overflow-hidden px-4 py-4 sm:px-6 rounded-md bg-imconOrange/20"
                 >
-                  <div className="flex flex-col items-center cursor-pointer">
+                  <div className="flex flex-col items-center text-center cursor-pointer">
                     <Link
                       as={`/organization/${slug}`}
                       href={`/organization/${slug}`}
@@ -52,7 +61,7 @@ export default function StatePage({ orgLinks, seo }) {
             })}
           </ul>
         </>
-      );
+      ));
     } else {
       signIn();
     }

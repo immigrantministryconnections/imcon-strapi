@@ -82,6 +82,14 @@
     },
     "contact": {
       "type": "string"
+    },
+    "organizationType": {
+      "type": "enumeration",
+      "enum": [
+        "Government and Private Organizations",
+        "Evangelical Ministries"
+      ],
+      "required": true
     }
   }
 }

@@ -62,9 +62,11 @@ export default function Navbar({ navbar, session }) {
               </div>
             </div>
             <div className="relative h-16 flex justify-between">
-              <div className="relative z-0 flex items-center justify-center sm:inset-0 w-1/3">
-                <ComboBox results={searchResults} onChange={onSearchChange} />
-              </div>
+              {session && (
+                <div className="relative z-0 flex items-center justify-center sm:inset-0 w-1/3">
+                  <ComboBox results={searchResults} onChange={onSearchChange} />
+                </div>
+              )}
               <div className="relative z-10 flex items-center lg:hidden">
                 {/* Mobile menu button */}
                 <Disclosure.Button className="rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-mediumBlue">
