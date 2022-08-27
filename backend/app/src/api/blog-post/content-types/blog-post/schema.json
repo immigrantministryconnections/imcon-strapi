@@ -28,24 +28,14 @@
       "type": "richtext",
       "required": true
     },
-    "author": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::author.author"
-    },
-    "blog_categories": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::blog-category.blog-category",
-      "inversedBy": "blog_posts"
-    },
-    "description": {
-      "type": "text",
-      "required": true
-    },
     "slug": {
       "type": "uid",
       "targetField": "title"
+    },
+    "description": {
+      "type": "text",
+      "required": true,
+      "maxLength": 160
     }
   }
 }

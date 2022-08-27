@@ -4,7 +4,7 @@
   "info": {
     "singularName": "top-level-page",
     "pluralName": "top-level-pages",
-    "displayName": "Top Level Pages",
+    "displayName": "Pages",
     "description": ""
   },
   "options": {
@@ -30,7 +30,6 @@
         "sections.embedded-form",
         "sections.simple-text",
         "sections.link-list",
-        "sections.blog-style-section",
         "sections.image-link-grid",
         "sections.leadership-section"
       ]
