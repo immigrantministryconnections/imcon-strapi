@@ -50,7 +50,7 @@ export default function ResourcesPage({ seo, imageLinks, sections }) {
           <ul
             role="list"
             className={`grid ${
-              imageLinks.length > 2 && 'lg:grid-cols-3 lg:gap-x-3'
+              imageLinks?.length > 2 && 'lg:grid-cols-3 lg:gap-x-3'
             }   mx-auto`}
           >
             {imageLinks?.map((imageLink) => {

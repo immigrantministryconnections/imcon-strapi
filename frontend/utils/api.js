@@ -273,17 +273,6 @@ export async function getPageData({ slug, preview }) {
                     }
                   }
                 }
-                ...on ComponentSectionsBlogStyleSection {
-                  id
-                  blogSectionTitle: title
-                  author
-                    content
-                    authorLink {
-                      text
-                      url
-                      newTab
-                    }
-                }
               }
             }
           }
