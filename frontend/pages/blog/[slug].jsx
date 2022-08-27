@@ -18,14 +18,7 @@ export default function Post({ article }) {
     <Layout>
       <Seo metadata={seo} />
       <article>
-        <h1>{title}</h1>
-        <NextImage media={image} />
-        <div className="my-4">
-          By:{' '}
-          {`${
-            author?.data?.attributes?.name || 'Immigrant Ministry Connections'
-          }`}
-        </div>
+        {image.data && <NextImage media={image} />}
         <div>
           <RichText data={JSON.parse(content)} />
         </div>

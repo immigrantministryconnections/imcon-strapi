@@ -8,11 +8,12 @@ import { fetchAPI } from 'utils/api';
 
 export default function BlogPage({ posts, seo, page, pageCount }) {
   const router = useRouter();
+
   return (
     <Layout>
       <Seo metadata={seo} />
       <BlogPosts posts={posts} />
-      <div className="flex flex-row item-center justify-center gap-x-4 mb-24 mt-4">
+      {/* <div className="flex flex-row item-center justify-center gap-x-4 mb-24 mt-4">
         <button
           className={`rounded w-20 px-2 py-1 ${
             page <= 1 ? 'bg-gray-200' : 'bg-mediumBlue'
@@ -32,7 +33,7 @@ export default function BlogPage({ posts, seo, page, pageCount }) {
         >
           Next
         </button>
-      </div>
+      </div> */}
     </Layout>
   );
 }
@@ -40,7 +41,8 @@ export default function BlogPage({ posts, seo, page, pageCount }) {
 export async function getServerSideProps({ query: { page = 1 } }) {
   const postData = await fetchAPI('/blog-posts', {
     populate: '*',
-    pagination: { page, pageSize: 10 },
+    pagination: { page, pageSize: 2000 },
+    sort: ['publishedAt:desc'],
   });
   return {
     props: {

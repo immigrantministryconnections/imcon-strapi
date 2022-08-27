@@ -15,68 +15,25 @@ export default function BlogPosts({ posts }) {
             From the Blog
           </h2>
         </div>
-        <div className="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
-          {posts.map((post) => (
-            <div
-              key={`${post.attributes.title}-${post.id}`}
-              className="flex flex-col rounded-lg shadow-lg overflow-hidden"
-            >
-              <div className="flex-shrink-0">
-                <NextImage
-                  // className="h-48 w-full object-cover"
-                  media={post.attributes.image}
-                  alt=""
-                />
-              </div>
-              <div className="flex-1 bg-white p-6 flex flex-col justify-between">
-                <div className="flex-1">
-                  {/* <p className="text-sm font-medium text-indigo-600">
-                    <Link href={`/blog/${post.attributes.slug}`}>
-                      <a className="hover:underline">{post.category.name}</a>
-                    </Link>
-                  </p> */}
-                  <Link href={`/blog/${post.attributes.slug}`}>
-                    <a className="block mt-2 !no-underline">
-                      <p className="text-xl font-semibold text-darkBlue">
-                        {post.attributes.title}
-                      </p>
-                      <p className="mt-3 text-base text-mediumBlue">
-                        {post.attributes?.description}
-                      </p>
+        <ul role="list" className="mx-auto mt-4 space-y-3 lg:max-w-lg">
+          {posts.map((post) => {
+            const { slug } = post.attributes;
+            return (
+              <li
+                key={post.id}
+                className="shadow overflow-hidden px-4 py-4 sm:px-6 rounded-md bg-imconOrange/20"
+              >
+                <div className="flex flex-col items-center text-center cursor-pointer">
+                  <Link as={`/blog/${slug}`} href={`/blog/${slug}`}>
+                    <a className="font-medium text-lg text-blue-500 hover:text-blue-400 underline">
+                      {post.attributes.title}
                     </a>
                   </Link>
                 </div>
-                <div className="mt-6 flex items-center">
-                  <div className="flex-shrink-0">
-                    <span className="sr-only">
-                      {`${
-                        post.attributes?.author?.data?.attributes?.name ||
-                        'Immigrant Ministry Connections'
-                      } `}
-                    </span>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-darkBlue">
-                      <span className="hover:underline">
-                        {`${
-                          post.attributes?.author?.data?.attributes?.name ||
-                          'Immigrant Ministry Connections'
-                        } `}
-                      </span>
-                    </p>
-                    <div className="flex space-x-1 text-sm text-lightBlue">
-                      <time dateTime={post.attributes.publishedAt}>
-                        {format(new Date(post.attributes.publishedAt), 'PPP')}
-                      </time>
-                      {/* <span aria-hidden="true">&middot;</span>
-                      <span>{post.readingTime} read</span> */}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </div>
   );

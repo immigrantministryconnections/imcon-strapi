@@ -29,7 +29,7 @@ export default function RichText({ data }) {
           className: 'list-inside',
         },
         paragraph: {
-          className: 'text-base text-opacity-75',
+          className: 'text-base text-opacity-75 my-2',
           actionsClassNames: {
             alignment: 'text-{alignment}', // This is a substitution placeholder: left or center.
           },

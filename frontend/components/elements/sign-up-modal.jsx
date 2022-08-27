@@ -113,7 +113,8 @@ export default function SignInModal() {
                 state: data?.state || '',
                 ministryfocus: data?.ministryTypes || '',
                 ethnicfocus: data?.ethnicities || '',
-                salariedministry: data?.salariedMinistry ? 'yes' : 'no',
+                salariedministry:
+                  data?.salariedMinistry === true ? 'yes' : 'no',
               }),
             }
           );
