@@ -25,7 +25,8 @@
         "Medium Blue",
         "Dark Blue",
         "Yellow",
-        "Orange"
+        "Orange",
+        "Black"
       ],
       "default": "Medium Blue"
     },
@@ -36,7 +37,8 @@
         "Medium Blue",
         "Dark Blue",
         "Yellow",
-        "Orange"
+        "Orange",
+        "Black"
       ],
       "default": "Medium Blue"
     }

@@ -26,7 +26,7 @@ export default function StatePage({ orgLinks, seo }) {
   }, [session]);
 
   let orgTypes = [];
-  if (orgLinks.length) {
+  if (orgLinks && orgLinks.length) {
     orgLinks.sort((a, b) => a.attributes.name.localeCompare(b.attributes.name));
     orgTypes = Array.from(
       new Set(orgLinks.map((org) => org.attributes?.organizationType))
@@ -42,35 +42,37 @@ export default function StatePage({ orgLinks, seo }) {
             be listed here, please send their Web address to
             <a href="mailto:connect@imcon.church"> connect@imcon.church</a>.
           </h4>
-          {orgTypes.map((type) => (
-            <>
-              <h2 className="mx-auto text-mediumBlue mb-4 text-center">
-                {type}
-              </h2>
-              <ul role="list" className="mx-auto mt-4 space-y-3 lg:max-w-lg">
-                {orgLinks?.map((orgLink) => {
-                  const slug = orgLink.attributes.orgSlug;
-                  return (
-                    <li
-                      key={orgLink.id}
-                      className="shadow overflow-hidden px-4 py-4 sm:px-6 rounded-md bg-imconOrange/20"
-                    >
-                      <div className="flex flex-col items-center text-center cursor-pointer">
-                        <Link
-                          as={`/organization/${slug}`}
-                          href={`/organization/${slug}`}
-                        >
-                          <a className="font-medium text-lg text-blue-500 hover:text-blue-400 underline">
-                            {orgLink.attributes.name}
-                          </a>
-                        </Link>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            </>
-          ))}
+          {orgTypes
+            .filter((orgLink) => orgLink.attributes?.organizationType === type)
+            .map((type) => (
+              <>
+                <h2 className="mx-auto text-mediumBlue mb-4 text-center">
+                  {type}
+                </h2>
+                <ul role="list" className="mx-auto mt-4 space-y-3 lg:max-w-lg">
+                  {orgLinks?.map((orgLink) => {
+                    const slug = orgLink.attributes.orgSlug;
+                    return (
+                      <li
+                        key={orgLink.id}
+                        className="shadow overflow-hidden px-4 py-4 sm:px-6 rounded-md bg-imconOrange/20"
+                      >
+                        <div className="flex flex-col items-center text-center cursor-pointer">
+                          <Link
+                            as={`/organization/${slug}`}
+                            href={`/organization/${slug}`}
+                          >
+                            <a className="font-medium text-lg text-blue-500 hover:text-blue-400 underline">
+                              {orgLink.attributes.name}
+                            </a>
+                          </Link>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </>
+            ))}
         </>
       );
     } else {

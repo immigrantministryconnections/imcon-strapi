@@ -4,4 +4,5 @@ export const colors = {
   Dark_Blue: 'darkBlue',
   Yellow: 'imconYellow',
   Orange: 'imconOrange',
+  Black: 'black',
 };

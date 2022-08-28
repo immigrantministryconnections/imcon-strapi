@@ -39,6 +39,13 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::resource.resource"
+    },
+    "order": {
+      "type": "integer",
+      "required": true,
+      "unique": true,
+      "default": 0,
+      "min": 0
     }
   }
 }

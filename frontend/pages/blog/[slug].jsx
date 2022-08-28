@@ -17,9 +17,9 @@ export default function Post({ article }) {
   return (
     <Layout>
       <Seo metadata={seo} />
-      <article className="max-w-5xl mx-auto bg-lightBlue/10 p-8 rounded-lg">
+      <article className="max-w-5xl mx-auto">
         {image.data && <NextImage media={image} />}
-        <div className="text-darkBlue">
+        <div className="text-black">
           <RichText data={JSON.parse(content)} />
         </div>
       </article>
