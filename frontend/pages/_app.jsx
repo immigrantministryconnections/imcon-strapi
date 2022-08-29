@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useEffect } from 'react';
 
 import { useRouter } from 'next/router';
 import { SessionProvider, useSession } from 'next-auth/react';
