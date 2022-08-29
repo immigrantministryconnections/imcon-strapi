@@ -34,12 +34,21 @@ export default function ResourcesPage({ seo, imageLinks, sections }) {
     sessionRes();
   }, []);
 
-  !!imageLinks?.length &&
-    imageLinks.sort((a, b) => {
-      const aName = a.attributes.name || a.attributes.title;
-      const bName = b.attributes.name || b.attributes.title;
-      return aName.localeCompare(bName);
-    });
+  // Sort alphabetically
+  if (imageLinks && imageLinks.length) {
+    if (imageLinks[0].attributes?.order) {
+      // Sort by order field if we have one
+      imageLinks.sort(
+        (a, b) => a.attributes?.order || 0 - b.attributes?.order || 0
+      );
+    } else {
+      imageLinks.sort((a, b) => {
+        const aName = a.attributes.name || a.attributes.title;
+        const bName = b.attributes.name || b.attributes.title;
+        return aName.localeCompare(bName);
+      });
+    }
+  }
 
   const renderContent = (session) => {
     if (!!sections) {

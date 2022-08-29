@@ -26,6 +26,8 @@ export default function StatePage({
   const [userSession, setUserSession] = useState(session);
   const router = useRouter();
 
+  // Get the unique 'org types' so that we can separate them
+  // into sections.
   let orgTypes = [];
   if (orgLinks && orgLinks.length) {
     orgLinks.sort((a, b) => a.attributes.name.localeCompare(b.attributes.name));
@@ -34,6 +36,7 @@ export default function StatePage({
     ).filter((org) => org !== undefined);
   }
 
+  // Sort alphabetically
   imageLinks &&
     imageLinks.length &&
     imageLinks.sort((a, b) => {
@@ -41,6 +44,12 @@ export default function StatePage({
       const bName = b.attributes.name || b.attributes.title;
       return aName.localeCompare(bName);
     });
+
+  // If they have an order field, sort by order
+  imageLinks &&
+    imageLinks.length &&
+    imageLinks.attributes?.order &&
+    imageLinks.sort((a, b) => a.attributes.order - b.attributes.order);
 
   useEffect(() => {
     const sessionRes = async () => {
