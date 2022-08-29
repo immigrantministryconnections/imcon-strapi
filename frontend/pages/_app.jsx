@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { SessionProvider, useSession } from 'next-auth/react';
 
 import App from 'next/app';
+import Script from 'next/script';
 import Head from 'next/head';
 import ErrorPage from 'next/error';
 import { DefaultSeo } from 'next-seo';
