@@ -36,6 +36,11 @@
       "type": "text",
       "required": true,
       "maxLength": 160
+    },
+    "textColor": {
+      "type": "string",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+      "default": "#000000"
     }
   }
 }
