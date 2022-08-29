@@ -8,7 +8,8 @@ import NextImage from '@/components/elements/image';
 import { fetchAPI } from 'utils/api';
 
 export default function Post({ article }) {
-  const { title, content, description, author, image } = article.attributes;
+  const { title, content, description, image } = article.attributes;
+  const textColor = article.attributes?.textColor || '#000000';
   const seo = {
     metaTitle: title,
     metaDescription: description,
@@ -19,7 +20,7 @@ export default function Post({ article }) {
       <Seo metadata={seo} />
       <article className="max-w-5xl mx-auto">
         {image.data && <NextImage media={image} />}
-        <div className="text-black">
+        <div className={`text-[${textColor}]`}>
           <RichText data={JSON.parse(content)} />
         </div>
       </article>

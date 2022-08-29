@@ -42,15 +42,17 @@ export default function StatePage({ orgLinks, seo }) {
             be listed here, please send their Web address to
             <a href="mailto:connect@imcon.church"> connect@imcon.church</a>.
           </h4>
-          {orgTypes
-            .filter((orgLink) => orgLink.attributes?.organizationType === type)
-            .map((type) => (
-              <>
-                <h2 className="mx-auto text-mediumBlue mb-4 text-center">
-                  {type}
-                </h2>
-                <ul role="list" className="mx-auto mt-4 space-y-3 lg:max-w-lg">
-                  {orgLinks?.map((orgLink) => {
+          {orgTypes.map((type) => (
+            <>
+              <h2 className="mx-auto text-mediumBlue mb-4 text-center">
+                {type}
+              </h2>
+              <ul role="list" className="mx-auto my-6 space-y-3 lg:max-w-lg">
+                {orgLinks
+                  ?.filter(
+                    (orgLink) => orgLink.attributes?.organizationType === type
+                  )
+                  .map((orgLink) => {
                     const slug = orgLink.attributes.orgSlug;
                     return (
                       <li
@@ -70,9 +72,9 @@ export default function StatePage({ orgLinks, seo }) {
                       </li>
                     );
                   })}
-                </ul>
-              </>
-            ))}
+              </ul>
+            </>
+          ))}
         </>
       );
     } else {
