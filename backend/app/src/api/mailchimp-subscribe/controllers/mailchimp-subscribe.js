@@ -8,6 +8,7 @@ module.exports = {
   subscribe: async (ctx, next) => {
     const { email } = ctx.request.body;
     const { fullName } = ctx.request.body;
+    const { subscribe } = ctx.request.body;
     if (!email || !fullName) {
       ctx.status = 400;
       ctx.body = "Email and full name are required";
@@ -22,7 +23,7 @@ module.exports = {
           body: {
             email_address: email,
             full_name: fullName,
-            status: "subscribed",
+            status: subscribe === true ? "subscribed" : "unsubscribed",
           },
         });
       const { _links, ...res } = response;

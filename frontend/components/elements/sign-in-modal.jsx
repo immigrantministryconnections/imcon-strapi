@@ -112,7 +112,10 @@ export default function SignInModal() {
                       </div>
                     )}
                     {!loading ? (
-                      <SignInForm onSubmit={onSubmit} />
+                      <SignInForm
+                        onSubmit={onSubmit}
+                        onClose={handleModalToggle}
+                      />
                     ) : (
                       <div className="my-8 text-center">Signing In...</div>
                     )}

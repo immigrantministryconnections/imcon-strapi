@@ -129,6 +129,26 @@ export default function SignUpForm({ onSubmit, submitErrors }) {
         </div>
       </div>
 
+      <div className="relative flex items-start">
+        <div className="flex h-5 items-center">
+          <input
+            id="subscribe"
+            aria-describedby="comments-description"
+            name="subscribe"
+            type="checkbox"
+            defaultValue={false}
+            defaultChecked={false}
+            className="h-4 w-4 rounded border-gray-300 text-lightBlue focus:ring-mediumBlue"
+            {...register('subscribe')}
+          />
+        </div>
+        <div className="ml-3 text-sm">
+          <span id="comments-description" className="text-mediumBlue">
+            Please subscribe me to your blogs
+          </span>
+        </div>
+      </div>
+
       <div>
         <button
           type="submit"

@@ -1,8 +1,10 @@
+import Link from 'next/link';
+
 import { useForm } from 'react-hook-form';
 
 import { LockClosedIcon } from '@heroicons/react/solid';
 
-export default function SignInForm({ onSubmit }) {
+export default function SignInForm({ onSubmit, onClose }) {
   const {
     register,
     handleSubmit,
@@ -48,12 +50,14 @@ export default function SignInForm({ onSubmit }) {
 
       <div className="flex items-center justify-between">
         <div className="text-sm">
-          <a
-            href="#"
-            className="font-medium text-indigo-600 hover:text-indigo-500"
-          >
-            Forgot your password?
-          </a>
+          <Link href="/auth/forgot-password">
+            <a
+              onClick={onClose}
+              className="font-medium text-lightBlue hover:text-mediumBlue"
+            >
+              Forgot your password?
+            </a>
+          </Link>
         </div>
       </div>
 

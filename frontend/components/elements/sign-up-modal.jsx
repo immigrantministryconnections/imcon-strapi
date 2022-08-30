@@ -10,7 +10,7 @@ import SuccessSection from './success-section';
 
 export default function SignInModal() {
   const { hideModal, showModal, store } = useModalContext();
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   const [errors, setErrors] = useState();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState();
@@ -66,7 +66,11 @@ export default function SignInModal() {
         headers: {
           'content-type': 'application/json',
         },
-        body: JSON.stringify({ email: data.email, fullName }),
+        body: JSON.stringify({
+          email: data.email,
+          fullName,
+          subscribe: data.subscribe,
+        }),
       });
       // send to hubspot
       const hubspotRes = await fetch(getStrapiURL('/api/hubspot-subscribe'), {

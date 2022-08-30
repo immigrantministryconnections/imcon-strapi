@@ -361,3 +361,28 @@ export async function updateUser({
 
   return await signUpRes.json();
 }
+
+export async function forgotPassword({ email }) {
+  const forgotRes = await fetch(
+    `${getStrapiURL('/api/auth/forgot-password')}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    }
+  );
+  return await forgotRes.json();
+}
+
+export async function resetPassword({ code, password, passwordConfirmation }) {
+  const resetRes = await fetch(`${getStrapiURL('/api/auth/reset-password')}`, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify({ code, password, passwordConfirmation }),
+  });
+  return await resetRes.json();
+}
