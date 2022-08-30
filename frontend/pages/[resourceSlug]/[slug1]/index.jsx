@@ -80,16 +80,7 @@ export default function StatePage({
               </Link>
             </h4>
           )}
-          {router.asPath.includes('disciple-making') && (
-            <h4 className="text-mediumBlue text-center mt-4 mb-8">
-              The organizations on this page provide media in multiple
-              languages. For resources focused on one language group, visit our{' '}
-              <Link href="/national-resources/peoplegroups">
-                <a>Serving Specific People Groups</a>
-              </Link>{' '}
-              page
-            </h4>
-          )}
+
           {!!imageLinks?.length && (
             <ul
               role="list"

@@ -42,6 +42,16 @@ export default function StatePage({ orgLinks, seo }) {
             be listed here, please send their Web address to
             <a href="mailto:connect@imcon.church"> connect@imcon.church</a>.
           </h4>
+          {router.asPath.includes('bibles-plus-media/media') && (
+            <h4 className="text-mediumBlue text-center mt-4 mb-8">
+              The organizations on this page provide media in multiple
+              languages. For resources focused on one language group, visit our{' '}
+              <Link href="/national-resources/peoplegroups">
+                <a>Serving Specific People Groups</a>
+              </Link>{' '}
+              page
+            </h4>
+          )}
           {orgTypes.map((type) => (
             <>
               <h2 className="mx-auto text-mediumBlue mb-4 text-center">
