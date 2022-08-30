@@ -75,7 +75,7 @@ export default function StatePage({
             <h4 className="text-mediumBlue text-center mt-4 mb-8">
               This page lists resources for individual people groups. For other
               ministry resources in multiple languages, visit our{' '}
-              <Link href="/national-resources/disciple-making">
+              <Link href="/national-resources/bibles-plus-media/media">
                 <a>Disciple Making Media page</a>
               </Link>
             </h4>
