@@ -53,7 +53,7 @@ export default function SignInForm({ onSubmit, onClose }) {
           <Link href="/auth/forgot-password">
             <a
               onClick={onClose}
-              className="font-medium text-indigo-600 hover:text-indigo-500"
+              className="font-medium text-lightBlue hover:text-mediumBlue"
             >
               Forgot your password?
             </a>

@@ -31,7 +31,7 @@ export default function OptionalForm({ onSubmit, onClose, submitErrors }) {
           type="state"
           autoComplete="state"
           className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-          placeholder="State of residence"
+          placeholder="In what metro / state do you reside?"
           {...register('state')}
         />
       </div>
@@ -45,7 +45,7 @@ export default function OptionalForm({ onSubmit, onClose, submitErrors }) {
           name="ethnicities"
           type="text"
           className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-          placeholder="Ethnicities served"
+          placeholder="Which people groups are you most passionate about serving?"
           {...register('ethnicities')}
         />
       </div>
@@ -59,7 +59,7 @@ export default function OptionalForm({ onSubmit, onClose, submitErrors }) {
           name="ministries"
           type="text"
           className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-          placeholder="Types of ministry"
+          placeholder="What kinds of ministries are you most passionate about?"
           {...register('ministryTypes')}
         />
       </div>
