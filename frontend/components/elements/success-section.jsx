@@ -1,7 +1,7 @@
 export default function SuccessSection({ signInModal }) {
   return (
     <div className="flex flex-col item-center justify-center">
-      <span className="bg-lightBlue/50">
+      <span className="flex text-white items-center justify-center rounded-lg bg-lightBlue/50 p-2 mb-4">
         Your account has been successfully created.
       </span>
       <button

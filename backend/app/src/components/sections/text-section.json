@@ -17,6 +17,30 @@
     "centerText": {
       "type": "boolean",
       "default": false
+    },
+    "titleColor": {
+      "type": "enumeration",
+      "enum": [
+        "Light Blue",
+        "Medium Blue",
+        "Dark Blue",
+        "Yellow",
+        "Orange",
+        "Black"
+      ],
+      "default": "Medium Blue"
+    },
+    "contentColor": {
+      "type": "enumeration",
+      "enum": [
+        "Light Blue",
+        "Medium Blue",
+        "Dark Blue",
+        "Yellow",
+        "Orange",
+        "Black"
+      ],
+      "default": "Medium Blue"
     }
   }
 }

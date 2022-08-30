@@ -7,6 +7,8 @@ import { useSession, signIn, getSession } from 'next-auth/react';
 import { useModalContext, MODAL_TYPES } from 'utils/context/modal-context';
 
 import NextImage from './image';
+import { colors } from '@/styles/colors';
+import { textSize } from '@/styles/text-size';
 
 export default function ImageLinkWithText({ imageLink }) {
   const { data: session } = useSession();
@@ -54,7 +56,11 @@ export default function ImageLinkWithText({ imageLink }) {
           </a>
         </Link>
       )}
-      <h3 className="font-medium text-lg text-[#1e1e1e]">
+      <h3
+        className={`font-medium text-${
+          textSize[imageLink.textSize || 'large']
+        } text-${colors[imageLink.textColor || 'mediumBlue']}`}
+      >
         {imageLink.text || imageLink.title}
       </h3>
     </div>

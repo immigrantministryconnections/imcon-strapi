@@ -12,6 +12,7 @@ import Seo from '@/components/elements/seo';
 import Sections from '@/components/sections';
 import Layout from '@/components/layout';
 import { fetchAPI, getPageData } from 'utils/api';
+import { colors, textSize } from '@/styles/colors';
 
 /**
  * This page is a dynamic page that will render the top-level
@@ -33,13 +34,34 @@ export default function ResourcesPage({ seo, imageLinks, sections }) {
     sessionRes();
   }, []);
 
+  // Sort alphabetically
+  if (imageLinks && imageLinks.length) {
+    if (imageLinks[0].attributes?.order) {
+      // Sort by order field if we have one
+      imageLinks.sort(
+        (a, b) => a.attributes?.order || 0 - b.attributes?.order || 0
+      );
+    } else {
+      imageLinks.sort((a, b) => {
+        const aName = a.attributes.name || a.attributes.title;
+        const bName = b.attributes.name || b.attributes.title;
+        return aName.localeCompare(bName);
+      });
+    }
+  }
+
   const renderContent = (session) => {
     if (!!sections) {
       return <Sections sections={sections} />;
     } else if (session) {
       return (
         <>
-          <ul role="list" className="mx-auto">
+          <ul
+            role="list"
+            className={`grid ${
+              imageLinks?.length > 2 && 'lg:grid-cols-3 lg:gap-x-3'
+            }   mx-auto`}
+          >
             {imageLinks?.map((imageLink) => {
               const slug =
                 imageLink.attributes?.stateSlug ||
@@ -56,14 +78,18 @@ export default function ResourcesPage({ seo, imageLinks, sections }) {
                       href={`${router.pathname}/${slug}`}
                     >
                       <a>
-                        <NextImage
-                          media={imageLink.attributes.image}
-                          height={200}
-                          width={600}
-                        />
+                        {imageLink.attributes.image && (
+                          <NextImage
+                            media={imageLink.attributes.image}
+                            height={200}
+                            width={600}
+                          />
+                        )}
                       </a>
                     </Link>
-                    <h3 className="font-medium text-lg text-[#1e1e1e]">
+                    <h3
+                      className={`font-medium text-${'lg'} text-${'mediumBlue'} text-center`}
+                    >
                       {imageLink.attributes.name || imageLink.attributes.title}
                     </h3>
                   </div>
@@ -132,18 +158,30 @@ export async function getStaticProps(context) {
     case 'canadian-resources':
       pageData = await fetchAPI('/ca-provinces', {
         field: ['name', 'provinceSlug'],
+        pagination: {
+          page: 1,
+          pageSize: 2000,
+        },
         populate: ['image'],
       });
       break;
     case 'national-resources':
       pageData = await fetchAPI('/resource-categories', {
         field: ['name', 'categorySlug'],
+        pagination: {
+          page: 1,
+          pageSize: 2000,
+        },
         populate: ['image'],
       });
       break;
     case 'local-resources':
       pageData = await fetchAPI('/us-states', {
         field: ['name', 'stateSlug'],
+        pagination: {
+          page: 1,
+          pageSize: 2000,
+        },
         populate: ['image'],
       });
       break;

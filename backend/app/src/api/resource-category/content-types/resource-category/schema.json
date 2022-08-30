@@ -27,12 +27,6 @@
       "targetField": "title",
       "required": true
     },
-    "subcategory": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::subcategory.subcategory",
-      "inversedBy": "resource_category"
-    },
     "image": {
       "type": "media",
       "multiple": false,
@@ -45,6 +39,13 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::resource.resource"
+    },
+    "order": {
+      "type": "integer",
+      "required": true,
+      "unique": false,
+      "default": 0,
+      "min": 0
     }
   }
 }

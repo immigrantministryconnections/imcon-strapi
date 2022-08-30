@@ -13,6 +13,17 @@
     "center": {
       "type": "boolean",
       "default": false
+    },
+    "textColor": {
+      "type": "enumeration",
+      "enum": [
+        "Light Blue",
+        "Medium Blue",
+        "Dark Blue",
+        "Yellow",
+        "Orange",
+        "Black"
+      ]
     }
   }
 }

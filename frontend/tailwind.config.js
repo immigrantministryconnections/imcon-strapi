@@ -8,11 +8,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        darkBlue: '#133e5dff',
-        mediumBlue: '#1d5b8dff',
-        lightBlue: '#247ab9ff',
-        imconOrange: '#bd6719ff',
-        imconYellow: '#edb11cff',
+        darkBlue: '#133e5d',
+        mediumBlue: '#1d5b8d',
+        lightBlue: '#247ab9',
+        imconOrange: '#bd6719',
+        imconYellow: '#edb11c',
       },
       fontFamily: {
         sans: ['Corbel', ...defaultTheme.fontFamily.sans],

@@ -29,8 +29,7 @@
     "resource_category": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::resource-category.resource-category",
-      "mappedBy": "subcategory"
+      "target": "api::resource-category.resource-category"
     },
     "image": {
       "type": "media",

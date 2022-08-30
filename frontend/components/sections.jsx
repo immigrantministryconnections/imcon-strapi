@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 
 import Hero from '@/components/sections/hero';
 import ImageLinkGrid from '@/components/sections/image-link-grid';
-import BlogStyleSection from '@/components/sections/blog-style-section';
 import TextSection from '@/components/sections/text-section';
 import LeadershipSection from '@/components/sections/leadership-section';
 import SimpleText from '@/components/sections/simple-text';
@@ -12,7 +11,6 @@ import LinkList from '@/components/sections/link-list-section';
 // Map Strapi sections to section components
 const sectionComponents = {
   ComponentSectionsHero: Hero,
-  ComponentSectionsBlogStyleSection: BlogStyleSection,
   ComponentSectionsImageLinkGrid: ImageLinkGrid,
   ComponentSectionsTextSection: TextSection,
   ComponentSectionsLeadershipSection: LeadershipSection,
@@ -57,7 +55,7 @@ export default function Sections({ sections, preview }) {
       {preview && <PreviewModeBanner />}
       {sections?.map((section) =>
         section ? (
-          <section key={`${section.__typename}${section.id}`} className="my-8">
+          <section key={`${section.__typename}${section.id}`} className="my-4">
             <Section sectionData={section} />
           </section>
         ) : (

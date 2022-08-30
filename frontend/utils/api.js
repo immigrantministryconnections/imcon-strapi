@@ -32,7 +32,6 @@ export async function fetchAPI(path, urlParamsObject = {}, options = {}) {
   const response = await fetch(requestUrl, mergedOptions);
 
   const data = await response.json();
-  console.log({ error: data.error });
 
   // Handle response
   if (!response.ok) {
@@ -135,7 +134,6 @@ export async function getGlobalData() {
  * @param {boolean} options.preview router isPreview value
  */
 export async function getPageData({ slug, preview }) {
-  console.log({ preview });
   // Find the pages that match this slug
   const gqlEndpoint = getStrapiURL('/graphql');
   const pagesRes = await fetch(gqlEndpoint, {
@@ -185,6 +183,8 @@ export async function getPageData({ slug, preview }) {
                   title
                   content
                   centerText
+                  titleColor
+                  contentColor
                 }
                 ... on ComponentSectionsSimpleText {
                   id
@@ -272,17 +272,6 @@ export async function getPageData({ slug, preview }) {
                       }
                     }
                   }
-                }
-                ...on ComponentSectionsBlogStyleSection {
-                  id
-                  blogSectionTitle: title
-                  author
-                    content
-                    authorLink {
-                      text
-                      url
-                      newTab
-                    }
                 }
               }
             }

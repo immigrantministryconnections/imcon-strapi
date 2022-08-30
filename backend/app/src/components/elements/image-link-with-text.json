@@ -13,6 +13,27 @@
     "imageLink": {
       "type": "component",
       "component": "links.link-image"
+    },
+    "textColor": {
+      "type": "enumeration",
+      "enum": [
+        "Light Blue",
+        "Medium Blue",
+        "Dark Blue",
+        "Yellow",
+        "Orange"
+      ],
+      "default": "Medium Blue"
+    },
+    "textSize": {
+      "type": "enumeration",
+      "enum": [
+        "tiny",
+        "small",
+        "medium",
+        "large"
+      ],
+      "default": "medium"
     }
   }
 }

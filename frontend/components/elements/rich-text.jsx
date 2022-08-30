@@ -26,10 +26,10 @@ export default function RichText({ data }) {
           },
         },
         list: {
-          className: 'list-inside',
+          className: 'list-outside',
         },
         paragraph: {
-          className: 'text-base text-opacity-75',
+          className: 'text-base text-opacity-75 my-3',
           actionsClassNames: {
             alignment: 'text-{alignment}', // This is a substitution placeholder: left or center.
           },

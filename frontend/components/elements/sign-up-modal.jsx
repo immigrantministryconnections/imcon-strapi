@@ -5,7 +5,7 @@ import { useModalContext, MODAL_TYPES } from 'utils/context/modal-context';
 import NextImage from 'next/image';
 import SignUpForm from './sign-up-form';
 import OptionalForm from './optional-form';
-import { signUp, updateUser } from 'utils/api';
+import { fetchAPI, getStrapiURL, signUp, updateUser } from 'utils/api';
 import SuccessSection from './success-section';
 
 export default function SignInModal() {
@@ -14,6 +14,7 @@ export default function SignInModal() {
   const [errors, setErrors] = useState();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState();
+  const [hubspotUser, setHubspotUser] = useState();
 
   const handleModalToggle = () => {
     hideModal();
@@ -30,6 +31,7 @@ export default function SignInModal() {
   const cancelButtonRef = useRef(null);
 
   const onSubmitSignup = async (data) => {
+    let fullName = `${data.firstName} ${data.lastName}`;
     if (data.honeypot === '') {
       setLoading(true);
       try {
@@ -39,12 +41,14 @@ export default function SignInModal() {
           firstName: data.firstName,
           lastName: data.lastName,
         });
+
         if (signUpRes?.error) {
           setErrors({
             error: signUpRes.error?.message || 'There was en error signing up.',
           });
         } else {
           setErrors(null);
+
           setUser(signUpRes);
           setStep(step + 1);
         }
@@ -56,6 +60,28 @@ export default function SignInModal() {
         });
         setLoading(false);
       }
+      // send to mailchimp
+      await fetch(getStrapiURL('/api/mailchimp-subscribe'), {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({ email: data.email, fullName }),
+      });
+      // send to hubspot
+      const hubspotRes = await fetch(getStrapiURL('/api/hubspot-subscribe'), {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: data.email,
+          firstName: data.firstName,
+          lastName: data.lastName,
+        }),
+      });
+      const resJson = await hubspotRes.json();
+      setHubspotUser(resJson.id);
     }
   };
 
@@ -75,6 +101,23 @@ export default function SignInModal() {
             error: signUpRes.error?.message || 'There was en error signing up.',
           });
         } else {
+          const hubspotUpdate = await fetch(
+            getStrapiURL('/api/hubspot-subscribe'),
+            {
+              method: 'PUT',
+              headers: {
+                'content-type': 'application/json',
+              },
+              body: JSON.stringify({
+                id: hubspotUser,
+                state: data?.state || '',
+                ministryfocus: data?.ministryTypes || '',
+                ethnicfocus: data?.ethnicities || '',
+                salariedministry:
+                  data?.salariedMinistry === true ? 'yes' : 'no',
+              }),
+            }
+          );
           setErrors(null);
           setStep(step + 1);
         }

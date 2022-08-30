@@ -25,32 +25,56 @@ export default function StatePage({ orgLinks, seo }) {
     sessionRes();
   }, [session]);
 
+  let orgTypes = [];
+  if (orgLinks && orgLinks.length) {
+    orgLinks.sort((a, b) => a.attributes.name.localeCompare(b.attributes.name));
+    orgTypes = Array.from(
+      new Set(orgLinks.map((org) => org.attributes?.organizationType))
+    ).filter((org) => org !== undefined);
+  }
+
   const renderContent = (userSession) => {
     if (userSession) {
       return (
         <>
-          <ul role="list" className="mx-auto">
-            {orgLinks.map((orgLink) => {
-              const slug = orgLink.attributes.orgSlug;
-              return (
-                <li
-                  key={orgLink.id}
-                  className="flex items-center justify-center mx-auto py-4"
-                >
-                  <div className="flex flex-col items-center cursor-pointer">
-                    <Link
-                      as={`/organization/${slug}`}
-                      href={`/organization/${slug}`}
-                    >
-                      <a className="font-medium text-lg text-blue-500 hover:text-blue-400 underline">
-                        {orgLink.attributes.name}
-                      </a>
-                    </Link>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
+          <h4 className="text-mediumBlue text-center mt-4 mb-8">
+            If you know any ministry organization website that you feel should
+            be listed here, please send their Web address to
+            <a href="mailto:connect@imcon.church"> connect@imcon.church</a>.
+          </h4>
+          {orgTypes.map((type) => (
+            <>
+              <h2 className="mx-auto text-mediumBlue mb-4 text-center">
+                {type}
+              </h2>
+              <ul role="list" className="mx-auto my-6 space-y-3 lg:max-w-lg">
+                {orgLinks
+                  ?.filter(
+                    (orgLink) => orgLink.attributes?.organizationType === type
+                  )
+                  .map((orgLink) => {
+                    const slug = orgLink.attributes.orgSlug;
+                    return (
+                      <li
+                        key={orgLink.id}
+                        className="shadow overflow-hidden px-4 py-4 sm:px-6 rounded-md bg-imconOrange/20"
+                      >
+                        <div className="flex flex-col items-center text-center cursor-pointer">
+                          <Link
+                            as={`/organization/${slug}`}
+                            href={`/organization/${slug}`}
+                          >
+                            <a className="font-medium text-lg text-blue-500 hover:text-blue-400 underline">
+                              {orgLink.attributes.name}
+                            </a>
+                          </Link>
+                        </div>
+                      </li>
+                    );
+                  })}
+              </ul>
+            </>
+          ))}
         </>
       );
     } else {
@@ -71,6 +95,10 @@ export async function getStaticPaths(context) {
   const [cityPages, subcategoryPages] = await Promise.all([
     fetchAPI('/city-regions', {
       fields: ['citySlug'],
+      pagination: {
+        page: 1,
+        pageSize: 2000,
+      },
       populate: {
         ca_province: { fields: ['provinceSlug'] },
         us_state: { fields: ['stateSlug'] },
@@ -79,6 +107,10 @@ export async function getStaticPaths(context) {
     }),
     fetchAPI('/subcategories', {
       fields: ['subcategorySlug'],
+      pagination: {
+        page: 1,
+        pageSize: 2000,
+      },
       populate: {
         resource_category: { fields: ['categorySlug'] },
         resource: { fields: ['resourceSlug'] },
@@ -171,12 +203,14 @@ export async function getStaticProps(context) {
   // Get all the orgs that belong at this level
   pageOrgs = await fetchAPI('/orgs', {
     populate: '*',
-    filters: {
-      ...queryFilter,
-      resource: {
-        resourceSlug: {
-          $eq: $resourceSlug,
-        },
+    filters: queryFilter,
+    pagination: {
+      page: 1,
+      pageSize: 1000,
+    },
+    resource: {
+      resourceSlug: {
+        $eq: $resourceSlug,
       },
     },
   });

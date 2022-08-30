@@ -1,0 +1,38 @@
+name: Build and Deploy to Netlify
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+  repository_dispatch:
+    types:
+      - webhook
+jobs:
+  pre-job:
+    name: Pre-job
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: technote-space/auto-cancel-redundant-workflow@v1
+
+      - name: Cancel redundant workflows
+        run: echo "Cancel redundant workflows finished"
+  automate-netlify-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: 'Deploy to Netlify Prod'
+        run: |
+          npm --version && node --version
+
+          cd frontend && npm install
+
+          cd ../
+
+          npm i -D netlify-cli
+
+          cat netlify.toml
+
+          netlify deploy --build --prod --auth ${{secrets.NETLIFY_AUTH_TOKEN}} --site ${{secrets.NETLIFY_SITE_ID}} --message "IMCON deployed from github actions"
