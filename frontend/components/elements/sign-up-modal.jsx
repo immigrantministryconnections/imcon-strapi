@@ -10,7 +10,7 @@ import SuccessSection from './success-section';
 
 export default function SignInModal() {
   const { hideModal, showModal, store } = useModalContext();
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const [errors, setErrors] = useState();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState();
@@ -180,6 +180,15 @@ export default function SignInModal() {
                         {step === 2 &&
                           'Optional: To better serve you and others, please provide the following voluntary information'}
                       </Dialog.Title>
+                      <p className="text-center text-md text-gray-600">
+                        Or{' '}
+                        <button
+                          onClick={signInModal}
+                          className="font-medium text-indigo-600 hover:text-indigo-500 underline"
+                        >
+                          sign in to your existing account
+                        </button>
+                      </p>
                     </div>
                     {step === 1 && (
                       <SignUpForm

@@ -21,7 +21,7 @@ export default function Navbar({ navbar, session }) {
   const [searchResults, setSearchResults] = useState();
   const { showModal } = useModalContext();
   const signinModal = () => {
-    showModal(MODAL_TYPES.SIGNIN_MODAL, {});
+    showModal(MODAL_TYPES.SIGNUP_MODAL, {});
   };
 
   const sendQuery = async (query) => {
