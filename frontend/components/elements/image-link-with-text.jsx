@@ -16,7 +16,7 @@ export default function ImageLinkWithText({ imageLink }) {
   const [userSession, setUserSession] = useState(null);
   const { showModal } = useModalContext();
   const createModal = () => {
-    showModal(MODAL_TYPES.SIGNIN_MODAL, {});
+    showModal(MODAL_TYPES.SIGNUP_MODAL, {});
   };
 
   useEffect(() => {
