@@ -1,11 +1,11 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useModalContext, MODAL_TYPES } from 'utils/context/modal-context';
 import NextImage from 'next/image';
 import SignUpForm from './sign-up-form';
 import OptionalForm from './optional-form';
-import { fetchAPI, getStrapiURL, signUp, updateUser } from 'utils/api';
+import { getStrapiURL, signUp, updateUser } from 'utils/api';
 import SuccessSection from './success-section';
 
 export default function SignInModal() {
@@ -69,7 +69,7 @@ export default function SignInModal() {
         body: JSON.stringify({
           email: data.email,
           fullName,
-          subscribe: data.subscribe,
+          subscribe: !!data.subscribe,
         }),
       });
       // send to hubspot
