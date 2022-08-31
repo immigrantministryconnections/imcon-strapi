@@ -136,8 +136,7 @@ export default function SignUpForm({ onSubmit, submitErrors }) {
             aria-describedby="comments-description"
             name="subscribe"
             type="checkbox"
-            defaultValue={false}
-            defaultChecked={false}
+            defaultChecked={true}
             className="h-4 w-4 rounded border-gray-300 text-lightBlue focus:ring-mediumBlue"
             {...register('subscribe')}
           />

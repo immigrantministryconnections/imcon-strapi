@@ -8,9 +8,6 @@
 [context.branch-deploy]
   command = "yarn run noIndex"
 
-[context.deploy-preview]
-  command = "yarn run noIndex"
-
 [[plugins]]
   package = 'netlify-plugin-contextual-env'
 

@@ -23,7 +23,7 @@ module.exports = {
           body: {
             email_address: email,
             full_name: fullName,
-            status: subscribe === true ? "subscribed" : "unsubscribed",
+            status: !!subscribe === true ? "subscribed" : "unsubscribed",
           },
         });
       const { _links, ...res } = response;

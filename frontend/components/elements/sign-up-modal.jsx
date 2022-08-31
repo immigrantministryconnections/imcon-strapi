@@ -1,16 +1,16 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useModalContext, MODAL_TYPES } from 'utils/context/modal-context';
 import NextImage from 'next/image';
 import SignUpForm from './sign-up-form';
 import OptionalForm from './optional-form';
-import { fetchAPI, getStrapiURL, signUp, updateUser } from 'utils/api';
+import { getStrapiURL, signUp, updateUser } from 'utils/api';
 import SuccessSection from './success-section';
 
 export default function SignInModal() {
   const { hideModal, showModal, store } = useModalContext();
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const [errors, setErrors] = useState();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState();
@@ -69,7 +69,7 @@ export default function SignInModal() {
         body: JSON.stringify({
           email: data.email,
           fullName,
-          subscribe: data.subscribe,
+          subscribe: !!data.subscribe,
         }),
       });
       // send to hubspot
@@ -180,6 +180,15 @@ export default function SignInModal() {
                         {step === 2 &&
                           'Optional: To better serve you and others, please provide the following voluntary information'}
                       </Dialog.Title>
+                      <p className="text-center text-md text-gray-600">
+                        Or{' '}
+                        <button
+                          onClick={signInModal}
+                          className="font-medium text-indigo-600 hover:text-indigo-500 underline"
+                        >
+                          sign in to your existing account
+                        </button>
+                      </p>
                     </div>
                     {step === 1 && (
                       <SignUpForm
