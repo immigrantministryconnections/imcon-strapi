@@ -24,6 +24,7 @@ module.exports = {
             email_address: email,
             full_name: fullName,
             status: !!subscribe === true ? "subscribed" : "unsubscribed",
+            tags: [{ name: "IMCON", status: "active" }],
           },
         });
       const { _links, ...res } = response;
