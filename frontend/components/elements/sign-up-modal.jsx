@@ -31,7 +31,6 @@ export default function SignInModal() {
   const cancelButtonRef = useRef(null);
 
   const onSubmitSignup = async (data) => {
-    let fullName = `${data.firstName} ${data.lastName}`;
     if (data.honeypot === '') {
       setLoading(true);
       try {
@@ -68,7 +67,8 @@ export default function SignInModal() {
         },
         body: JSON.stringify({
           email: data.email,
-          fullName,
+          firstName: data.firstName,
+          lastName: data.lastName,
           subscribe: !!data.subscribe,
         }),
       });

@@ -6,9 +6,8 @@
 
 module.exports = {
   subscribe: async (ctx, next) => {
-    const { email } = ctx.request.body;
-    const { fullName } = ctx.request.body;
-    const { subscribe } = ctx.request.body;
+    const { email, firstName, lastName, subscribe } = ctx.request.body;
+
     if (!email || !fullName) {
       ctx.status = 400;
       ctx.body = "Email and full name are required";
@@ -22,9 +21,12 @@ module.exports = {
           path: `/lists/${process.env.MAILCHIMP_LIST_ID}/members`,
           body: {
             email_address: email,
-            full_name: fullName,
             status: !!subscribe === true ? "subscribed" : "unsubscribed",
             tags: ["IMCON"],
+            merge_fields: {
+              FNAME: firstName,
+              LNAME: lastName,
+            },
           },
         });
       const { _links, ...res } = response;
