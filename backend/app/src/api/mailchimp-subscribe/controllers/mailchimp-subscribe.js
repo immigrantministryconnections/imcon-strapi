@@ -8,7 +8,7 @@ module.exports = {
   subscribe: async (ctx, next) => {
     const { email, firstName, lastName, subscribe } = ctx.request.body;
 
-    if (!email || !fullName) {
+    if (!email || !firstName || !lastName) {
       ctx.status = 400;
       ctx.body = "Email and full name are required";
       return;
