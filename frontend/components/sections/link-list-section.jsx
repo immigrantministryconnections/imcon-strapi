@@ -7,13 +7,13 @@ export default function LinkList({ links, type }) {
     links.filter((link) => link.attributes?.organizationType === type);
   }
   return (
-    <ul role="list" className="mx-auto my-6 space-y-3 lg:max-w-lg">
-      {links.map((link) => {
+    <ul role="list" className="mx-auto space-y-3 lg:max-w-3xl mb-6">
+      {links?.map((link) => {
         const slug = link.attributes.orgSlug;
         return (
           <li
             key={link.id}
-            className="shadow overflow-hidden px-4 py-4 sm:px-6 rounded-md bg-imconOrange/20"
+            className="overflow-hidden bg-white px-4 py-4 shadow drop-shadow-md sm:rounded-md sm:px-6"
           >
             <div className="flex flex-col items-center text-center cursor-pointer">
               <Link as={`/organization/${slug}`} href={`/organization/${slug}`}>

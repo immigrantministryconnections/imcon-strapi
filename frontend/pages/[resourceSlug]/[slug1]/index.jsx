@@ -150,12 +150,12 @@ export default function StatePage({
 
           {!stateData &&
             orgTypes.map((type) => (
-              <>
+              <div key={`type-${type}`}>
                 <h2 className="mx-auto mb-4 text-center text-mediumBlue">
                   {type}
                 </h2>
-                <LinkList orgLinks={orgLinks} type={type} />
-              </>
+                <LinkList links={orgLinks} type={type} />
+              </div>
             ))}
           {subcatLinks && <LinkList orgLinks={subcatLinks} />}
         </>

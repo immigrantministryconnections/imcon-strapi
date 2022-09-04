@@ -58,7 +58,7 @@ export default function StatePage({ orgLinks, seo }) {
               <h2 className="mx-auto text-mediumBlue mb-4 text-center">
                 {type}
               </h2>
-              <LinkList links={orgLinks} type={type} />
+              {orgLinks && <LinkList links={orgLinks} type={type} />}
             </>
           ))}
         </>
