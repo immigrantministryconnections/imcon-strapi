@@ -11,8 +11,7 @@ import NextImage from '@/components/elements/image';
 import Seo from '@/components/elements/seo';
 import Sections from '@/components/sections';
 import Layout from '@/components/layout';
-import { fetchAPI, getPageData } from 'utils/api';
-import { colors, textSize } from '@/styles/colors';
+import { fetchAPI } from 'utils/api';
 
 /**
  * This page is a dynamic page that will render the top-level

@@ -9,6 +9,7 @@ import Layout from '@/components/layout';
 import Seo from '@/components/elements/seo';
 
 import { fetchAPI } from 'utils/api';
+import LinkList from '@/components/sections/link-list-section';
 
 export default function StatePage({ orgLinks, seo }) {
   const { data: session } = useSession();
@@ -57,32 +58,7 @@ export default function StatePage({ orgLinks, seo }) {
               <h2 className="mx-auto text-mediumBlue mb-4 text-center">
                 {type}
               </h2>
-              <ul role="list" className="mx-auto my-6 space-y-3 lg:max-w-lg">
-                {orgLinks
-                  ?.filter(
-                    (orgLink) => orgLink.attributes?.organizationType === type
-                  )
-                  .map((orgLink) => {
-                    const slug = orgLink.attributes.orgSlug;
-                    return (
-                      <li
-                        key={orgLink.id}
-                        className="shadow overflow-hidden px-4 py-4 sm:px-6 rounded-md bg-imconOrange/20"
-                      >
-                        <div className="flex flex-col items-center text-center cursor-pointer">
-                          <Link
-                            as={`/organization/${slug}`}
-                            href={`/organization/${slug}`}
-                          >
-                            <a className="font-medium text-lg text-blue-500 hover:text-blue-400 underline">
-                              {orgLink.attributes.name}
-                            </a>
-                          </Link>
-                        </div>
-                      </li>
-                    );
-                  })}
-              </ul>
+              <LinkList links={orgLinks} type={type} />
             </>
           ))}
         </>
