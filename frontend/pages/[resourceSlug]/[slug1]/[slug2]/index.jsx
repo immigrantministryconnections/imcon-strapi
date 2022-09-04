@@ -187,7 +187,7 @@ export async function getStaticProps(context) {
     ? {
         us_state: {
           stateSlug: {
-            $eq: slug2.split('-')[1],
+            $eq: slug2.substring(slug2.indexOf('-') + 1),
           },
         },
       }
