@@ -115,7 +115,10 @@ export default function SignInModal() {
           });
         } else {
           // Send to hubspot in prod only
-          if (process.env.NODE_ENV === 'production' process.env.NETLIFY_CONTEXT === 'production') {
+          if (
+            process.env.NODE_ENV === 'production' &&
+            process.env.NETLIFY_CONTEXT === 'production'
+          ) {
             await fetch(getStrapiURL('/api/hubspot-subscribe'), {
               method: 'PUT',
               headers: {
