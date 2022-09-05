@@ -1,27 +1,30 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useRef, useState } from 'react';
+
+import { signIn } from 'next-auth/react';
+
 import { Dialog, Transition } from '@headlessui/react';
 import { useModalContext, MODAL_TYPES } from 'utils/context/modal-context';
 import NextImage from 'next/image';
+import { useRouter } from 'next/router';
 import SignUpForm from './sign-up-form';
 import OptionalForm from './optional-form';
 import { getStrapiURL, signUp, updateUser } from 'utils/api';
 import SuccessSection from './success-section';
 
 export default function SignInModal() {
-  const { hideModal, showModal, store } = useModalContext();
+  const { hideModal, showModal } = useModalContext();
+  const [loading, setLoading] = useState(true);
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState();
-  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   const [hubspotUser, setHubspotUser] = useState();
+
+  const router = useRouter();
 
   const handleModalToggle = () => {
     hideModal();
-  };
-
-  const createModal = () => {
-    showModal(MODAL_TYPES.SIGNUP_MODAL, {});
   };
 
   const signInModal = () => {
@@ -47,8 +50,9 @@ export default function SignInModal() {
           });
         } else {
           setErrors(null);
-
           setUser(signUpRes);
+          setEmail(data.email);
+          setPassword(data.password);
           setStep(step + 1);
         }
         setLoading(false);
@@ -59,33 +63,35 @@ export default function SignInModal() {
         });
         setLoading(false);
       }
-      // send to mailchimp
-      await fetch(getStrapiURL('/api/mailchimp-subscribe'), {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: data.email,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          subscribe: !!data.subscribe,
-        }),
-      });
-      // send to hubspot
-      const hubspotRes = await fetch(getStrapiURL('/api/hubspot-subscribe'), {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: data.email,
-          firstName: data.firstName,
-          lastName: data.lastName,
-        }),
-      });
-      const resJson = await hubspotRes.json();
-      setHubspotUser(resJson.id);
+      if (process.env.NODE_ENV === 'production') {
+        // send to mailchimp
+        await fetch(getStrapiURL('/api/mailchimp-subscribe'), {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: data.email,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            subscribe: !!data.subscribe,
+          }),
+        });
+        // send to hubspot
+        const hubspotRes = await fetch(getStrapiURL('/api/hubspot-subscribe'), {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: data.email,
+            firstName: data.firstName,
+            lastName: data.lastName,
+          }),
+        });
+        const resJson = await hubspotRes.json();
+        setHubspotUser(resJson.id);
+      }
     }
   };
 
@@ -105,9 +111,9 @@ export default function SignInModal() {
             error: signUpRes.error?.message || 'There was en error signing up.',
           });
         } else {
-          const hubspotUpdate = await fetch(
-            getStrapiURL('/api/hubspot-subscribe'),
-            {
+          // Send to hubspot in prod only
+          if (process.env.NODE_ENV === 'production') {
+            await fetch(getStrapiURL('/api/hubspot-subscribe'), {
               method: 'PUT',
               headers: {
                 'content-type': 'application/json',
@@ -120,10 +126,15 @@ export default function SignInModal() {
                 salariedministry:
                   data?.salariedMinistry === true ? 'yes' : 'no',
               }),
-            }
-          );
+            });
+          }
+
           setErrors(null);
-          setStep(step + 1);
+          await signIn('credentials', {
+            callbackUrl: `/national-resources`,
+            email,
+            password,
+          });
         }
         setLoading(false);
       } catch (error) {
@@ -201,6 +212,8 @@ export default function SignInModal() {
                         onClose={handleModalToggle}
                         submitErrors={errors}
                         onSubmit={onSubmitOptional}
+                        email={email}
+                        password={password}
                       />
                     )}
                     {step === 3 && <SuccessSection signInModal={signInModal} />}

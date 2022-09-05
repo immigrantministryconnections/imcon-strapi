@@ -6,7 +6,7 @@ export default function LinkList({ links, type }) {
   }
   return (
     <ul role="list" className="mx-auto mt-4 space-y-3 lg:max-w-lg">
-      {data.links?.map((link) => {
+      {links?.map((link) => {
         return (
           <li
             key={`howlink-${link.id}`}
