@@ -1,6 +1,9 @@
 import Link from 'next/link';
 
-export default function LinkList({ data }) {
+export default function LinkList({ links, type }) {
+  if (type) {
+    links = links.filter((link) => link.attributes?.organizationType === type);
+  }
   return (
     <ul role="list" className="mx-auto mt-4 space-y-3 lg:max-w-lg">
       {data.links?.map((link) => {
