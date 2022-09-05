@@ -11,6 +11,7 @@ import NextImage from '@/components/elements/image';
 
 import { fetchAPI } from 'utils/api';
 import Sections from '@/components/sections';
+import LinkList from '@/components/sections/link-list-section';
 
 export default function StatePage({
   seo,
@@ -149,62 +150,14 @@ export default function StatePage({
 
           {!stateData &&
             orgTypes.map((type) => (
-              <>
+              <div key={`type-${type}`}>
                 <h2 className="mx-auto mb-4 text-center text-mediumBlue">
                   {type}
                 </h2>
-                <ul role="list" className="mx-auto my-6 space-y-3 lg:max-w-lg">
-                  {orgLinks
-                    ?.filter(
-                      (orgLink) => orgLink.attributes?.organizationType === type
-                    )
-                    .map((orgLink) => {
-                      const slug = orgLink.attributes.orgSlug;
-                      return (
-                        <li
-                          key={orgLink.id}
-                          className="shadow overflow-hidden px-4 py-4 sm:px-6 rounded-md bg-imconOrange/20"
-                        >
-                          <div className="flex flex-col items-center text-center cursor-pointer">
-                            <Link
-                              as={`/organization/${slug}`}
-                              href={`/organization/${slug}`}
-                            >
-                              <a className="font-medium text-lg text-blue-500 hover:text-blue-400 underline">
-                                {orgLink.attributes.name}
-                              </a>
-                            </Link>
-                          </div>
-                        </li>
-                      );
-                    })}
-                </ul>
-              </>
+                <LinkList links={orgLinks} type={type} />
+              </div>
             ))}
-          {subcatLinks && (
-            <ul role="list" className="mx-auto">
-              {subcatLinks.map((subcatLink) => {
-                const slug = subcatLink.attributes.orgSlug;
-                return (
-                  <li
-                    key={subcatLink.id}
-                    className="flex items-center justify-center mx-auto py-4"
-                  >
-                    <div className="flex flex-col items-center cursor-pointer">
-                      <Link
-                        as={`${router.asPath}/${slug}`}
-                        href={`${router.pathname}/${slug}`}
-                      >
-                        <a className="font-medium text-lg text-blue-500 hover:text-blue-400 underline">
-                          {subcatLink.attributes.title}
-                        </a>
-                      </Link>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
+          {subcatLinks && <LinkList orgLinks={subcatLinks} />}
         </>
       );
     } else {
