@@ -63,7 +63,10 @@ export default function SignInModal() {
         });
         setLoading(false);
       }
-      if (process.env.NODE_ENV === 'production') {
+      if (
+        process.env.NODE_ENV === 'production' &&
+        process.env.NETLIFY_CONTEXT === 'production'
+      ) {
         // send to mailchimp
         await fetch(getStrapiURL('/api/mailchimp-subscribe'), {
           method: 'POST',
@@ -112,7 +115,7 @@ export default function SignInModal() {
           });
         } else {
           // Send to hubspot in prod only
-          if (process.env.NODE_ENV === 'production') {
+          if (process.env.NODE_ENV === 'production' process.env.NETLIFY_CONTEXT === 'production') {
             await fetch(getStrapiURL('/api/hubspot-subscribe'), {
               method: 'PUT',
               headers: {
