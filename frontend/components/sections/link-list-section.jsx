@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 export default function LinkList({ links, type }) {
   if (type) {
-    links.filter((link) => link.attributes?.organizationType === type);
+    links = links.filter((link) => link.attributes?.organizationType === type);
   }
   return (
     <ul role="list" className="mx-auto space-y-3 lg:max-w-3xl mb-6">
