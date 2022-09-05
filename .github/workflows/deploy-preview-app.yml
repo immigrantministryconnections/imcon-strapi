@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [opened, reopened, closed, synchronize]
     branches:
-      - 'staging'
+      - 'main'
   workflow_dispatch:
 
 jobs:
@@ -35,4 +35,4 @@ jobs:
             :sparkles: Netlify Deploy Preview Successfully Created :sparkles:
             Visit your deploy [on netlify][1]
 
-            [1]: https://deploy-preview-${{github.event.number}}--ilearnedathing.netlify.app
+            [1]: https://deploy-preview-${{github.event.number}}--imcon.netlify.app
