@@ -1,4 +1,4 @@
-name: Deploy Heroku and Netlify Preview Apps
+name: Deploy Netlify Preview App
 
 on:
   pull_request:
