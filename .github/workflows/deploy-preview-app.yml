@@ -1,0 +1,38 @@
+name: Deploy Netlify Preview App
+
+on:
+  pull_request:
+    types: [opened, reopened, closed, synchronize]
+    branches:
+      - 'main'
+  workflow_dispatch:
+
+jobs:
+  automate-review-app:
+    runs-on: ubuntu-latest
+    name: Create / Delete a Review App
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Deploy to netlify
+        if: github.event.action != 'closed' && github.event.pull_request.merged == false
+        run: |
+          npm --version && node --version
+
+          cd frontend && npm install
+
+          cd ../
+
+          npm i -D netlify-cli
+
+          netlify deploy --build --auth ${{secrets.NETLIFY_AUTH_TOKEN}} --site ${{secrets.NETLIFY_SITE_ID}} --message "Deployed with github actions" --alias "staging" --context staging
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v2
+        if: github.event.action != 'closed' && github.event.pull_request.merged == false
+        with:
+          issue-number: ${{github.event.number}}
+          body: |
+            :sparkles: Netlify Deploy Preview Successfully Created :sparkles:
+            Visit your deploy [on netlify][1]
+
+            [1]: https://deploy-preview-${{github.event.number}}--imcon.netlify.app

@@ -1,11 +1,33 @@
 import { useForm } from 'react-hook-form';
 
-export default function OptionalForm({ onSubmit, onClose, submitErrors }) {
+import { signIn } from 'next-auth/react';
+
+export default function OptionalForm({
+  onSubmit,
+  onClose,
+  submitErrors,
+  email,
+  password,
+}) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  /**
+   * We want to log the user in and send them
+   * to the national-resources page when they click
+   * skip
+   */
+  const loginOnSkip = async () => {
+    await signIn('credentials', {
+      callbackUrl: `/national-resources`,
+      email,
+      password,
+    });
+  };
+
   return (
     <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
       <input type="hidden" name="remember" defaultValue="true" />
@@ -115,7 +137,7 @@ export default function OptionalForm({ onSubmit, onClose, submitErrors }) {
           Submit
         </button>
         <button
-          onClick={onClose}
+          onClick={loginOnSkip}
           className="group relative w-full flex justify-center py-2 px-4 border border-mediumBlue text-sm font-medium rounded-md text-darkBlue bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lightBlue"
         >
           Skip
