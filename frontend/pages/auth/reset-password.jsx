@@ -32,7 +32,6 @@ export default function ResetPassword() {
           code: router.query.code,
           passwordConfirmation: data.confirmPassword,
         });
-        console.log({ resetRes });
         if (resetRes?.error) {
           setSubmitErrors({
             error:
