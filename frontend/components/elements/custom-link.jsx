@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { linkPropTypes } from 'utils/types';
 
 const CustomLink = ({ link, children }) => {
-  console.log({ link });
   const url = link?.url || link;
   const isInternalLink = url.startsWith('/');
 

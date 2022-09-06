@@ -21,7 +21,7 @@ export default function BlogPosts({ posts }) {
             return (
               <li
                 key={post.id}
-                className="shadow overflow-hidden px-4 py-4 sm:px-6 rounded-md bg-imconOrange/20"
+                className="shadow-md drop-shadow-lg overflow-hidden px-4 py-4 sm:px-6 rounded-md"
               >
                 <div className="flex flex-col items-center text-center cursor-pointer">
                   <Link as={`/blog/${slug}`} href={`/blog/${slug}`}>
