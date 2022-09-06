@@ -1,7 +1,8 @@
 import Link from 'next/link';
 
-export default function LinkList({ links, type }) {
-  if (type) {
+export default function LinkList({ data }) {
+  let { links } = data;
+  if (data?.type) {
     links = links.filter((link) => link.attributes?.organizationType === type);
   }
   return (
