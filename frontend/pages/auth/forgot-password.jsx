@@ -10,21 +10,26 @@ export default function ForgotPassword() {
   const [submitErrors, setSubmitErrors] = useState(null);
   const [alert, setAlert] = useState();
   const [loading, setLoading] = useState(false);
+
   const {
     register,
     reset,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const onSubmit = async (data) => {
     setAlert(null);
     setLoading(true);
     if (data.honeypot === '') {
       try {
         const forgotRes = await forgotPassword({ email: data.email });
+        console.log({ forgotRes });
         if (forgotRes?.error) {
           setSubmitErrors({
-            error: forgotRes.error?.message || 'There was en error signing up.',
+            error:
+              forgotRes.error?.message ||
+              'There was en error sending your email',
           });
           reset();
         } else {
@@ -55,9 +60,9 @@ export default function ForgotPassword() {
           </div>
         )}
 
-        {errors && errors.error && (
+        {submitErrors && submitErrors.error && (
           <div className="flex items-center justify-center mx-auto p-2 max-w-md bg-red-500/10">
-            {errors.error}
+            {submitErrors.error}
           </div>
         )}
         <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
