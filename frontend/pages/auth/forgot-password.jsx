@@ -93,8 +93,9 @@ export default function ForgotPassword() {
             <button
               className="group relative w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-mediumBlue hover:bg-darkBlue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               type="submit"
+              diabled={loading}
             >
-              Send password reset email
+              {loading ? 'Processing...' : 'Send password reset email'}
             </button>
           </div>
         </form>
