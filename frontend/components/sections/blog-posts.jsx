@@ -15,7 +15,10 @@ export default function BlogPosts({ posts }) {
             From the Blog
           </h2>
         </div>
-        <ul role="list" className="mx-auto mt-4 space-y-3 lg:max-w-lg">
+        <ul
+          role="list"
+          className="mx-auto mt-4 space-y-3 lg:max-w-lg !list-none"
+        >
           {posts.map((post) => {
             const { slug } = post.attributes;
             return (

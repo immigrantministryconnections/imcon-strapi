@@ -153,7 +153,10 @@ export default function StatePage({
                 <h2 className="mx-auto mb-4 text-center text-mediumBlue">
                   {type}
                 </h2>
-                <ul role="list" className="mx-auto my-6 space-y-3 lg:max-w-lg">
+                <ul
+                  role="list"
+                  className="mx-auto my-6 space-y-3 lg:max-w-lg !list-none"
+                >
                   {orgLinks
                     ?.filter(
                       (orgLink) => orgLink.attributes?.organizationType === type
@@ -182,7 +185,7 @@ export default function StatePage({
               </>
             ))}
           {subcatLinks && (
-            <ul role="list" className="mx-auto">
+            <ul role="list" className="mx-auto !list-none">
               {subcatLinks.map((subcatLink) => {
                 const slug = subcatLink.attributes.orgSlug;
                 return (

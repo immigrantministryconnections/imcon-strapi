@@ -57,7 +57,10 @@ export default function StatePage({ orgLinks, seo }) {
               <h2 className="mx-auto text-mediumBlue mb-4 text-center">
                 {type}
               </h2>
-              <ul role="list" className="mx-auto my-6 space-y-3 lg:max-w-lg">
+              <ul
+                role="list"
+                className="mx-auto my-6 space-y-3 lg:max-w-lg !list-none"
+              >
                 {orgLinks
                   ?.filter(
                     (orgLink) => orgLink.attributes?.organizationType === type

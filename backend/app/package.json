@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@chartbrew/plugin-strapi": "^0.3.1",
     "@hubspot/api-client": "^7.1.2",
     "@strapi/plugin-graphql": "^4.0.0",
     "@strapi/plugin-i18n": "4.3.4",
