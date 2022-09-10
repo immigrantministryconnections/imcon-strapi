@@ -6,6 +6,18 @@ a {
   @apply underline text-blue-500 hover:text-blue-600 visited:text-purple-600;
 }
 
+ol {
+  @apply list-inside list-decimal;
+}
+
+ul {
+  @apply list-inside list-disc;
+}
+
+li {
+  @apply my-4;
+}
+
 h1 {
   @apply font-medium text-3xl lg:text-5xl mt-0 mb-2;
 }

@@ -26,7 +26,7 @@ export default function RichText({ data }) {
           },
         },
         list: {
-          className: 'list-outside',
+          className: 'rich-list-item',
         },
         paragraph: {
           className: 'text-base text-opacity-75 my-3',

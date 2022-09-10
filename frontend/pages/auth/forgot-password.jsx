@@ -24,7 +24,6 @@ export default function ForgotPassword() {
     if (data.honeypot === '') {
       try {
         const forgotRes = await forgotPassword({ email: data.email });
-        console.log({ forgotRes });
         if (forgotRes?.error) {
           setSubmitErrors({
             error:

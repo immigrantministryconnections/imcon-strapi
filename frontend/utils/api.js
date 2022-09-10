@@ -182,7 +182,7 @@ export async function getSignupPage() {
 
   const { data, errors } = await pageRes.json();
 
-  if (!data) {
+  if (!data.mezzanineSignupPage && !data.mezzanineSignupPage.data) {
     return null;
   }
 
