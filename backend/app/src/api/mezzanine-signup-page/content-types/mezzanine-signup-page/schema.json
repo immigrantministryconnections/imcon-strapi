@@ -1,0 +1,36 @@
+{
+  "kind": "singleType",
+  "collectionName": "mezzanine_signup_pages",
+  "info": {
+    "singularName": "mezzanine-signup-page",
+    "pluralName": "mezzanine-signup-pages",
+    "displayName": "Mezzanine Signup Page",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "mainImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "slug": {
+      "type": "string",
+      "default": "mezzanine-page",
+      "required": true
+    },
+    "sections": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.rich-text",
+        "sections.simple-text"
+      ]
+    }
+  }
+}
