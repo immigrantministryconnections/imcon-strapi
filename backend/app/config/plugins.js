@@ -1,4 +1,5 @@
 module.exports = ({ env }) => ({
+  chartbrew: true,
   publisher: {
     enabled: true,
   },
