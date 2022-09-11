@@ -1,4 +1,4 @@
-import NextImage from '@/components/elements/image';
+import NextImage from 'next/image';
 import PrimaryButton from '@/components/elements/primary-button';
 import Layout from '@/components/layout';
 import Sections from '@/components/sections';
@@ -19,7 +19,15 @@ export default function SignupPage({ content }) {
   return (
     <Layout>
       <div className="min-h-screen">
-        {mainImage?.data && <NextImage media={mainImage} />}
+        {mainImage?.data && (
+          <div className="flex items-center justify-center">
+            <NextImage
+              height={227}
+              width={500}
+              src={mainImage.data.attributes.url}
+            />
+          </div>
+        )}
         <div className="">
           <Sections bottomPadding={false} sections={sections} />
           <div className="flex flex-col gap-y-2 items-center">

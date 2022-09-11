@@ -2,6 +2,6 @@
 module.exports = {
   reactStrictMode: false,
   images: {
-    domains: ['localhost'],
+    domains: ['localhost', 'imconstrapi.blob.core.windows.net'],
   },
 };
