@@ -7,7 +7,8 @@ import { getSignupPage } from 'utils/api';
 import { useModalContext, MODAL_TYPES } from 'utils/context/modal-context';
 
 export default function SignupPage({ content }) {
-  const { mainImage, sections } = content.attributes;
+  const { sections } = content.attributes;
+  const mainImage = content.attributes?.mainImage;
   const { showModal } = useModalContext();
   const signinModal = () => {
     showModal(MODAL_TYPES.SIGNIN_MODAL);
@@ -18,7 +19,7 @@ export default function SignupPage({ content }) {
   return (
     <Layout>
       <div className="min-h-screen">
-        <NextImage media={mainImage} />
+        {mainImage?.data && <NextImage media={mainImage} />}
         <div className="">
           <Sections bottomPadding={false} sections={sections} />
           <div className="flex flex-col gap-y-2 items-center">
