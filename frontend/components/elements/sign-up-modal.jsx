@@ -65,7 +65,7 @@ export default function SignInModal() {
       }
       if (
         process.env.NODE_ENV === 'production' &&
-        process.env.NETLIFY_CONTEXT === 'production'
+        process.env.NEXT_PUBLIC_NETLIFY_CONTEXT === 'production'
       ) {
         // send to mailchimp
         await fetch(getStrapiURL('/api/mailchimp-subscribe'), {
@@ -117,7 +117,7 @@ export default function SignInModal() {
           // Send to hubspot in prod only
           if (
             process.env.NODE_ENV === 'production' &&
-            process.env.NETLIFY_CONTEXT === 'production'
+            process.env.NEXT_PUBLIC_NETLIFY_CONTEXT === 'production'
           ) {
             await fetch(getStrapiURL('/api/hubspot-subscribe'), {
               method: 'PUT',
