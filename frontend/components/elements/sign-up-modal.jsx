@@ -13,7 +13,7 @@ import SuccessSection from './success-section';
 
 export default function SignInModal() {
   const { hideModal, showModal } = useModalContext();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState();
   const [user, setUser] = useState();
