@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { LockClosedIcon } from '@heroicons/react/solid';
 
-export default function SignInForm({ onSubmit, onClose }) {
+export default function SignInForm({ loading, onSubmit, onClose }) {
   const {
     register,
     handleSubmit,
@@ -63,6 +63,7 @@ export default function SignInForm({ onSubmit, onClose }) {
 
       <div>
         <button
+          disabled={loading}
           type="submit"
           className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-mediumBlue hover:bg-darkBlue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
