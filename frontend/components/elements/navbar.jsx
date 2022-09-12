@@ -85,11 +85,23 @@ export default function Navbar({ navbar, session }) {
             >
               <div>
                 {navbar?.link?.map((item) => {
-                  return (
-                    <Link
-                      key={item.id}
-                      href={item.protected && !session ? '/signup' : item.url}
-                    >
+                  return item.protected && !session ? (
+                    <button key={item.id} onClick={signinModal}>
+                      <a
+                        className={`
+                      ${
+                        router.asPath === item.url
+                          ? '!bg-gray-100 !text-gray-900 '
+                          : '!text-gray-900 !hover:bg-gray-50 !hover:text-gray-900 '
+                      }
+                      rounded-md py-2 px-3 inline-flex items-center text-sm font-medium !no-underline`}
+                        aria-current={item.current ? 'page' : undefined}
+                      >
+                        {item.text}
+                      </a>
+                    </button>
+                  ) : (
+                    <Link key={item.id} href={item.url}>
                       <a
                         className={`
                       ${
@@ -121,11 +133,25 @@ export default function Navbar({ navbar, session }) {
           <Disclosure.Panel as="nav" className="lg:hidden" aria-label="Global">
             <div className="pt-2 pb-3 px-2 space-y-1">
               {navbar?.link?.map((item) => {
-                return (
-                  <Link
-                    key={item.id}
-                    href={item.protected && !session ? '/signup' : item.url}
-                  >
+                return item.protected && !session ? (
+                  <div key={item.id} onClick={signinModal} className="block">
+                    <a className="!no-underline">
+                      <Disclosure.Button
+                        className={`${
+                          router.asPath === item.url
+                            ? '!bg-gray-100 !text-gray-900 '
+                            : '!text-gray-900 !hover:bg-gray-50 !hover:text-gray-900 '
+                        } block rounded-md py-2 px-3 text-base font-medium`}
+                        aria-current={
+                          router.asPath === item.url ? 'page' : undefined
+                        }
+                      >
+                        {item.text}
+                      </Disclosure.Button>
+                    </a>
+                  </div>
+                ) : (
+                  <Link key={item.id} href={item.url}>
                     <a className="!no-underline">
                       <Disclosure.Button
                         className={`${

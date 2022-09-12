@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 
 import Link from 'next/link';
 
+import { useModalContext, MODAL_TYPES } from 'utils/context/modal-context';
+
 import { useSession, getSession } from 'next-auth/react';
 
 import NextImage from './image';
@@ -12,6 +14,10 @@ export default function ImageLinkWithText({ imageLink }) {
   const { data: session } = useSession();
   const [loading, setLoading] = useState(true);
   const [userSession, setUserSession] = useState(null);
+  const { showModal } = useModalContext();
+  const createModal = () => {
+    showModal(MODAL_TYPES.MEZZ_MODAL, {});
+  };
 
   useEffect(() => {
     const sessionRes = async () => {
@@ -26,22 +32,30 @@ export default function ImageLinkWithText({ imageLink }) {
     <></>
   ) : (
     <div className="flex flex-col items-center cursor-pointer">
-      <Link
-        as={`${imageLink.imageLink.url}`}
-        href={
-          imageLink.imageLink.protected && !userSession
-            ? '/signup'
-            : `${imageLink.imageLink.url}`
-        }
-      >
-        <a>
-          <NextImage
-            media={imageLink.imageLink.image}
-            height={200}
-            width={600}
-          />
-        </a>
-      </Link>
+      {imageLink.imageLink.protected && !userSession ? (
+        <button onClick={createModal}>
+          <a>
+            <NextImage
+              media={imageLink.imageLink.image}
+              height={200}
+              width={600}
+            />
+          </a>
+        </button>
+      ) : (
+        <Link
+          as={`${imageLink.imageLink.url}`}
+          href={`${imageLink.imageLink.url}`}
+        >
+          <a>
+            <NextImage
+              media={imageLink.imageLink.image}
+              height={200}
+              width={600}
+            />
+          </a>
+        </Link>
+      )}
       <h3
         className={`font-medium text-${
           textSize[imageLink.textSize || 'large']

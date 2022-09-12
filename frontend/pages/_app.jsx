@@ -9,7 +9,7 @@ import Head from 'next/head';
 import ErrorPage from 'next/error';
 import { DefaultSeo } from 'next-seo';
 import { getStrapiMedia } from 'utils/media';
-import { getGlobalData } from 'utils/api';
+import { getGlobalData, getSignupPage } from 'utils/api';
 
 import * as gtag from '../lib/gtag';
 
@@ -92,7 +92,9 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
       />
       {/* Display the content */}
       <SessionProvider session={session}>
-        <GlobalContext.Provider value={{ global: globalData }}>
+        <GlobalContext.Provider
+          value={{ global: globalData, mezzaninePage: pageProps.mezzaninePage }}
+        >
           <Modal>
             {Component.auth ? (
               <Auth>
@@ -127,11 +129,13 @@ MyApp.getInitialProps = async (appContext) => {
   // Calls page's `getInitialProps` and fills `appProps.pageProps`
   const appProps = await App.getInitialProps(appContext);
   const globalData = await getGlobalData();
+  const mezzaninePage = await getSignupPage();
 
   return {
     ...appProps,
     pageProps: {
       globalData: globalData,
+      mezzaninePage: mezzaninePage.data,
     },
   };
 };

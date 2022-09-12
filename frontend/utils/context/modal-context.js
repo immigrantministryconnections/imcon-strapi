@@ -1,15 +1,18 @@
 import React, { useState, createContext, useContext } from 'react';
 import SignInModal from '@/components/elements/sign-in-modal';
 import SignUpModal from '@/components/elements/sign-up-modal';
+import MezzanineModal from '@/components/elements/mezzanine-modal';
 
 export const MODAL_TYPES = {
   SIGNUP_MODAL: 'SIGNUP_MODAL',
   SIGNIN_MODAL: 'SIGNIN_MODAL',
+  MEZZ_MODAL: 'MEZZ_MODAL',
 };
 
 const MODAL_COMPONENTS = {
   [MODAL_TYPES.SIGNIN_MODAL]: SignInModal,
   [MODAL_TYPES.SIGNUP_MODAL]: SignUpModal,
+  [MODAL_TYPES.MEZZ_MODAL]: MezzanineModal,
 };
 
 const initialState = {

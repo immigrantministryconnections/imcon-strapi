@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { signIn } from 'next-auth/react';
 
 export default function OptionalForm({
+  loading,
   onSubmit,
   onClose,
   submitErrors,
@@ -131,6 +132,7 @@ export default function OptionalForm({
 
       <div>
         <button
+          disabled={loading}
           type="submit"
           className="group mb-2 relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-mediumBlue hover:bg-darkBlue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >

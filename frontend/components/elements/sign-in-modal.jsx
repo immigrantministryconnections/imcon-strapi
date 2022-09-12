@@ -113,6 +113,7 @@ export default function SignInModal() {
                     )}
                     {!loading ? (
                       <SignInForm
+                        loading={loading}
                         onSubmit={onSubmit}
                         onClose={handleModalToggle}
                       />

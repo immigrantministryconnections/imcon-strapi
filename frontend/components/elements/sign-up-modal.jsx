@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useRef, useState, useContext } from 'react';
 
 import { signIn } from 'next-auth/react';
 
@@ -10,10 +10,15 @@ import SignUpForm from './sign-up-form';
 import OptionalForm from './optional-form';
 import { getStrapiURL, signUp, updateUser } from 'utils/api';
 import SuccessSection from './success-section';
+import MezzanineModal from './mezzanine-modal';
+
+import { GlobalContext } from 'pages/_app';
 
 export default function SignInModal() {
+  const { mezzaninePage } = useContext(GlobalContext);
+  console.log({ mezzaninePage });
   const { hideModal, showModal } = useModalContext();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState();
   const [user, setUser] = useState();
@@ -65,7 +70,7 @@ export default function SignInModal() {
       }
       if (
         process.env.NODE_ENV === 'production' &&
-        process.env.NETLIFY_CONTEXT === 'production'
+        process.env.NEXT_PUBLIC_NETLIFY_CONTEXT === 'production'
       ) {
         // send to mailchimp
         await fetch(getStrapiURL('/api/mailchimp-subscribe'), {
@@ -117,7 +122,7 @@ export default function SignInModal() {
           // Send to hubspot in prod only
           if (
             process.env.NODE_ENV === 'production' &&
-            process.env.NETLIFY_CONTEXT === 'production'
+            process.env.NEXT_PUBLIC_NETLIFY_CONTEXT === 'production'
           ) {
             await fetch(getStrapiURL('/api/hubspot-subscribe'), {
               method: 'PUT',
@@ -209,12 +214,14 @@ export default function SignInModal() {
                     </div>
                     {step === 1 && (
                       <SignUpForm
+                        loading={loading}
                         submitErrors={errors}
                         onSubmit={onSubmitSignup}
                       />
                     )}
                     {step === 2 && (
                       <OptionalForm
+                        loading={loading}
                         onClose={handleModalToggle}
                         submitErrors={errors}
                         onSubmit={onSubmitOptional}
@@ -222,7 +229,6 @@ export default function SignInModal() {
                         password={password}
                       />
                     )}
-                    {step === 3 && <SuccessSection signInModal={signInModal} />}
                   </div>
                 </div>
               </Dialog.Panel>
