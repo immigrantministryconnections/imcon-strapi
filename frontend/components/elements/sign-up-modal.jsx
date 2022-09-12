@@ -209,12 +209,14 @@ export default function SignInModal() {
                     </div>
                     {step === 1 && (
                       <SignUpForm
+                        loading={loading}
                         submitErrors={errors}
                         onSubmit={onSubmitSignup}
                       />
                     )}
                     {step === 2 && (
                       <OptionalForm
+                        loading={loading}
                         onClose={handleModalToggle}
                         submitErrors={errors}
                         onSubmit={onSubmitOptional}

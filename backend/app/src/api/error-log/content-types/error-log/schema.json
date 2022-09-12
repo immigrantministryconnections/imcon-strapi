@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "error_logs",
+  "info": {
+    "singularName": "error-log",
+    "pluralName": "error-logs",
+    "displayName": "Error Log"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "errorText": {
+      "type": "text",
+      "required": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "mailchimp",
+        "hubspot"
+      ]
+    },
+    "errorCode": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
