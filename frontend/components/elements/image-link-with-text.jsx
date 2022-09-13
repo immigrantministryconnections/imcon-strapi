@@ -57,7 +57,7 @@ export default function ImageLinkWithText({ imageLink }) {
         </Link>
       )}
       <h3
-        className={`font-medium text-${
+        className={`font-bold text-${
           textSize[imageLink.textSize || 'large']
         } text-${colors[imageLink.textColor || 'mediumBlue']}`}
       >
