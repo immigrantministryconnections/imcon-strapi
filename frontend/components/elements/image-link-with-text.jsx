@@ -11,6 +11,7 @@ import { colors } from '@/styles/colors';
 import { textSize } from '@/styles/text-size';
 
 export default function ImageLinkWithText({ imageLink }) {
+  console.log(imageLink);
   const { data: session } = useSession();
   const [loading, setLoading] = useState(true);
   const [userSession, setUserSession] = useState(null);

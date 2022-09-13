@@ -327,6 +327,8 @@ export async function getPageData({ slug, preview }) {
                   id
                   imageLink {
                     text
+                    textColor
+                    textSize
                     imageLink {
                       url
                       protected
