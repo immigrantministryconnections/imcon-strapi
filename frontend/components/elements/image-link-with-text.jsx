@@ -11,7 +11,6 @@ import { colors } from '@/styles/colors';
 import { textSize } from '@/styles/text-size';
 
 export default function ImageLinkWithText({ imageLink }) {
-  console.log(imageLink);
   const { data: session } = useSession();
   const [loading, setLoading] = useState(true);
   const [userSession, setUserSession] = useState(null);
@@ -60,7 +59,7 @@ export default function ImageLinkWithText({ imageLink }) {
       <h3
         className={`font-bold text-${
           textSize[imageLink.textSize || 'large']
-        } text-${colors[imageLink.textColor || 'mediumBlue']}`}
+        } text-${colors[imageLink.textColor || 'black']}`}
       >
         {imageLink.text || imageLink.title}
       </h3>
