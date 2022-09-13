@@ -58,10 +58,10 @@ export default function SignInModal() {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full sm:p-6">
-                <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+              <Dialog.Panel className="relative bg-white rounded-lg px-4 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full sm:p-6">
+                <div className="min-h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
                   <div className="max-w-md w-full space-y-8">
-                    <div className="min-h-screen">
+                    <div ref={cancelButtonRef} className="min-h-screen">
                       {mezzaninePage.attributes.mainImage?.data && (
                         <div className="flex items-center justify-center">
                           <NextImage
