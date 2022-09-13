@@ -23,6 +23,9 @@ export default function Navbar({ navbar, session }) {
   const signinModal = () => {
     showModal(MODAL_TYPES.SIGNUP_MODAL, {});
   };
+  const mezzModal = () => {
+    showModal(MODAL_TYPES.MEZZ_MODAL);
+  };
 
   const sendQuery = async (query) => {
     const resultsRes = await fetch(`/api/search?q=${query}`);
@@ -86,7 +89,7 @@ export default function Navbar({ navbar, session }) {
               <div>
                 {navbar?.link?.map((item) => {
                   return item.protected && !session ? (
-                    <button key={item.id} onClick={signinModal}>
+                    <button key={item.id} onClick={mezzModal}>
                       <a
                         className={`
                       ${
@@ -134,7 +137,7 @@ export default function Navbar({ navbar, session }) {
             <div className="pt-2 pb-3 px-2 space-y-1">
               {navbar?.link?.map((item) => {
                 return item.protected && !session ? (
-                  <div key={item.id} onClick={signinModal} className="block">
+                  <div key={item.id} onClick={mezzModal} className="block">
                     <a className="!no-underline">
                       <Disclosure.Button
                         className={`${
