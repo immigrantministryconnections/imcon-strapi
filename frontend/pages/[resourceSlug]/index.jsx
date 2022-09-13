@@ -84,7 +84,7 @@ export default function ResourcesPage({ seo, imageLinks, sections }) {
                         )}
                       </a>
                     </Link>
-                    <h3 className={`font-bold text-2xl text-black text-center`}>
+                    <h3 className={`font-bold text-lg text-black text-center`}>
                       {imageLink.attributes.name || imageLink.attributes.title}
                     </h3>
                   </div>

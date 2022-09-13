@@ -106,7 +106,7 @@ export default function StatePage({
                         />
                       </a>
                     </Link>
-                    <h3 className="font-bold text-2xl text-black">
+                    <h3 className="font-bold text-lg text-black">
                       {`${stateData.stateName} Statewide Resources`}
                     </h3>
                   </div>
@@ -136,7 +136,7 @@ export default function StatePage({
                           />
                         </a>
                       </Link>
-                      <h3 className="font-bold text-2xl text-black">
+                      <h3 className="font-bold text-lg text-black">
                         {imageLink.attributes?.name ||
                           imageLink.attributes?.title}
                       </h3>

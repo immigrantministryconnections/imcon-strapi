@@ -1,6 +1,6 @@
 export const textSize = {
   tiny: 'xs',
   small: 'sm',
-  medium: 'md',
+  medium: 'lg',
   large: '2xl',
 };
