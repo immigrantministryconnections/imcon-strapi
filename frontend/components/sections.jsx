@@ -7,6 +7,7 @@ import LeadershipSection from '@/components/sections/leadership-section';
 import SimpleText from '@/components/sections/simple-text';
 import EmbeddedForm from '@/components/sections/embedded-form';
 import LinkList from '@/components/sections/link-list-section';
+import RichTextSection from '@/components/sections/rich-text-section';
 
 // Map Strapi sections to section components
 const sectionComponents = {
@@ -15,6 +16,7 @@ const sectionComponents = {
   ComponentSectionsTextSection: TextSection,
   ComponentSectionsLeadershipSection: LeadershipSection,
   ComponentSectionsSimpleText: SimpleText,
+  ComponentSectionsRichText: RichTextSection,
   ComponentSectionsEmbeddedForm: EmbeddedForm,
   ComponentSectionsLinkList: LinkList,
 };
@@ -48,14 +50,16 @@ const PreviewModeBanner = () => {
   );
 };
 
-export default function Sections({ sections, preview }) {
+export default function Sections({ bottomPadding = true, sections, preview }) {
   return (
-    <div className="flex flex-col mx-auto max-w-5xl pb-16">
+    <div
+      className={`flex flex-col mx-auto max-w-5xl ${bottomPadding && 'pb-16'}`}
+    >
       {/* Show a banner if preview mode is on */}
       {preview && <PreviewModeBanner />}
       {sections?.map((section) =>
         section ? (
-          <section key={`${section.__typename}${section.id}`} className="my-4">
+          <section key={`${section?.__typename}${section.id}`} className="my-4">
             <Section sectionData={section} />
           </section>
         ) : (

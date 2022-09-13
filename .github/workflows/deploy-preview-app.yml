@@ -35,4 +35,4 @@ jobs:
             :sparkles: Netlify Deploy Preview Successfully Created :sparkles:
             Visit your deploy [on netlify][1]
 
-            [1]: https://deploy-preview-${{github.event.number}}--imcon.netlify.app
+            [1]: https://staging--imcon.netlify.app

@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useRef, useState, useContext } from 'react';
 
 import { signIn } from 'next-auth/react';
 
@@ -10,8 +10,13 @@ import SignUpForm from './sign-up-form';
 import OptionalForm from './optional-form';
 import { getStrapiURL, signUp, updateUser } from 'utils/api';
 import SuccessSection from './success-section';
+import MezzanineModal from './mezzanine-modal';
+
+import { GlobalContext } from 'pages/_app';
 
 export default function SignInModal() {
+  const { mezzaninePage } = useContext(GlobalContext);
+  console.log({ mezzaninePage });
   const { hideModal, showModal } = useModalContext();
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
@@ -224,7 +229,6 @@ export default function SignInModal() {
                         password={password}
                       />
                     )}
-                    {step === 3 && <SuccessSection signInModal={signInModal} />}
                   </div>
                 </div>
               </Dialog.Panel>

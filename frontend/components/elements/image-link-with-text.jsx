@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 
 import Link from 'next/link';
 
-import { useSession, signIn, getSession } from 'next-auth/react';
-
 import { useModalContext, MODAL_TYPES } from 'utils/context/modal-context';
+
+import { useSession, getSession } from 'next-auth/react';
 
 import NextImage from './image';
 import { colors } from '@/styles/colors';
@@ -16,7 +16,7 @@ export default function ImageLinkWithText({ imageLink }) {
   const [userSession, setUserSession] = useState(null);
   const { showModal } = useModalContext();
   const createModal = () => {
-    showModal(MODAL_TYPES.SIGNUP_MODAL, {});
+    showModal(MODAL_TYPES.MEZZ_MODAL, {});
   };
 
   useEffect(() => {

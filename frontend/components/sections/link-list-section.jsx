@@ -6,7 +6,7 @@ export default function LinkList({ data }) {
     links = links.filter((link) => link.attributes?.organizationType === type);
   }
   return (
-    <ul role="list" className="mx-auto mt-4 space-y-3 lg:max-w-lg">
+    <ul role="list" className="mx-auto mt-4 space-y-3 lg:max-w-lg !list-none">
       {links?.map((link) => {
         const url =
           link?.attributes?.url || link?.attributes?.websiteURL || link.url;

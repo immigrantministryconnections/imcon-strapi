@@ -126,6 +126,69 @@ export async function getGlobalData() {
   return global.data;
 }
 
+export async function getSignupPage() {
+  const gqlEndpoint = getStrapiURL('/graphql');
+  const pageRes = await fetch(gqlEndpoint, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: `
+      fragment FileParts on UploadFileEntityResponse {
+        data {
+          id
+          attributes {
+            alternativeText
+            width
+            height
+            mime
+            url
+            formats
+          }
+        }
+      }
+      query GetPages {
+        mezzanineSignupPage {
+          data {
+            id
+            attributes {
+              slug
+              mainImage {
+                ...FileParts
+              }
+              sections {
+                __typename
+                ... on ComponentSectionsRichText {
+                  content
+                  alignment
+                  textColor
+                }
+                __typename
+                ... on ComponentSectionsSimpleText {
+                  text {
+                    center
+                    textColor
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      `,
+    }),
+  });
+
+  const { data, errors } = await pageRes.json();
+
+  if (!data.mezzanineSignupPage && !data.mezzanineSignupPage.data) {
+    return null;
+  }
+
+  return data.mezzanineSignupPage;
+}
+
 /**
  *
  * @param {Object} options
