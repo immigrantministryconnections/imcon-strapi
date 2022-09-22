@@ -55,5 +55,3 @@ export async function getStaticProps(context) {
     props: { org: orgData.data[0] },
   };
 }
-
-OrgPage.auth = true;

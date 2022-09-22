@@ -3,8 +3,6 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { signIn, getSession } from 'next-auth/react';
-
 import NextImage from '@/components/elements/image';
 import Seo from '@/components/elements/seo';
 import Sections from '@/components/sections';
@@ -18,18 +16,7 @@ import { fetchAPI } from 'utils/api';
  * category / subcategory pages.
  */
 export default function ResourcesPage({ seo, imageLinks, sections }) {
-  const [session, setSession] = useState(null);
-  const [loading, setLoading] = useState(true);
   const router = useRouter();
-
-  useEffect(() => {
-    const sessionRes = async () => {
-      const session = await getSession();
-      setSession(session);
-      setLoading(false);
-    };
-    sessionRes();
-  }, []);
 
   // Sort alphabetically
   if (imageLinks && imageLinks.length) {
@@ -47,10 +34,10 @@ export default function ResourcesPage({ seo, imageLinks, sections }) {
     }
   }
 
-  const renderContent = (session) => {
+  const renderContent = () => {
     if (!!sections) {
       return <Sections sections={sections} />;
-    } else if (session) {
+    } else {
       return (
         <>
           <ul
@@ -94,15 +81,13 @@ export default function ResourcesPage({ seo, imageLinks, sections }) {
           </ul>
         </>
       );
-    } else {
-      signIn();
     }
   };
 
   return (
     <Layout>
       <Seo metadata={seo} />
-      {loading ? <></> : renderContent(session)}
+      {renderContent()}
     </Layout>
   );
 }

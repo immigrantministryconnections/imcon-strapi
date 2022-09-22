@@ -3,27 +3,13 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import { getSession, useSession, signIn } from 'next-auth/react';
-
 import Layout from '@/components/layout';
 import Seo from '@/components/elements/seo';
 
 import { fetchAPI } from 'utils/api';
 
 export default function StatePage({ orgLinks, seo }) {
-  const { data: session } = useSession();
-  const [loading, setLoading] = useState(true);
-  const [userSession, setUserSession] = useState(session);
   const router = useRouter();
-
-  useEffect(() => {
-    const sessionRes = async () => {
-      const session = await getSession();
-      setUserSession(session);
-      setLoading(false);
-    };
-    sessionRes();
-  }, [session]);
 
   let orgTypes = [];
   if (orgLinks && orgLinks.length) {
@@ -33,72 +19,66 @@ export default function StatePage({ orgLinks, seo }) {
     ).filter((org) => org !== undefined);
   }
 
-  const renderContent = (userSession) => {
-    if (userSession) {
-      return (
-        <>
+  const renderContent = () => {
+    return (
+      <>
+        <h4 className="text-mediumBlue text-center mt-4 mb-8">
+          If you know any ministry organization website that you feel should be
+          listed here, please send their Web address to
+          <a href="mailto:connect@imcon.church"> connect@imcon.church</a>.
+        </h4>
+        {router.asPath.includes('bibles-plus-media/media') && (
           <h4 className="text-mediumBlue text-center mt-4 mb-8">
-            If you know any ministry organization website that you feel should
-            be listed here, please send their Web address to
-            <a href="mailto:connect@imcon.church"> connect@imcon.church</a>.
+            The organizations on this page provide media in multiple languages.
+            For resources focused on one language group, visit our{' '}
+            <Link href="/national-resources/peoplegroups">
+              <a>Serving Specific People Groups</a>
+            </Link>{' '}
+            page
           </h4>
-          {router.asPath.includes('bibles-plus-media/media') && (
-            <h4 className="text-mediumBlue text-center mt-4 mb-8">
-              The organizations on this page provide media in multiple
-              languages. For resources focused on one language group, visit our{' '}
-              <Link href="/national-resources/peoplegroups">
-                <a>Serving Specific People Groups</a>
-              </Link>{' '}
-              page
-            </h4>
-          )}
-          {orgTypes.map((type) => (
-            <>
-              <h2 className="mx-auto text-mediumBlue mb-4 text-center">
-                {type}
-              </h2>
-              <ul
-                role="list"
-                className="mx-auto my-6 space-y-3 lg:max-w-lg !list-none"
-              >
-                {orgLinks
-                  ?.filter(
-                    (orgLink) => orgLink.attributes?.organizationType === type
-                  )
-                  .map((orgLink) => {
-                    const slug = orgLink.attributes.orgSlug;
-                    return (
-                      <li
-                        key={orgLink.id}
-                        className="shadow-md drop-shadow-lg overflow-hidden px-4 py-4 sm:px-6 rounded-md"
-                      >
-                        <div className="flex flex-col items-center text-center cursor-pointer">
-                          <Link
-                            as={`/organization/${slug}`}
-                            href={`/organization/${slug}`}
-                          >
-                            <a className="font-medium text-lg text-blue-500 hover:text-blue-400 underline">
-                              {orgLink.attributes.name}
-                            </a>
-                          </Link>
-                        </div>
-                      </li>
-                    );
-                  })}
-              </ul>
-            </>
-          ))}
-        </>
-      );
-    } else {
-      signIn();
-    }
+        )}
+        {orgTypes.map((type) => (
+          <>
+            <h2 className="mx-auto text-mediumBlue mb-4 text-center">{type}</h2>
+            <ul
+              role="list"
+              className="mx-auto my-6 space-y-3 lg:max-w-lg !list-none"
+            >
+              {orgLinks
+                ?.filter(
+                  (orgLink) => orgLink.attributes?.organizationType === type
+                )
+                .map((orgLink) => {
+                  const slug = orgLink.attributes.orgSlug;
+                  return (
+                    <li
+                      key={orgLink.id}
+                      className="shadow-md drop-shadow-lg overflow-hidden px-4 py-4 sm:px-6 rounded-md"
+                    >
+                      <div className="flex flex-col items-center text-center cursor-pointer">
+                        <Link
+                          as={`/organization/${slug}`}
+                          href={`/organization/${slug}`}
+                        >
+                          <a className="font-medium text-lg text-blue-500 hover:text-blue-400 underline">
+                            {orgLink.attributes.name}
+                          </a>
+                        </Link>
+                      </div>
+                    </li>
+                  );
+                })}
+            </ul>
+          </>
+        ))}
+      </>
+    );
   };
 
   return (
     <Layout>
       <Seo metadata={seo} />
-      {loading ? <></> : renderContent(userSession)}
+      {renderContent()}
     </Layout>
   );
 }
