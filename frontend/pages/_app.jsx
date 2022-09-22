@@ -17,7 +17,7 @@ import { Modal } from 'utils/context/modal-context';
 
 export const GlobalContext = createContext({});
 
-const MyApp = ({ Component, ...pageProps }) => {
+const MyApp = ({ Component, pageProps }) => {
   const router = useRouter();
   // Extract the data we need
   const { globalData } = pageProps;

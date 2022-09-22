@@ -38,7 +38,7 @@ export default function StatePage({ orgLinks, seo }) {
           </h4>
         )}
         {orgTypes.map((type) => (
-          <>
+          <div key={`orgtype-${type}`}>
             <h2 className="mx-auto text-mediumBlue mb-4 text-center">{type}</h2>
             <ul
               role="list"
@@ -69,7 +69,7 @@ export default function StatePage({ orgLinks, seo }) {
                   );
                 })}
             </ul>
-          </>
+          </div>
         ))}
       </>
     );

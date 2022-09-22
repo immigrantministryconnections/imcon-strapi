@@ -135,7 +135,7 @@ export default function StatePage({
 
           {!stateData &&
             orgTypes.map((type) => (
-              <>
+              <div key={`orgtype-${type}`}>
                 <h2 className="mx-auto mb-4 text-center text-mediumBlue">
                   {type}
                 </h2>
@@ -168,7 +168,7 @@ export default function StatePage({
                       );
                     })}
                 </ul>
-              </>
+              </div>
             ))}
           {subcatLinks && (
             <ul role="list" className="mx-auto !list-none">
