@@ -24,7 +24,7 @@ export default function Layout({ showSignup = false, children }) {
   };
 
   useEffect(() => {
-    setTimeout(() => createModal(), 1000);
+    setTimeout(() => createModal(), 30000);
   }, []);
 
   const onSubmitSignup = async (data) => {
