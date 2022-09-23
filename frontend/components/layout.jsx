@@ -5,9 +5,11 @@ import { getStrapiURL } from 'utils/api';
 import Navbar from './elements/navbar';
 import Footer from './elements/footer';
 
+import { useModalContext, MODAL_TYPES } from 'utils/context/modal-context';
 import SignUpForm from '../components/elements/sign-up-form';
 
 import { GlobalContext } from 'pages/_app';
+import { useEffect } from 'react';
 
 export default function Layout({ showSignup = false, children }) {
   const { global } = useContext(GlobalContext);
@@ -15,6 +17,15 @@ export default function Layout({ showSignup = false, children }) {
   const [errors, setErrors] = useState();
   const [success, setSuccess] = useState();
   const { navbar, footer } = global.global.data.attributes;
+
+  const { showModal } = useModalContext();
+  const createModal = () => {
+    showModal(MODAL_TYPES.SIGNUP_MODAL);
+  };
+
+  useEffect(() => {
+    setTimeout(() => createModal(), 1000);
+  }, []);
 
   const onSubmitSignup = async (data) => {
     if (data.honeypot === '') {
