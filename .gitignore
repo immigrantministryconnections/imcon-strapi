@@ -107,6 +107,7 @@ coverage
 # Strapi
 ############################
 
+./backend/mariadb
 .env
 license.txt
 exports
