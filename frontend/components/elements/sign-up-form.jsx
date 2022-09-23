@@ -1,17 +1,16 @@
 import { useForm } from 'react-hook-form';
 
-import { LockClosedIcon } from '@heroicons/react/solid';
 import { useEffect } from 'react';
 
 export default function SignUpForm({
   loading,
   onSubmit,
-  reset,
   submitErrors,
   success,
 }) {
   const {
     register,
+    reset,
     watch,
     handleSubmit,
     formState: { errors },
