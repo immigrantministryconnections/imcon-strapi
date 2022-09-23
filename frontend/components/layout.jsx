@@ -5,16 +5,27 @@ import { getStrapiURL } from 'utils/api';
 import Navbar from './elements/navbar';
 import Footer from './elements/footer';
 
+import { useModalContext, MODAL_TYPES } from 'utils/context/modal-context';
 import SignUpForm from '../components/elements/sign-up-form';
 
 import { GlobalContext } from 'pages/_app';
+import { useEffect } from 'react';
 
-export default function Layout({ children }) {
+export default function Layout({ showSignup = false, children }) {
   const { global } = useContext(GlobalContext);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState();
   const [success, setSuccess] = useState();
   const { navbar, footer } = global.global.data.attributes;
+
+  const { showModal } = useModalContext();
+  const createModal = () => {
+    showModal(MODAL_TYPES.SIGNUP_MODAL);
+  };
+
+  useEffect(() => {
+    setTimeout(() => createModal(), 1000);
+  }, []);
 
   const onSubmitSignup = async (data) => {
     if (data.honeypot === '') {
@@ -80,12 +91,14 @@ export default function Layout({ children }) {
     }
   };
 
-  return (
-    <div className="relative min-h-screen">
-      <Navbar navbar={navbar} />
-      <main className="grid lg:grid-cols-8 top-0 h-full container mx-auto pt-2 pb-20 px-4 sm:px-6 lg:px-8">
+  const renderContent = () => {
+    if (!showSignup) {
+      return children;
+    }
+    return (
+      <>
         <div className="lg:col-span-6">{children}</div>
-        <div className="lg:col-span-2 pt-12 text-darkBlue">
+        <div className="lg:col-span-2 ld:pt-12 text-darkBlue">
           <div className="border border-darkBlue rounded-md p-4">
             <h5 className="text-center">Subscribe to our weekly blogs</h5>
             <SignUpForm
@@ -96,6 +109,15 @@ export default function Layout({ children }) {
             />
           </div>
         </div>
+      </>
+    );
+  };
+
+  return (
+    <div className="relative min-h-screen">
+      <Navbar navbar={navbar} />
+      <main className="grid lg:grid-cols-8 top-0 h-full container mx-auto pt-2 pb-20 px-4 sm:px-6 lg:px-8">
+        {renderContent()}
       </main>
       <Footer footer={footer} />
     </div>

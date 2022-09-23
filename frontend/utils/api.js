@@ -230,6 +230,7 @@ export async function getPageData({ slug, preview }) {
               pageName
               publishedAt
               slug
+              showSignupForm
               seo {
                 metaTitle
                 metaDescription

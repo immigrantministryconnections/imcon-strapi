@@ -1,17 +1,18 @@
 import { useForm } from 'react-hook-form';
 
-import { LockClosedIcon } from '@heroicons/react/solid';
 import { useEffect } from 'react';
 
 export default function SignUpForm({
+  buttonText = 'Sign up',
+  inModal = false,
   loading,
   onSubmit,
-  reset,
   submitErrors,
-  success,
+  success = false,
 }) {
   const {
     register,
+    reset,
     watch,
     handleSubmit,
     formState: { errors },
@@ -24,7 +25,10 @@ export default function SignUpForm({
   }, [success]);
 
   return (
-    <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className={`${inModal ? '' : 'mt-8'} w-full space-y-6`}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <input type="hidden" name="remember" defaultValue="true" />
       <input
         type="hidden"
@@ -121,7 +125,7 @@ export default function SignUpForm({
           type="submit"
           className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-mediumBlue hover:bg-darkBlue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
-          {loading ? 'Processing...' : 'Sign up'}
+          {loading ? 'Processing...' : buttonText}
         </button>
       </div>
     </form>

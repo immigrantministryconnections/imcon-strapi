@@ -3,10 +3,8 @@ import { useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import { signOut } from 'next-auth/react';
-
 import { Disclosure } from '@headlessui/react';
-import { MenuIcon, XIcon } from '@heroicons/react/outline';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
 import NextImage from './image';
 import ComboBox from './combobox';
@@ -64,9 +62,9 @@ export default function Navbar({ navbar }) {
                 <Disclosure.Button className="rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-mediumBlue">
                   <span className="sr-only">Open menu</span>
                   {open ? (
-                    <XIcon className="block h-6 w-6" aria-hidden="true" />
+                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
                   ) : (
-                    <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
                   )}
                 </Disclosure.Button>
               </div>

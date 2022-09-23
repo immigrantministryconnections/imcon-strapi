@@ -36,6 +36,10 @@
     },
     "slug": {
       "type": "string"
+    },
+    "showSignupForm": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
