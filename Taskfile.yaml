@@ -1,0 +1,15 @@
+version: '3'
+
+dotenv: ['.env']
+
+tasks:
+  dump_remote_db:
+    desc: 'Dump the Azure remote DB to backup.sql file'
+    cmds:
+      - mysqldump -u$AZURE_DB_USER -p$AZURE_DB_PASS -h $AZURE_DB_HOST --column-statistics=0 strapi > backup.sql
+
+  db:seed:
+    desc: 'Seed the mariadb docker container with Azure DB data'
+    cmds:
+      - mysqldump -u$AZURE_DB_USER -p$AZURE_DB_PASS -h $AZURE_DB_HOST --column-statistics=0 strapi > backup.sql
+      - docker exec -i imcon_mysql mysql -ustrapi -pstrapi strapi < backup.sql
