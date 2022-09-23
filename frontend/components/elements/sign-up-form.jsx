@@ -100,7 +100,7 @@ export default function SignUpForm({
         </div>
       </div>
 
-      <div className="relative flex items-start">
+      <div className={`${inModal ? '' : 'hidden'} relative flex items-start`}>
         <div className="flex h-5 items-center">
           <input
             id="subscribe"

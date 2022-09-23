@@ -188,10 +188,11 @@ export default function SignInModal() {
                       >
                         {step === 1 && (
                           <span className="font-normal">
-                            Download your FREE copy of Know Your New Neighbors:{' '}
+                            Download your FREE copy of{' '}
                             <span className="italic font-extrabold ">
-                              What 57 Immigrant Pastors Want You to Know about
-                              Effectively Serving their Communities
+                              Know Your New Neighbors: What 57 Immigrant Pastors
+                              Want You to Know about Effectively Serving their
+                              Communities
                             </span>
                           </span>
                         )}
