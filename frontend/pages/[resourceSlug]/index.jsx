@@ -15,7 +15,12 @@ import { fetchAPI } from 'utils/api';
  * the children 'subdirectory' state / province, city / region,
  * category / subcategory pages.
  */
-export default function ResourcesPage({ seo, imageLinks, sections }) {
+export default function ResourcesPage({
+  seo,
+  imageLinks,
+  sections,
+  showSignupForm,
+}) {
   const router = useRouter();
 
   // Sort alphabetically
@@ -85,7 +90,7 @@ export default function ResourcesPage({ seo, imageLinks, sections }) {
   };
 
   return (
-    <Layout>
+    <Layout showSignup={showSignupForm}>
       <Seo metadata={seo} />
       {renderContent()}
     </Layout>

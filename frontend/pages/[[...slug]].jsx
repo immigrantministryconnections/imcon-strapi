@@ -6,7 +6,7 @@ import Seo from '@/components/elements/seo';
 import Layout from '@/components/layout';
 import Custom404 from './404';
 
-export default function Page({ seo, sections, preview }) {
+export default function Page({ seo, sections, showSignupForm, preview }) {
   const router = useRouter();
 
   // Check if the required data was provided
@@ -19,7 +19,7 @@ export default function Page({ seo, sections, preview }) {
   //   return <div className="container">Loading...</div>;
   // }
   return (
-    <Layout>
+    <Layout showSignup={showSignupForm}>
       <Seo metadata={seo} />
       <Sections sections={sections} preview={preview} />
     </Layout>
@@ -65,11 +65,12 @@ export async function getStaticProps(context) {
     return { props: {} };
   }
 
-  const { sections, seo } = pageData.attributes;
+  const { sections, seo, showSignupForm } = pageData.attributes;
 
   return {
     props: {
       sections,
+      showSignupForm,
       preview,
       seo,
     },
