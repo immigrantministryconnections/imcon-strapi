@@ -33,7 +33,6 @@ module.exports = {
       ctx.status = res.statusCode;
       ctx.body = JSON.stringify(res);
     } catch (err) {
-      console.log(err);
       ctx.status = err.status;
       ctx.body = err.detail;
     }
