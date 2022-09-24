@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useRef } from 'react';
 
 import { getStrapiURL } from 'utils/api';
 
@@ -17,6 +17,7 @@ export default function Layout({ showSignup = false, children }) {
   const [errors, setErrors] = useState();
   const [success, setSuccess] = useState();
   const { navbar, footer } = global.global.data.attributes;
+  const [modalExpired, setModalExpired] = useState(false);
 
   const { showModal } = useModalContext();
   const createModal = () => {
@@ -24,8 +25,14 @@ export default function Layout({ showSignup = false, children }) {
   };
 
   useEffect(() => {
-    setTimeout(() => createModal(), 30000);
-  }, []);
+    const modalCookie = localStorage.getItem('imcon_modal');
+    const modalExpired =
+      modalCookie !== null ? Date.now() - modalCookie > 300000 : true;
+    setModalExpired(modalExpired);
+    if (modalExpired) {
+      setTimeout(() => createModal(), 30000);
+    }
+  }, [modalExpired]);
 
   const onSubmitSignup = async (data) => {
     if (data.honeypot === '') {
@@ -98,7 +105,7 @@ export default function Layout({ showSignup = false, children }) {
     return (
       <>
         <div className="lg:col-span-6">{children}</div>
-        <div className="lg:col-span-2 ld:pt-12 text-darkBlue">
+        <div className="mb-12 lg:mb-0 lg:col-span-2 ld:pt-12 text-darkBlue">
           <div className="border border-darkBlue rounded-md p-4">
             <h5 className="text-center">Subscribe to our weekly blogs</h5>
             <SignUpForm
@@ -116,7 +123,11 @@ export default function Layout({ showSignup = false, children }) {
   return (
     <div className="relative min-h-screen">
       <Navbar navbar={navbar} />
-      <main className="grid lg:grid-cols-8 top-0 h-full container mx-auto pt-2 pb-20 px-4 sm:px-6 lg:px-8">
+      <main
+        className={`grid ${
+          showSignup && 'lg:grid-cols-8'
+        } top-0 h-full container mx-auto pt-2 pb-20 px-4 sm:px-6 lg:px-8`}
+      >
         {renderContent()}
       </main>
       <Footer footer={footer} />

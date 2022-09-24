@@ -15,7 +15,7 @@ export default function RichText({ data }) {
           className: 'border-0',
         },
         header: {
-          className: 'font-bold',
+          className: `font-bold`,
         },
         image: {
           className: 'w-full max-w-screen-md',
@@ -29,7 +29,7 @@ export default function RichText({ data }) {
           className: 'rich-list-item',
         },
         paragraph: {
-          className: 'text-base text-opacity-75 my-3',
+          className: `text-base font-normal text-opacity-75 my-3`,
           actionsClassNames: {
             alignment: 'text-{alignment}', // This is a substitution placeholder: left or center.
           },

@@ -1,39 +1,34 @@
 import { Fragment, useRef, useState, useContext } from 'react';
 
-import { signIn } from 'next-auth/react';
-
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { useModalContext, MODAL_TYPES } from 'utils/context/modal-context';
+import { useModalContext } from 'utils/context/modal-context';
 import NextImage from 'next/image';
-import { useRouter } from 'next/router';
 import SignUpForm from './sign-up-form';
 import OptionalForm from './optional-form';
 import { getStrapiURL, signUp, updateUser } from 'utils/api';
 import SuccessSection from './success-section';
 
 import { GlobalContext } from 'pages/_app';
-import PrimaryButton from './primary-button';
+import RichText from './rich-text';
 
 export default function SignInModal() {
-  const { hideModal, showModal } = useModalContext();
+  const { hideModal } = useModalContext();
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState();
-  const [success, setSuccess] = useState();
-  const [user, setUser] = useState();
   const [email, setEmail] = useState();
+  const [richTextColor, setRichTextColor] = useState('#00000');
   const [password, setPassword] = useState();
   const [hubspotUser, setHubspotUser] = useState();
 
-  const router = useRouter();
+  const { global } = useContext(GlobalContext);
+
+  const { content } = global.global.data.attributes.popupText;
 
   const handleModalToggle = () => {
+    localStorage.setItem('imcon_modal', Date.now());
     hideModal();
-  };
-
-  const signInModal = () => {
-    showModal(MODAL_TYPES.SIGNIN_MODAL);
   };
 
   const cancelButtonRef = useRef(null);
@@ -73,6 +68,8 @@ export default function SignInModal() {
             }
             setLoading(false);
           }
+          setEmail(data.email);
+          setPassword(data.password);
         } catch (error) {
           setErrors({
             error:
@@ -81,7 +78,7 @@ export default function SignInModal() {
         }
 
         // send to hubspot
-        await fetch(getStrapiURL('/api/hubspot-subscribe'), {
+        const hubspotRes = await fetch(getStrapiURL('/api/hubspot-subscribe'), {
           method: 'POST',
           headers: {
             'content-type': 'application/json',
@@ -92,6 +89,8 @@ export default function SignInModal() {
             lastName: data.lastName,
           }),
         });
+        const hubspotJson = await hubspotRes.json();
+        setHubspotUser(hubspotJson.id);
         setLoading(false);
         if (!errors) {
           setSuccess(true);
@@ -184,18 +183,9 @@ export default function SignInModal() {
 
                       <Dialog.Title
                         as="h3"
-                        className="text-lg text-center leading-6 font-bold text-darkBlue mt-4"
+                        className={`text-lg text-center leading-6 font-bold text-darkBlue mt-4`}
                       >
-                        {step === 1 && (
-                          <span className="font-normal">
-                            Download your FREE copy of{' '}
-                            <span className="italic font-extrabold ">
-                              Know Your New Neighbors: What 57 Immigrant Pastors
-                              Want You to Know about Effectively Serving their
-                              Communities
-                            </span>
-                          </span>
-                        )}
+                        {step === 1 && <RichText data={JSON.parse(content)} />}
 
                         {step === 2 &&
                           'Optional: To better serve you and others, please provide the following voluntary information'}
