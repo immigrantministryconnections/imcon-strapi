@@ -27,7 +27,7 @@ export default function Layout({ showSignup = false, children }) {
   useEffect(() => {
     const modalCookie = localStorage.getItem('imcon_modal');
     const modalExpired =
-      modalCookie !== null ? Date.now() - modalCookie > 300000 : true;
+      modalCookie !== null ? Date.now() - modalCookie > 3600000 : true;
     setModalExpired(modalExpired);
     if (modalExpired) {
       setTimeout(() => createModal(), 30000);
