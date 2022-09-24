@@ -1,90 +1,82 @@
 import { Fragment, useRef, useState, useContext } from 'react';
 
-import { signIn } from 'next-auth/react';
-
 import { Dialog, Transition } from '@headlessui/react';
-import { useModalContext, MODAL_TYPES } from 'utils/context/modal-context';
+import { XMarkIcon } from '@heroicons/react/24/outline';
+import { useModalContext } from 'utils/context/modal-context';
 import NextImage from 'next/image';
-import { useRouter } from 'next/router';
 import SignUpForm from './sign-up-form';
 import OptionalForm from './optional-form';
 import { getStrapiURL, signUp, updateUser } from 'utils/api';
 import SuccessSection from './success-section';
-import MezzanineModal from './mezzanine-modal';
 
 import { GlobalContext } from 'pages/_app';
+import RichText from './rich-text';
 
 export default function SignInModal() {
-  const { mezzaninePage } = useContext(GlobalContext);
-  console.log({ mezzaninePage });
-  const { hideModal, showModal } = useModalContext();
+  const { hideModal } = useModalContext();
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState();
-  const [user, setUser] = useState();
   const [email, setEmail] = useState();
+  const [richTextColor, setRichTextColor] = useState('#00000');
   const [password, setPassword] = useState();
   const [hubspotUser, setHubspotUser] = useState();
 
-  const router = useRouter();
+  const { global } = useContext(GlobalContext);
+
+  const { content } = global.global.data.attributes.popupText;
 
   const handleModalToggle = () => {
+    localStorage.setItem('imcon_modal', Date.now());
     hideModal();
-  };
-
-  const signInModal = () => {
-    showModal(MODAL_TYPES.SIGNIN_MODAL);
   };
 
   const cancelButtonRef = useRef(null);
 
   const onSubmitSignup = async (data) => {
     if (data.honeypot === '') {
-      setLoading(true);
-      try {
-        const signUpRes = await signUp({
-          email: data.email,
-          password: data.password,
-          firstName: data.firstName,
-          lastName: data.lastName,
-        });
+      // Only send in production
+      if (
+        true
+        // process.env.NODE_ENV === 'production' &&
+        // process.env.NEXT_PUBLIC_NETLIFY_CONTEXT === 'production'
+      ) {
+        setLoading(true);
+        try {
+          // send to mailchimp
+          const mailchimpRes = await fetch(
+            getStrapiURL('/api/mailchimp-subscribe'),
+            {
+              method: 'POST',
+              headers: {
+                'content-type': 'application/json',
+              },
+              body: JSON.stringify({
+                email: data.email,
+                firstName: data.firstName,
+                lastName: data.lastName,
+                subscribe: !!data.subscribe,
+              }),
+            }
+          );
 
-        if (signUpRes?.error) {
-          setErrors({
-            error: signUpRes.error?.message || 'There was en error signing up.',
-          });
-        } else {
-          setErrors(null);
-          setUser(signUpRes);
+          if (!mailchimpRes.ok) {
+            if (mailchimpRes.status === 400) {
+              const message = await mailchimpRes.text();
+              message = message.split('. ', 1)[0];
+              setErrors({ error: message });
+            }
+            setLoading(false);
+          }
           setEmail(data.email);
           setPassword(data.password);
-          setStep(step + 1);
+        } catch (error) {
+          setErrors({
+            error:
+              'Server error. Check your internet connection or please try again at another time.',
+          });
         }
-        setLoading(false);
-      } catch (error) {
-        setErrors({
-          error:
-            'Server error. Check your internet connection or please try again at another time.',
-        });
-        setLoading(false);
-      }
-      if (
-        process.env.NODE_ENV === 'production' &&
-        process.env.NEXT_PUBLIC_NETLIFY_CONTEXT === 'production'
-      ) {
-        // send to mailchimp
-        await fetch(getStrapiURL('/api/mailchimp-subscribe'), {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: data.email,
-            firstName: data.firstName,
-            lastName: data.lastName,
-            subscribe: !!data.subscribe,
-          }),
-        });
+
         // send to hubspot
         const hubspotRes = await fetch(getStrapiURL('/api/hubspot-subscribe'), {
           method: 'POST',
@@ -97,8 +89,15 @@ export default function SignInModal() {
             lastName: data.lastName,
           }),
         });
-        const resJson = await hubspotRes.json();
-        setHubspotUser(resJson.id);
+        const hubspotJson = await hubspotRes.json();
+        setHubspotUser(hubspotJson.id);
+        setLoading(false);
+        if (!errors) {
+          setSuccess(true);
+          setStep(step + 1);
+        }
+      } else {
+        setErrors({ error: 'Form submit only works in production' });
       }
     }
   };
@@ -106,55 +105,29 @@ export default function SignInModal() {
   const onSubmitOptional = async (data) => {
     if (data.honeypot === '') {
       setLoading(true);
-      try {
-        const signUpRes = await updateUser({
-          user,
-          state: data.state,
-          ethnicitiesServed: data.ethnicities,
-          ministryTypes: data.ministryTypes,
-          salariedMinistry: data.salariedMinistry,
+      // Send to hubspot in prod only
+      if (
+        true
+        // process.env.NODE_ENV === 'production' &&
+        // process.env.NEXT_PUBLIC_NETLIFY_CONTEXT === 'production'
+      ) {
+        await fetch(getStrapiURL('/api/hubspot-subscribe'), {
+          method: 'PUT',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: hubspotUser,
+            state: data?.state || '',
+            ministryfocus: data?.ministryTypes || '',
+            ethnicfocus: data?.ethnicities || '',
+            salariedministry: data?.salariedMinistry === true ? 'yes' : 'no',
+          }),
         });
-        if (signUpRes?.error) {
-          setErrors({
-            error: signUpRes.error?.message || 'There was en error signing up.',
-          });
-        } else {
-          // Send to hubspot in prod only
-          if (
-            process.env.NODE_ENV === 'production' &&
-            process.env.NEXT_PUBLIC_NETLIFY_CONTEXT === 'production'
-          ) {
-            await fetch(getStrapiURL('/api/hubspot-subscribe'), {
-              method: 'PUT',
-              headers: {
-                'content-type': 'application/json',
-              },
-              body: JSON.stringify({
-                id: hubspotUser,
-                state: data?.state || '',
-                ministryfocus: data?.ministryTypes || '',
-                ethnicfocus: data?.ethnicities || '',
-                salariedministry:
-                  data?.salariedMinistry === true ? 'yes' : 'no',
-              }),
-            });
-          }
-
-          setErrors(null);
-          await signIn('credentials', {
-            callbackUrl: `/national-resources`,
-            email,
-            password,
-          });
-        }
-        setLoading(false);
-      } catch (error) {
-        setErrors({
-          error:
-            'Server error. Check your internet connection or please try again at another time.',
-        });
-        setLoading(false);
       }
+      setErrors(null);
+      setLoading(false);
+      setStep(step + 1);
     }
   };
 
@@ -188,46 +161,59 @@ export default function SignInModal() {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full sm:p-6">
+              <Dialog.Panel className="relative bg-imconYellow rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full sm:p-6">
+                <div className="absolute top-0 right-0 pt-4 pr-4 sm:block">
+                  <button
+                    type="button"
+                    className="rounded-md bg-imconYellow text-darkBlue hover:darkBlue focus:outline-none focus:ring-2 focus:ring-mediumBlue focus:ring-offset-2"
+                    onClick={handleModalToggle}
+                  >
+                    <span className="sr-only">Close</span>
+                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                  </button>
+                </div>
                 <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-                  <div className="max-w-md w-full space-y-8">
+                  <div className="max-w-md w-full">
                     <div className="flex flex-col items-center">
-                      <NextImage src="/imcon_icon.png" height={50} width={50} />
+                      <NextImage
+                        src="/popup_image.jpg"
+                        width={300}
+                        height={128}
+                      />
+
                       <Dialog.Title
                         as="h3"
-                        className="text-lg text-center leading-6 font-bold text-gray-900 mt-4"
+                        className={`text-lg text-center leading-6 font-bold text-darkBlue mt-4`}
                       >
-                        {step === 1 &&
-                          'Unlock free access to hundreds of ministry resources'}
+                        {step === 1 && <RichText data={JSON.parse(content)} />}
+
                         {step === 2 &&
                           'Optional: To better serve you and others, please provide the following voluntary information'}
                       </Dialog.Title>
-                      <p className="text-center text-md text-gray-600">
-                        Or{' '}
-                        <button
-                          onClick={signInModal}
-                          className="font-medium text-indigo-600 hover:text-indigo-500 underline"
-                        >
-                          sign in to your existing account
-                        </button>
-                      </p>
                     </div>
                     {step === 1 && (
-                      <SignUpForm
-                        loading={loading}
-                        submitErrors={errors}
-                        onSubmit={onSubmitSignup}
-                      />
+                      <div className="flex items-center justify-center flex-col gap-y-4">
+                        <SignUpForm
+                          onSubmit={onSubmitSignup}
+                          loading={loading}
+                          submitErrors={errors}
+                          buttonText="Request My Copy"
+                          inModal={true}
+                        />
+                      </div>
                     )}
                     {step === 2 && (
                       <OptionalForm
                         loading={loading}
-                        onClose={handleModalToggle}
                         submitErrors={errors}
+                        onClose={() => setStep(step + 1)}
                         onSubmit={onSubmitOptional}
                         email={email}
                         password={password}
                       />
+                    )}
+                    {step === 3 && (
+                      <SuccessSection closeModal={handleModalToggle} />
                     )}
                   </div>
                 </div>

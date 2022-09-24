@@ -1,7 +1,6 @@
 import { createContext, useEffect } from 'react';
 
 import { useRouter } from 'next/router';
-import { SessionProvider, useSession } from 'next-auth/react';
 
 import App from 'next/app';
 import Script from 'next/script';
@@ -18,7 +17,7 @@ import { Modal } from 'utils/context/modal-context';
 
 export const GlobalContext = createContext({});
 
-const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
+const MyApp = ({ Component, pageProps }) => {
   const router = useRouter();
   // Extract the data we need
   const { globalData } = pageProps;
@@ -91,35 +90,16 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
         }}
       />
       {/* Display the content */}
-      <SessionProvider session={session}>
-        <GlobalContext.Provider
-          value={{ global: globalData, mezzaninePage: pageProps.mezzaninePage }}
-        >
-          <Modal>
-            {Component.auth ? (
-              <Auth>
-                <Component {...pageProps} />
-              </Auth>
-            ) : (
-              <Component {...pageProps} />
-            )}
-          </Modal>
-        </GlobalContext.Provider>
-      </SessionProvider>
+      <GlobalContext.Provider
+        value={{ global: globalData, mezzaninePage: pageProps.mezzaninePage }}
+      >
+        <Modal>
+          <Component {...pageProps} />
+        </Modal>
+      </GlobalContext.Provider>
     </>
   );
 };
-
-function Auth({ children }) {
-  // if `{ required: true }` is supplied, `status` can only be "loading" or "authenticated"
-  const { status } = useSession({ required: true });
-
-  if (status === 'loading') {
-    return <div>Loading...</div>;
-  }
-
-  return children;
-}
 
 // getInitialProps disables automatic static optimization for pages that don't
 // have getStaticProps. So [[...slug]] pages still get SSG.

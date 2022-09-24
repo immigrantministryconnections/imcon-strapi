@@ -72,6 +72,11 @@ export async function getGlobalData() {
               favicon {
                 ...FileParts
               }
+              popupText {
+                content
+                textColor
+                alignment
+              }
               defaultSeo {
                 metaTitle
                 metaDescription
@@ -123,6 +128,7 @@ export async function getGlobalData() {
   });
 
   const global = await globalRes.json();
+
   return global.data;
 }
 
@@ -230,6 +236,7 @@ export async function getPageData({ slug, preview }) {
               pageName
               publishedAt
               slug
+              showSignupForm
               seo {
                 metaTitle
                 metaDescription

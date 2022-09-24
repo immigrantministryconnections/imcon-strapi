@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { getSession, signIn, useSession } from 'next-auth/react';
-
 import Layout from '@/components/layout';
 import Seo from '@/components/elements/seo';
 import NextImage from '@/components/elements/image';
@@ -21,9 +19,6 @@ export default function StatePage({
   stateData,
   sections,
 }) {
-  const { data: session } = useSession();
-  const [loading, setLoading] = useState(true);
-  const [userSession, setUserSession] = useState(session);
   const router = useRouter();
 
   // Get the unique 'org types' so that we can separate them
@@ -51,19 +46,10 @@ export default function StatePage({
     imageLinks.attributes?.order &&
     imageLinks.sort((a, b) => a.attributes.order - b.attributes.order);
 
-  useEffect(() => {
-    const sessionRes = async () => {
-      const session = await getSession();
-      setUserSession(session);
-      setLoading(false);
-    };
-    sessionRes();
-  }, [session]);
-
-  const renderContent = (userSession) => {
+  const renderContent = () => {
     if (!!sections) {
       return <Sections sections={sections} />;
-    } else if (userSession) {
+    } else {
       return (
         <>
           <h4 className="text-mediumBlue text-center mt-4 mb-8">
@@ -149,7 +135,7 @@ export default function StatePage({
 
           {!stateData &&
             orgTypes.map((type) => (
-              <>
+              <div key={`orgtype-${type}`}>
                 <h2 className="mx-auto mb-4 text-center text-mediumBlue">
                   {type}
                 </h2>
@@ -182,7 +168,7 @@ export default function StatePage({
                       );
                     })}
                 </ul>
-              </>
+              </div>
             ))}
           {subcatLinks && (
             <ul role="list" className="mx-auto !list-none">
@@ -210,15 +196,13 @@ export default function StatePage({
           )}
         </>
       );
-    } else {
-      signIn();
     }
   };
 
   return (
     <Layout>
       <Seo metadata={seo} />
-      {loading ? <></> : renderContent(userSession)}
+      {renderContent()}
     </Layout>
   );
 }

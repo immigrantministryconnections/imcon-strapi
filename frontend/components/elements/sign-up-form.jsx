@@ -1,17 +1,34 @@
 import { useForm } from 'react-hook-form';
 
-import { LockClosedIcon } from '@heroicons/react/solid';
+import { useEffect } from 'react';
 
-export default function SignUpForm({ loading, onSubmit, submitErrors }) {
+export default function SignUpForm({
+  buttonText = 'Sign up',
+  inModal = false,
+  loading,
+  onSubmit,
+  submitErrors,
+  success = false,
+}) {
   const {
     register,
+    reset,
     watch,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+  useEffect(() => {
+    if (success) {
+      reset();
+    }
+  }, [success]);
+
   return (
-    <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className={`${inModal ? '' : 'mt-8'} w-full space-y-6`}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <input type="hidden" name="remember" defaultValue="true" />
       <input
         type="hidden"
@@ -20,10 +37,15 @@ export default function SignUpForm({ loading, onSubmit, submitErrors }) {
         value=""
         {...register('honeypot')}
       />
-      <div className="rounded-md shadow-sm -space-y-px">
+      <div className="-space-y-px">
         {submitErrors && (
-          <div className="text-red-600 text-center bg-red-400/25 rounded p-2">
+          <div className="text-red-600 text-center bg-red-400/25 rounded p-2 mb-2">
             {submitErrors.error}
+          </div>
+        )}
+        {success && (
+          <div className="text-black text-center bg-green-400/25 rounded p-2 mb-2">
+            Thank you. You have been subscribed.
           </div>
         )}
         <div>
@@ -66,7 +88,7 @@ export default function SignUpForm({ loading, onSubmit, submitErrors }) {
             id="email-address"
             name="email"
             type="email"
-            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            className="appearance-none rounded-b-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Email address"
             {...register('email', { required: true })}
           />
@@ -76,60 +98,9 @@ export default function SignUpForm({ loading, onSubmit, submitErrors }) {
             </span>
           )}
         </div>
-        <div>
-          <label htmlFor="password" className="sr-only">
-            Password
-          </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Password"
-            {...register('password', {
-              required: true,
-              minLength: {
-                value: 8,
-                message: 'Password must have at least 8 characters',
-              },
-            })}
-          />
-          {errors.password && (
-            <span className="text-sm text-red-600">
-              {errors.password.message}
-            </span>
-          )}
-        </div>
-        <div>
-          <label htmlFor="password" className="sr-only">
-            Confirm Password
-          </label>
-          <input
-            id="confirmPassword"
-            name="confirmPassword"
-            type="password"
-            autoComplete="confirm-password"
-            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Confirm password"
-            {...register('confirmPassword', {
-              required: true,
-              validate: (val) => {
-                if (watch('password') != val) {
-                  return 'Your passwords do no match';
-                }
-              },
-            })}
-          />
-          {errors.confirmPassword && (
-            <span className="text-sm text-red-600">
-              {errors.confirmPassword.message}
-            </span>
-          )}
-        </div>
       </div>
 
-      <div className="relative flex items-start">
+      <div className={`${inModal ? '' : 'hidden'} relative flex items-start`}>
         <div className="flex h-5 items-center">
           <input
             id="subscribe"
@@ -154,10 +125,7 @@ export default function SignUpForm({ loading, onSubmit, submitErrors }) {
           type="submit"
           className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-mediumBlue hover:bg-darkBlue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
-          <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-            <LockClosedIcon className="h-5 w-5 text-white" aria-hidden="true" />
-          </span>
-          Sign up
+          {loading ? 'Processing...' : buttonText}
         </button>
       </div>
     </form>
