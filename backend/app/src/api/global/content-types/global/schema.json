@@ -45,6 +45,11 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.seo"
+    },
+    "popupText": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.rich-text"
     }
   }
 }
