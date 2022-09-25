@@ -11,6 +11,8 @@ import SuccessSection from './success-section';
 
 import { GlobalContext } from 'pages/_app';
 import RichText from './rich-text';
+import { useEffect } from 'react';
+import { first } from 'lodash';
 
 export default function SignInModal() {
   const { hideModal } = useModalContext();
@@ -18,13 +20,21 @@ export default function SignInModal() {
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState();
   const [email, setEmail] = useState();
-  const [richTextColor, setRichTextColor] = useState('#00000');
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
   const [password, setPassword] = useState();
+  const [mailchimpSuccess, setMailchimpSuccess] = useState();
   const [hubspotUser, setHubspotUser] = useState();
 
   const { global } = useContext(GlobalContext);
 
   const { content } = global.global.data.attributes.popupText;
+
+  useEffect(() => {
+    if (mailchimpSuccess && firstName && lastName && email) {
+      sendToHubspot(firstName, lastName, email);
+    }
+  }, [mailchimpSuccess, firstName, lastName, email]);
 
   const handleModalToggle = () => {
     localStorage.setItem('imcon_modal', Date.now());
@@ -42,63 +52,62 @@ export default function SignInModal() {
         // process.env.NEXT_PUBLIC_NETLIFY_CONTEXT === 'production'
       ) {
         setLoading(true);
-        try {
-          // send to mailchimp
-          const mailchimpRes = await fetch(
-            getStrapiURL('/api/mailchimp-subscribe'),
-            {
-              method: 'POST',
-              headers: {
-                'content-type': 'application/json',
-              },
-              body: JSON.stringify({
-                email: data.email,
-                firstName: data.firstName,
-                lastName: data.lastName,
-                subscribe: !!data.subscribe,
-              }),
-            }
-          );
-
-          if (!mailchimpRes.ok) {
-            if (mailchimpRes.status === 400) {
-              const message = await mailchimpRes.text();
-              message = message.split('. ', 1)[0];
-              setErrors({ error: message });
-            }
-            setLoading(false);
+        // send to mailchimp
+        const mailchimpRes = await fetch(
+          getStrapiURL('/api/mailchimp-subscribe'),
+          {
+            method: 'POST',
+            headers: {
+              'content-type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: data.email,
+              firstName: data.firstName,
+              lastName: data.lastName,
+              subscribe: !!data.subscribe,
+            }),
           }
+        );
+
+        if (!mailchimpRes.ok) {
+          if (mailchimpRes.status === 400) {
+            const message = await mailchimpRes.text();
+            message = message.split('. ', 1)[0];
+            setErrors({ error: message });
+          }
+          setLoading(false);
+        } else {
+          setErrors(null);
+          setMailchimpSuccess(true);
           setEmail(data.email);
           setPassword(data.password);
-        } catch (error) {
-          setErrors({
-            error:
-              'Server error. Check your internet connection or please try again at another time.',
-          });
-        }
-
-        // send to hubspot
-        const hubspotRes = await fetch(getStrapiURL('/api/hubspot-subscribe'), {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: data.email,
-            firstName: data.firstName,
-            lastName: data.lastName,
-          }),
-        });
-        const hubspotJson = await hubspotRes.json();
-        setHubspotUser(hubspotJson.id);
-        setLoading(false);
-        if (!errors) {
-          setSuccess(true);
-          setStep(step + 1);
+          setFirstName(data.firstName);
+          setLastName(data.lastName);
         }
       } else {
         setErrors({ error: 'Form submit only works in production' });
       }
+    }
+  };
+
+  const sendToHubspot = async (firstName, lastName, email) => {
+    // send to hubspot
+    const hubspotRes = await fetch(getStrapiURL('/api/hubspot-subscribe'), {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        firstName,
+        lastName,
+      }),
+    });
+    const hubspotJson = await hubspotRes.json();
+    setHubspotUser(hubspotJson.id);
+    setLoading(false);
+    if (!hubspotJson.error) {
+      setStep(step + 1);
     }
   };
 
