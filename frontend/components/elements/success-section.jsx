@@ -7,7 +7,7 @@ export default function SuccessSection({ closeModal }) {
         Your request has been received. Within 5 minutes you will receive an
         email with your PDF
       </span>
-      <PrimaryButton onClick={closeModal} size="medium" text="Close" />
+      <PrimaryButton onClick={closeModal} size="medium" text="OK" />
     </div>
   );
 }
