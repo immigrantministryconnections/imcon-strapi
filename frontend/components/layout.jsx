@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState, useRef } from 'react';
+import { useEffect, useContext, useState } from 'react';
 
 import { getStrapiURL } from 'utils/api';
 
@@ -17,8 +17,6 @@ export default function Layout({ showSignup = false, children }) {
   const [success, setSuccess] = useState();
   const { navbar, footer } = global.global.data.attributes;
   const [modalExpired, setModalExpired] = useState(false);
-
-  const timerStarted = useRef(false);
 
   const { showModal } = useModalContext();
   const createModal = () => {
