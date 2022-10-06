@@ -1,4 +1,4 @@
-import { useContext, useState, useRef } from 'react';
+import { useEffect, useContext, useState, useRef } from 'react';
 
 import { getStrapiURL } from 'utils/api';
 
@@ -9,7 +9,6 @@ import { useModalContext, MODAL_TYPES } from 'utils/context/modal-context';
 import SignUpForm from '../components/elements/sign-up-form';
 
 import { GlobalContext } from 'pages/_app';
-import { useEffect } from 'react';
 
 export default function Layout({ showSignup = false, children }) {
   const { global } = useContext(GlobalContext);
@@ -18,6 +17,8 @@ export default function Layout({ showSignup = false, children }) {
   const [success, setSuccess] = useState();
   const { navbar, footer } = global.global.data.attributes;
   const [modalExpired, setModalExpired] = useState(false);
+
+  const timerStarted = useRef(false);
 
   const { showModal } = useModalContext();
   const createModal = () => {
@@ -30,6 +31,8 @@ export default function Layout({ showSignup = false, children }) {
       modalCookie !== null ? Date.now() - modalCookie > 3600000 : true;
     setModalExpired(modalExpired);
     if (modalExpired) {
+      timerStarted.current = true;
+      localStorage.setItem('imcon_modal', Date.now());
       setTimeout(() => createModal(), 30000);
     }
   }, [modalExpired]);
