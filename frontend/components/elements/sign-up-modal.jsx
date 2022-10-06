@@ -37,6 +37,7 @@ export default function SignInModal() {
   }, [mailchimpSuccess, firstName, lastName, email]);
 
   const handleModalToggle = () => {
+    localStorage.setItem('imcon_modal', Date.now());
     hideModal();
   };
 
