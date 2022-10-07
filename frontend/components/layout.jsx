@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from 'react';
+import { useContext, useState, useRef } from 'react';
 
 import { getStrapiURL } from 'utils/api';
 
@@ -9,6 +9,7 @@ import { useModalContext, MODAL_TYPES } from 'utils/context/modal-context';
 import SignUpForm from '../components/elements/sign-up-form';
 
 import { GlobalContext } from 'pages/_app';
+import { useEffect } from 'react';
 
 export default function Layout({ showSignup = false, children }) {
   const { global } = useContext(GlobalContext);
