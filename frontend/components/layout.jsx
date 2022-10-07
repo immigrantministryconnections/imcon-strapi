@@ -29,7 +29,6 @@ export default function Layout({ showSignup = false, children }) {
       modalCookie !== null ? Date.now() - modalCookie > 3600000 : true;
     setModalExpired(modalExpired);
     if (modalExpired) {
-      timerStarted.current = true;
       localStorage.setItem('imcon_modal', Date.now());
       setTimeout(() => createModal(), 30000);
     }
