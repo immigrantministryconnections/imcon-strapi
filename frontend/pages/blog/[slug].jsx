@@ -18,7 +18,7 @@ export default function Post({ article }) {
   return (
     <Layout>
       <Seo metadata={seo} />
-      <article className="max-w-5xl mx-auto">
+      <article className="max-w-5xl mx-auto mb-12">
         {image.data && <NextImage media={image} />}
         <div className={`text-[${textColor}]`}>
           <RichText data={JSON.parse(content)} />
