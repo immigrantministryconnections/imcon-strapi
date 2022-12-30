@@ -14,20 +14,37 @@ export default function ImageLinkWithText({ imageLink }) {
     showModal(MODAL_TYPES.MEZZ_MODAL, {});
   };
 
+  console.log(imageLink);
+
   return (
     <div className="flex flex-col items-center cursor-pointer">
-      <Link
-        as={`${imageLink.imageLink.url}`}
-        href={`${imageLink.imageLink.url}`}
-      >
-        <a>
+      {imageLink.imageLink.url?.startsWith('http') ? (
+        <a
+          href={imageLink.imageLink.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <NextImage
             media={imageLink.imageLink.image}
             height={200}
             width={600}
           />
         </a>
-      </Link>
+      ) : (
+        <Link
+          as={`${imageLink.imageLink.url}`}
+          href={`${imageLink.imageLink.url}`}
+        >
+          <a>
+            <NextImage
+              media={imageLink.imageLink.image}
+              height={200}
+              width={600}
+            />
+          </a>
+        </Link>
+      )}
+
       <h3
         className={`font-bold text-${
           textSize[imageLink.textSize || 'large']

@@ -338,6 +338,7 @@ export async function getPageData({ slug, preview }) {
                     textSize
                     imageLink {
                       url
+                      newTab
                       protected
                       image {
                         ...FileParts
