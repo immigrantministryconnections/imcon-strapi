@@ -14,8 +14,6 @@ export default function ImageLinkWithText({ imageLink }) {
     showModal(MODAL_TYPES.MEZZ_MODAL, {});
   };
 
-  console.log(imageLink);
-
   return (
     <div className="flex flex-col items-center cursor-pointer">
       {imageLink.imageLink.url?.startsWith('http') ? (
