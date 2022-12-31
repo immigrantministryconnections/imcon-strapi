@@ -53,11 +53,11 @@ export default function SignInModal() {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative bg-lightBlue rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full sm:p-6">
+              <Dialog.Panel className="relative bg-veryLightBlue rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full sm:p-6">
                 <div className="absolute top-0 right-0 pt-4 pr-4 sm:block">
                   <button
                     type="button"
-                    className="rounded-md bg-lightBlue text-white hover:darkBlue focus:outline-none focus:ring-2 focus:ring-mediumBlue focus:ring-offset-2"
+                    className="rounded-md bg-veryLightBlue text-mediumBlue hover:mediumBlue focus:outline-none focus:ring-2 focus:ring-mediumBlue focus:ring-offset-2"
                     onClick={handleModalToggle}
                   >
                     <span className="sr-only">Close</span>
@@ -75,7 +75,7 @@ export default function SignInModal() {
 
                       <Dialog.Title
                         as="h3"
-                        className={`text-lg text-center leading-6 font-bold text-white mt-4`}
+                        className={`text-lg text-center leading-6 font-bold text-mediumBlue mt-4`}
                       >
                         <RichText data={JSON.parse(content)} />
                       </Dialog.Title>

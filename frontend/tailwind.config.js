@@ -11,6 +11,7 @@ module.exports = {
         darkBlue: '#133e5d',
         mediumBlue: '#1d5b8d',
         lightBlue: '#247ab9',
+        veryLightBlue: '#c3dce8',
         imconOrange: '#bd6719',
         imconYellow: '#edb11c',
       },
