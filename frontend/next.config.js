@@ -4,4 +4,13 @@ module.exports = {
   images: {
     domains: ['localhost', 'imconstrapi.blob.core.windows.net'],
   },
+
+  async rewrites() {
+    return [
+      {
+        source: '/about',
+        destination: 'https://immigrantministry.com/about',
+      },
+    ];
+  },
 };
