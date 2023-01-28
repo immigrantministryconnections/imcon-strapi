@@ -8,7 +8,7 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: '/about',
+        source: '/aboutus',
         destination: 'https://immigrantministry.com/about',
       },
     ];
